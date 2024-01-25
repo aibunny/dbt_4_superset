@@ -1,0 +1,19 @@
+version: 2
+
+sources: 
+  - name: sc_db
+    schema: public
+    tables:
+      - name: case_files
+      - name: debtors
+      - name: products
+      - name: organizations
+      - name: users
+      - name: teams
+      - name: debt_types
+      - name: branches
+      - name: contact_statuses
+      - name: contact_types
+      - name: buckets
+      - name: deliquency_reasons
+      - name: dispute_reasons
