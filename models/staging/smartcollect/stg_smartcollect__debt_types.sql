@@ -3,4 +3,4 @@
 SELECT 
     *
 FROM
-    {{source('sc_db', 'debt_types')}}
+    {{source('smartcollect', 'debt_types')}}

@@ -3,4 +3,4 @@
 SELECT 
     *
 FROM
-    {{ source('sc_data', 'products')}}
+    {{ source('smartcollect', 'products')}}

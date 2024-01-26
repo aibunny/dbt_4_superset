@@ -6,7 +6,7 @@ SELECT
     pd.title as product,
     org.names as organization,
     org.id as organization_id,
-    CONCAT(u.first_name,' ',u.last_name) as user,
+    u.full_name as user,
     u.id as user_id,
     t.title as team,
     t.id AS team_id,
@@ -38,7 +38,7 @@ SELECT
     c.created_at as created_date
 
 FROM
-    {{ ref('stg_smartcollect__case_files') }} c
+    {{ ref('stg_smartcollect__casefiles') }} c
     INNER JOIN  {{ ref('stg_smartcollect__debtors') }} d ON d.id = c.debtor_id
     INNER JOIN  {{ ref('stg_smartcollect__products') }} pd ON pd.id = c.product_id
     LEFT JOIN   {{ ref('stg_smartcollect__organizations') }} org ON org.id = c.organization_id
@@ -51,5 +51,4 @@ FROM
     LEFT JOIN {{ ref('stg_smartcollect__buckets')}} bkt on bkt.id=c.bucket_id
     LEFT JOIN {{ ref('stg_smartcollect__deliquency_reasons')}} del ON del.id=c.delinquency_reason_id
     LEFT JOIN {{ ref('stg_smartcollect__dispute_reasons')}} disp ON disp.id=c.dispute_reason_id
-
-WHERE c.deleted_at IS NULL AND c.closed IS FALSE
+    WHERE c.deleted_at IS NULL AND c.closed IS FALSE

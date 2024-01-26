@@ -1,7 +1,7 @@
 version: 2
 
 sources: 
-  - name: sc_db
+  - name: smartcollect
     schema: public
     tables:
       - name: case_files
@@ -15,5 +15,5 @@ sources:
       - name: contact_statuses
       - name: contact_types
       - name: buckets
-      - name: deliquency_reasons
+      - name: delinquency_reasons
       - name: dispute_reasons

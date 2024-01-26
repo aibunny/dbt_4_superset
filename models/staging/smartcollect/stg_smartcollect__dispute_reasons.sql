@@ -3,4 +3,4 @@
 SELECT 
     *
 FROM
-    {{source('sc_db', 'dispute_reasons')}}
+    {{source('smartcollect', 'dispute_reasons')}}

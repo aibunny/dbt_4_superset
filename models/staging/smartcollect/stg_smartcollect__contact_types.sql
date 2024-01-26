@@ -3,4 +3,4 @@
 SELECT 
     *
 FROM
-    {{source('sc_db', 'contact_types')}}
+    {{source('smartcollect', 'contact_types')}}

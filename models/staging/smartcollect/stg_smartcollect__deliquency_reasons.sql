@@ -1,6 +1,6 @@
---- deliquency_reasons
+--- delinquency_reasons
 
 SELECT 
     *
 FROM
-    {{source('sc_db', 'deliquency_reasons')}}
+    {{source('smartcollect', 'delinquency_reasons')}}
