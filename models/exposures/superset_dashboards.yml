@@ -1,0 +1,31 @@
+version: 2
+exposures:
+  - name: portfolio_overview
+    label: Portfolio Overview
+    type: dashboard
+    url: https://dash.lab.co.ke//superset/dashboard/2
+    description: ''
+    depends_on: []
+    owner:
+        name: Hello Crafted
+        email: ''
+
+  - name: performance_dashboard
+    label: Performance Dashboard
+    type: dashboard
+    url: https://dash.lab.co.ke//superset/dashboard/3
+    description: ''
+    depends_on: []
+    owner:
+        name: Hello Crafted
+        email: ''
+
+  - name: activity_dashboard
+    label: Activity Dashboard
+    type: dashboard
+    url: https://dash.lab.co.ke//superset/dashboard/4
+    description: ''
+    depends_on: []
+    owner:
+        name: Hello Crafted
+        email: ''
