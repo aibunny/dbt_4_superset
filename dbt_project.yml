@@ -29,6 +29,8 @@ models:
     staging:
       +materialized: view
     intermediate:
+      historical_tables:
+        +materialized: table
       +materialized: view
     mart:
       +materialized: view
