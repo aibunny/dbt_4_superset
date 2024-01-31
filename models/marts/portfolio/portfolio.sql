@@ -179,7 +179,7 @@ various other tables to extract relevant information.
       
       - name: due_date
         description: Due date of the loan
-        label: "Loan Due Date"
+        label: Loan Due Date
         tests:
           - not_null
 
@@ -219,7 +219,7 @@ various other tables to extract relevant information.
         tests:
           - not_null
 ```
-*/
+
 SELECT
     c.ref_id AS cfid,
     d.names AS customers,
@@ -271,4 +271,5 @@ FROM
     LEFT JOIN {{ ref('stg_smartcollect__buckets')}} bkt on bkt.id=c.bucket_id
     LEFT JOIN {{ ref('stg_smartcollect__deliquency_reasons')}} del ON del.id=c.delinquency_reason_id
     LEFT JOIN {{ ref('stg_smartcollect__dispute_reasons')}} disp ON disp.id=c.dispute_reason_id
-    WHERE c.deleted_at IS NULL AND c.closed IS FALSE
+    WHERE c.deleted_at IS NULL AND c.closed IS FALSE 
+
