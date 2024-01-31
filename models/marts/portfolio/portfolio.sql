@@ -219,6 +219,9 @@ various other tables to extract relevant information.
         tests:
           - not_null
 ```
+*/
+
+
 
 SELECT
     c.ref_id AS cfid,
