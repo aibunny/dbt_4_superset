@@ -2,4 +2,4 @@
 SELECT 
     *
 FROM
-    {{ ref('int_portfolio') }}
+    {{ ref('int_portfolio_lambda') }}

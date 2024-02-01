@@ -221,7 +221,11 @@ various other tables to extract relevant information.
 ```
 */
 
-{{ config(materialized='table') }}
+{{ 
+  config(
+    materialized='table'
+  )
+}}
 
 SELECT
     c.ref_id AS cfid,

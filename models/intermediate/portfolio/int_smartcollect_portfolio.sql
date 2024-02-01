@@ -222,6 +222,13 @@ various other tables to extract relevant information.
 */
 
 
+--view materialization
+{{ 
+  config(
+    materialized='incremental',
+    unique_key='cfid'
+  ) 
+}}
 
 SELECT
     c.ref_id AS cfid,
