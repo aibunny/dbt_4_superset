@@ -222,6 +222,7 @@ various other tables to extract relevant information.
 */
 
 
+
 SELECT
     c.ref_id AS cfid,
     d.names AS customers,
