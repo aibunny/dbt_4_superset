@@ -1,9 +1,8 @@
 --- lamda view
-.
 --- This lambda view includes the most recent data from the
 --- int_smartcollect_portfolio table and historical data from the
 --- int_smartcollect_portfolio_history table that is not already included 
---- in the int_smartcollect_portfolio table.
+--- in the int_smartcollect_portfolio table
 
 
 WITH lambda_view AS (
