@@ -17,3 +17,8 @@ sources:
       - name: buckets
       - name: delinquency_reasons
       - name: dispute_reasons
+      - name: charges
+      - name: currencies
+      - name: employers
+      - name: collection_stages
+      - name: payments

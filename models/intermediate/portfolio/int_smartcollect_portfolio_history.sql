@@ -276,7 +276,7 @@ FROM
     LEFT JOIN {{ ref('stg_smartcollect__contact_statuses')}} cs on cs.id=c.contact_status_id
     LEFT JOIN {{ ref('stg_smartcollect__contact_types')}} ct on ct.id=c.contact_type_id
     LEFT JOIN {{ ref('stg_smartcollect__buckets')}} bkt on bkt.id=c.bucket_id
-    LEFT JOIN {{ ref('stg_smartcollect__deliquency_reasons')}} del ON del.id=c.delinquency_reason_id
+    LEFT JOIN {{ ref('stg_smartcollect__delinquency_reasons')}} del ON del.id=c.delinquency_reason_id
     LEFT JOIN {{ ref('stg_smartcollect__dispute_reasons')}} disp ON disp.id=c.dispute_reason_id
     WHERE c.deleted_at IS NULL AND c.closed IS FALSE 
 
