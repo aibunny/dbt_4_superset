@@ -2,7 +2,16 @@
 # Don't manually update.
 # https://github.com/anelendata/dbt_docstring
 
-{% docs portfolio %}
+{% docs int_smartcollect_portfolio %}
+This model provides a comprehensive overview of the portfolio,
+including information about customers, products, organizations, users,
+teams, debt types, branches, contact statuses, contact types, buckets,
+delinquency reasons, and dispute reasons.
+The model is based on the stg_smartcollect__casefiles table and joins
+various other tables to extract relevant information.
+{% enddocs %}
+
+{% docs int_smartcollect_portfolio_history %}
 This model provides a comprehensive overview of the portfolio,
 including information about customers, products, organizations, users,
 teams, debt types, branches, contact statuses, contact types, buckets,

@@ -12,6 +12,9 @@ various other tables to extract relevant information.
         label: Case File ID
         tests:
             - unique
+      - name: debtor_id
+        description: ID of the debtor
+        label: Debtor ID
       - name: customers
         description: Names of the customers
         label: Customer Names
@@ -229,6 +232,7 @@ various other tables to extract relevant information.
 
 SELECT
     c.ref_id AS cfid,
+    d.id AS debtor_id,
     d.names AS customers,
     pd.title as product,
     org.names as organization,
