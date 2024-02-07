@@ -1,0 +1,13 @@
+your_target_name:
+  target: dev #target name change to analytics
+  outputs:
+    dev: #target schema
+      type: postgres
+      host: your_host
+      user: your_username
+      password: your_password
+      port: your_port
+      dbname: your_database_name
+      schema: dev #target schema
+      threads: 4
+      keepalives_idle: 0
