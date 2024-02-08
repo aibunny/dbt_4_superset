@@ -1,7 +1,11 @@
 SELECT
-    c.*,
-    cf.*
+    cf.*,
+    c.charge_type,
+    c.amount_charged,
+    c.date_charged,
+    c.percentage_charged
 
 FROM
     {{ref('stg_smartcollect__charges')}} c
-    LEFT JOIN {{ ref('int_smartcollect_portfolio')}} cf on c.id::text =  cf.cfid::text
+    LEFT JOIN {{ ref('int_smartcollect_portfolio')}} cf ON c.case_file_id = cf.cfid
+

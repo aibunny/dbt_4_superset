@@ -8,11 +8,11 @@ various other tables to extract relevant information.
 ```dbt
     columns:
       - name: cfid
-        description: Reference ID for the case file
+        description: ID for the case file
         label: Case File ID
         tests:
             - unique
-            
+      
       - name: debtor_id
         description: ID of the debtor
         label: Debtor ID
@@ -235,7 +235,7 @@ various other tables to extract relevant information.
 }}
 
 SELECT
-    c.ref_id AS cfid,
+    c.id As cfid,
     d.id AS debtor_id,
     d.names AS customers,
     pd.title as product,
