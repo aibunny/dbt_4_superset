@@ -97,4 +97,4 @@ with case_files as (
         {{ source('smartcollect', 'case_files') }} 
 )
 
-select * case_files
+select * from case_files
