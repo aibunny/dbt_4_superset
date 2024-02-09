@@ -1,15 +1,12 @@
 --- users
 
-WITH users AS (
+with users as (
 
-SELECT 
-    *, 
-    CONCAT(u.first_name, ' ', u.last_name) as full_name
-FROM
-    {{source('smartcollect', 'users')}} u
+    select
+        *, 
+        CONCAT(u.first_name, ' ', u.last_name) as full_name
+    from
+        {{source('smartcollect', 'users')}} u
 )
 
-SELECT *
-
-FROM 
-    users
+select * from users

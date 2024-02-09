@@ -1,6 +1,10 @@
 --- teams
 
-SELECT 
+with teams as (
+select
     *
-FROM
+from
     {{source('smartcollect', 'teams')}}
+)
+
+select * from teams 

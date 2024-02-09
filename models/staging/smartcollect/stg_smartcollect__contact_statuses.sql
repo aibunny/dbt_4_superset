@@ -1,6 +1,10 @@
 --- contact_statuses
 
-SELECT 
+with contact_statuses as (
+select
     *
-FROM
+from
     {{source('smartcollect', 'contact_statuses')}}
+) 
+
+select * from contact_statuses

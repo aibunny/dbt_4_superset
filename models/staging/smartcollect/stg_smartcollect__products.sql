@@ -1,6 +1,10 @@
 --- products
 
-SELECT 
+with products as (
+select
     *
-FROM
+from
     {{ source('smartcollect', 'products')}}
+)
+
+select * from products

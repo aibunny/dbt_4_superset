@@ -1,5 +1,7 @@
+-- payments
 
-SELECT
+with payments as (
+select
     id,
     COALESCE(amount, 0.00) AS amount,
     payment_date,
@@ -28,4 +30,7 @@ SELECT
     updated_at,
     deleted_at,
     effort
-FROM {{ source('smartcollect', 'payments') }}
+from {{ source('smartcollect', 'payments') }}
+)
+
+select * from payments
