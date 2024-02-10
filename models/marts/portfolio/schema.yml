@@ -1,6 +1,11 @@
 models:
   - name: portfolio
-    description: Case files finance data mart
+    description: / This model provides a comprehensive overview of the portfolio,
+          including information about customers, products, organizations, users,
+          teams, debt types, branches, contact statuses, contact types, buckets,
+          delinquency reasons, and dispute reasons.
+          The model is based on the smartcollect casefiles table and joins
+          various other tables to extract relevant information. 
     columns:
         - name: cfid
           description: ID for the case file
