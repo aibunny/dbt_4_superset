@@ -1,6 +1,6 @@
 with users as (
     select 
-        id,
+        id as user_id,
         ref_id,
         identity_id,
         full_name as name,
