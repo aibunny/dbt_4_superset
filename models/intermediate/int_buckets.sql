@@ -16,4 +16,4 @@ with buckets as (
 
 )
 
-select * from buckets where deleted_at is null and active = True
+select * from buckets where deleted_at is null 
