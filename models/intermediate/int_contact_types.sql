@@ -10,4 +10,4 @@ with refined_contact_types as (
     from {{ ref('stg_smartcollect__contact_types')}}
 )
 
-select * from refined_contact_types where deleted_at is null and active = True
+select * from refined_contact_types where deleted_at is null and active is True

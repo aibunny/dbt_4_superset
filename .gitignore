@@ -5,3 +5,4 @@ logs/
 seeds
 .env
 sample.sql1
+sample.sql

@@ -15,4 +15,4 @@ with teams as (
 )
 
 
-select * from teams where deleted_at is null and active = True
+select * from teams where deleted_at is null and active is True

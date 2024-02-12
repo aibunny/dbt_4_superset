@@ -7,26 +7,6 @@
 
 SELECT
     c.id As cfid,
-    d.id AS debtor_id,
-    d.names AS customers,
-    pd.title as product,
-    org.names as organization,
-    org.id as organization_id,
-    u.full_name as user,
-    u.id as user_id,
-    t.title as team,
-    t.id AS team_id,
-    dt.title as debt_type,
-    br.title as branch,
-    br.id as branch_id,
-    cs.title contact_status,
-    ct.title as contact_type,
-    bkt.title as bucket,
-    CASE WHEN p.owner_type="user" THEN u.names 
-    WHEN p.owner_type="agency" THEN 
-    agencies.names ELSE 'No Owner' END as owner,
-    del.title as delinquency,
-    disp.title as dispute, 
     c.loan_id as loan_id,
     c.account_state as account_state, 
     c.principal_amount as principal_amount, 
@@ -45,6 +25,29 @@ SELECT
     c.last_action_date as last_action_date, 
     c.next_action_date as next_action_date, 
     c.created_at as created_date
+
+    d.id as debtor_id,
+    d.names as customers,
+    d.identification as identification,
+    pd.title as product,
+    org.names as organization,
+    org.id as organization_id,
+    u.full_name as user,
+    u.id as user_id,
+    t.title as team,
+    t.id AS team_id,
+    dt.title as debt_type,
+    br.title as branch,
+    br.id as branch_id,
+    cs.title contact_status,
+    ct.title as contact_type,
+    bkt.title as bucket,
+    CASE WHEN p.owner_type="user" THEN u.names 
+    WHEN p.owner_type="agency" THEN 
+    agencies.names ELSE 'No Owner' END as owner,
+    del.title as delinquency,
+    disp.title as dispute, 
+    
 
 FROM
     {{ ref('stg_smartcollect__payments')}} p

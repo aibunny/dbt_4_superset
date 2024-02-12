@@ -2,10 +2,12 @@ models:
   - name: finance
     description: Case files finance data mart
     columns:
-      - name: organization
-        description: The organization the case files belong to
-        label: Organization
-
+      - name: organization  
+        description: The organization the case files belong to   
+        meta:
+            type: string
+            label: 'Organization##############***********************'
+            
       - name: Total Casefiles
         description: The total number of unique case files
         label: Total Casefiles

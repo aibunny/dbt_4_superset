@@ -4,8 +4,6 @@ with refined_products as (
         ref_id,
         title,
         description,
-        active,
-        external_id,
         created_at,
         deleted_at
     from {{ ref('stg_smartcollect__products')}}

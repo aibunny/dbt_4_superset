@@ -1,7 +1,6 @@
 with organization as (
     select 
         id as organization_id,
-        ref_id,
         organization_type_id,
         names as name,
         agency_id as agency_id,

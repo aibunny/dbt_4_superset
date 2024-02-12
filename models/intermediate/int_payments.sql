@@ -6,7 +6,6 @@ with payments as (
         payment_date,
         payment_method,
         payment_type,
-        external_id,
         is_confirmed,
         confirmed_by,
         confirmed_date,
