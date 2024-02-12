@@ -19,4 +19,4 @@ with users as (
         {{ref('stg_smartcollect__users')}}
 )
 
-select * from users where active = TRUE and deleted_at is null
+select * from users where active is TRUE and deleted_at is null

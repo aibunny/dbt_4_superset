@@ -6,7 +6,7 @@ with refined_calls as (
         call_campaign_id,
         user_id,
         pbx_sn,
-        exteral_id,
+        external_id,
         time_start,
         call_from,
         call_duration,
@@ -15,7 +15,7 @@ with refined_calls as (
         dst_trunk_name,
         status,
         type,
-        did_nmber,
+        did_number,
         agent_ring_time,
         created_at
     from {{ ref('stg_smartcollect__calls')}}

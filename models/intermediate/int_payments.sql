@@ -11,8 +11,6 @@ with payments as (
         confirmed_by,
         confirmed_date,
         is_reversed,
-        reversed_by,
-        reversed_date,
         product_id,
         sub_product_id,
         effort,
@@ -25,4 +23,4 @@ with payments as (
         {{ref('stg_smartcollect__payments')}}
 )
 
-select * from payments where deleted_at is null
+select * from payments where deleted_at is null and is_confirmed is TRUE and is_reversed is FALSE

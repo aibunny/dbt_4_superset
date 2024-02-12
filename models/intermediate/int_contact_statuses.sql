@@ -8,8 +8,8 @@ with refined_contact_statuses as (
         dialing_priority,
         next_action_days,
         created_by,
-        deleted_at,
-    from {{ ref('stg_smartcollect_contact_statuses')}}
+        deleted_at
+    from {{ ref('stg_smartcollect__contact_statuses')}}
 )
 
 select * from refined_contact_statuses where deleted_at is null 

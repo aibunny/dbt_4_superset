@@ -10,7 +10,7 @@ WITH lambda_view AS (
   SELECT 
     *  
   FROM 
-    {{ ref('int_smartcollect_portfolio') }} v
+    {{ ref('int_portfolio') }} v
   WHERE 
      v.created_date >= '{{ run_started_at }}'
     
@@ -19,7 +19,7 @@ WITH lambda_view AS (
   SELECT   
   *  
   FROM 
-  {{ ref('int_smartcollect_portfolio_history') }} t
+  {{ ref('int_portfolio_history') }} t
   WHERE t.created_date < '{{ run_started_at }}'
 )
 

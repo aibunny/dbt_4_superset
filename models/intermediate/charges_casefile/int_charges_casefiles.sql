@@ -7,5 +7,5 @@ SELECT
 
 FROM
     {{ref('stg_smartcollect__charges')}} c
-    LEFT JOIN {{ ref('int_smartcollect_portfolio')}} cf ON c.case_file_id = cf.cfid
+    LEFT JOIN {{ ref('int_portfolio')}} cf ON c.case_file_id = cf.cfid
 
