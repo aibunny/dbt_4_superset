@@ -3,7 +3,7 @@ with users as (
         id,
         ref_id,
         identity_id,
-        concat(first_name,' ',last_name) as user_name,
+        full_name as name,
         title,
         user_type,
         organization_id,

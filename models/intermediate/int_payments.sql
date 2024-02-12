@@ -15,12 +15,12 @@ with payments as (
         reversed_date,
         product_id,
         sub_product_id,
+        effort,
         owner_type,
         owner_id,
         created_by,
         created_at,
-        deleted_at,
-        effort
+        deleted_at
     from 
         {{ref('stg_smartcollect__payments')}}
 )
