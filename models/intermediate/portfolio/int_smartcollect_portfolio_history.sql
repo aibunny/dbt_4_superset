@@ -22,6 +22,9 @@ SELECT
     cs.title contact_status,
     ct.title as contact_type,
     bkt.title as bucket,
+    CASE WHEN p.owner_type="user" THEN u.names 
+    WHEN p.owner_type="agency" THEN 
+    agencies.names ELSE 'No Owner' END as owner,
     del.title as delinquency,
     disp.title as dispute, 
     c.loan_id as loan_id,
@@ -44,6 +47,7 @@ SELECT
     c.created_at as created_date
 
 FROM
+    {{ ref('stg_smartcollect__payments')}} p
     {{ ref('stg_smartcollect__casefiles') }} c
     INNER JOIN  {{ ref('stg_smartcollect__debtors') }} d ON d.id = c.debtor_id
     INNER JOIN  {{ ref('stg_smartcollect__products') }} pd ON pd.id = c.product_id
