@@ -15,7 +15,7 @@ with active_portfolio_lambda_view as (
   *  
   from 
   {{ ref('int_portfolio_history') }} t
-  where t.updated_at < '{{ run_started_at }}'
+  where t.updated_at < '{{ run_started_at }}' or updated_at is null
 )
 
 select
