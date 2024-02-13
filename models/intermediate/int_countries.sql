@@ -1,7 +1,7 @@
 with refined_countries as (
     select
         id as country_id,
-        title as country_name,
+        title as country,
         currency_id
     from
         {{ref('stg_smartcollect__countries')}}

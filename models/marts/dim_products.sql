@@ -1,10 +1,10 @@
 with dim_products as (
     select
         p.product_id,
-        p.product_name,
+        p.product,
         p.product_description,
         sp.sub_product_id,
-        sp.sub_product_name,
+        sp.sub_product,
         sp.sub_product_description
     from
         {{ ref('int_products')}} p

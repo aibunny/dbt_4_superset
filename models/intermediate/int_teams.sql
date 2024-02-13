@@ -4,7 +4,7 @@ with teams as (
         organization_id,
         branch_id,
         agency_id,
-        title as team_name,
+        title as team,
         team_type,
         team_leader as team_leader_id
     from 

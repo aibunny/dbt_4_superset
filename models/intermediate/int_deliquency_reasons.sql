@@ -1,7 +1,7 @@
 with refined_delinquency_reason as (
     select
         id as delinquency_id,
-        title,
+        title as delinquency_reason,
         description        
     from 
         {{ ref("stg_smartcollect__delinquency_reasons") }}

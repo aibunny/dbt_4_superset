@@ -29,3 +29,4 @@ sources:
       - name: sub_products
       - name: collection_sub_stages
       - name: collaterals
+      - name: closure_reasons

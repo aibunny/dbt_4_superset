@@ -1,7 +1,7 @@
 with refined_contact_statuses as (
     select
         id as contact_status_id,
-        title as contact_status_name,
+        title as contact_status,
         description,
         contact_type_id,
         dialing_priority,

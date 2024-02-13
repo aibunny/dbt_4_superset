@@ -2,7 +2,7 @@ with refined_sub_products as (
     select 
         id as sub_product_id,
         product_id,
-        title as sub_product_name,
+        title as sub_product,
         description as sub_product_description
     from
         {{ ref('stg_smartcollect__sub_products')}}

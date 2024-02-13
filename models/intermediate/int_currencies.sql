@@ -1,7 +1,7 @@
 with currencies as (
     select 
         id as currency_id,
-        title as currency_name,
+        title as currency,
         symbol as currency_symbol
     from 
         {{ref('stg_smartcollect__currencies')}}

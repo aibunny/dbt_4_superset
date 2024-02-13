@@ -2,7 +2,7 @@ with organization as (
     select 
         id as organization_id,
         organization_type_id,
-        names as organization_name,
+        names as organization,
         agency_id as agency_id,
         active,
         country_id as country_id,

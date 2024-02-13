@@ -1,10 +1,10 @@
 with dim_collection_stage as (
     select
         cs.collection_stage_id,
-        cs.collection_stage_name,
+        cs.collection_stage,
         cs.collection_stage_description,
         css.collection_sub_stage_id,
-        css.collection_sub_stage_name,
+        css.collection_sub_stage,
         css.collection_sub_stage_description
     from 
         {{ref('int_collection_stages')}} cs
