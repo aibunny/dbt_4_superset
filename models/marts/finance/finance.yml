@@ -6,11 +6,12 @@ models:
         description: The organization the case files belong to   
         meta:
             type: string
-            label: 'Organization##############***********************'
+            label: 'Organization'
             
       - name: Total Casefiles
         description: The total number of unique case files
-        label: Total Casefiles
+        meta:
+          label: Total Casefiles
 
       - name: Total Debtors
         description: The total number of unique debtors across all case files
