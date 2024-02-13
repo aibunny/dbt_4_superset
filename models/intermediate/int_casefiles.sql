@@ -1,8 +1,6 @@
 with refined_casefiles as (
     select
         id as cfid,
-        debtor_id,
-        loan_id,
         account_state,
         principal_amount,
         loan_amount,
@@ -39,6 +37,8 @@ with refined_casefiles as (
         traction,
         traction_date,
         score,
+        debtor_id,
+        loan_id,
         organization_id, 
         team_id,
         user_id,
@@ -62,11 +62,11 @@ with refined_casefiles as (
         next_action_id,
         last_action_date,
         created_at,
-        closed_at   
+        updated_at         
     from
         {{ref("stg_smartcollect__casefiles")}}
     where 
-        deleted_at is null and closed_at is null
+        deleted_at is null
 )
 
 select * from case_files 

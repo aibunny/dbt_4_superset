@@ -7,7 +7,7 @@ with branches as (
     from
         {{ ref("stg_smartcollect__branches") }}
     where 
-        deleted_at is null
+        deleted_at is null and active is TRUE
 )
 
 select * from branches 

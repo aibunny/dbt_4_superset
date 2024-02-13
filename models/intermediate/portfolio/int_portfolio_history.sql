@@ -5,63 +5,91 @@
   )
 }}
 
-SELECT
-    c.id As cfid,
-    c.loan_id as loan_id,
-    c.account_state as account_state, 
-    c.principal_amount as principal_amount, 
-    c.loan_amount as loan_amount,
-    c.arrears as arrears, 
-    c.balance as balance, 
-    c.total_payments as total_payments, 
-    c.account_no as account_no, 
-    c.customer_no as customer_no,
-    c.dpd as dpd, 
-    c.loan_taken_date as taken_date, 
-    c.loan_due_date as due_date, 
-    c.allocated as allocated,
-    c.traction as traction, 
-    c.score as score,
-    c.last_action_date as last_action_date, 
-    c.next_action_date as next_action_date, 
-    c.created_at as created_date,
-    d.id as debtor_id,
-    d.names as customers,
-    d.identification as identification,
-    pd.title as product,
-    org.names as organization,
-    org.id as organization_id,
-    u.full_name as user,
-    u.id as user_id,
-    t.title as team,
-    t.id AS team_id,
-    dt.title as debt_type,
-    br.title as branch,
-    br.id as branch_id,
-    cs.title contact_status,
-    ct.title as contact_type,
-    bkt.title as bucket,
-    CASE WHEN p.owner_type="user" THEN u.names 
-    WHEN p.owner_type="agency" THEN 
-    agencies.names ELSE 'No Owner' END as owner,
-    del.title as delinquency,
-    disp.title as dispute
-    
+with active_portfolio as (
+    select
+        cf.id,
+        cf.account_state,
+        cf.principal_amount,
+        cf.loan_amount,
+        cf.arrears,
+        cf.amount_repaid,
+        cf.total_payments,
+        cf.installment_amount,
+        cf.installment_balance,
+        cf.next_installment_amount,
+        cf.next_installment_date,
+        cf.interest_amount,
+        cf.interest_rate,
+        cf.emi,
+        cf.waived,
+        cf.waived_balance,
+        cf.discount,
+        cf.discount_balance,
+        cf.overdraw_charges,
+        cf.penalty_amount,
+        cf.ledger_fee,
+        cf.agency_commission,
+        cf.case_branch,
+        cf.batch_no,
+        cf.dpd,
+        cf.loan_term,
+        cf.term_fees,
+        cf.loan_taken_date,
+        cf.loan_due_date,
+        cf.allocated,
+        cf.allocation_type,
+        cf.is_new_allocation,
+        cf.traction,
+        cf.traction_date,
+        cf.score,
+        cf.last_action_date,
+        d.names as debtor,
+        d.debtor_type,
+        d.gender as debtor_gender,
+        d.score as debtor_score,
+        o.organization,
+        o.country as organization_country,
+        o.currency as organization_currency,
+        u.name as user,
+        u.user_title as user_title,
+        u.team as user_team,
+        p.product,
+        sp.sub_product,
+        dt.debt_type,
+        cs.collection_stage,
+        cur.currency as case_file_currency,
+        c.country as case_file_country,
+        b.branch,
+        b.branch_manager,
+        cst.contact_status,
+        ct.contact_type,
+        bck.bucket,
+        dr.delinquency_reason,
+        dsr.dispute_reason,
+        cf.created_at,
+        cf.updated_at
 
-FROM
-    {{ ref('stg_smartcollect__payments')}} p
-    {{ ref('stg_smartcollect__casefiles') }} c
-    INNER JOIN  {{ ref('stg_smartcollect__debtors') }} d ON d.id = c.debtor_id
-    INNER JOIN  {{ ref('stg_smartcollect__products') }} pd ON pd.id = c.product_id
-    LEFT JOIN   {{ ref('stg_smartcollect__organizations') }} org ON org.id = c.organization_id
-    LEFT JOIN {{ ref('stg_smartcollect__users')}} u ON u.id=c.user_id
-    LEFT JOIN {{ ref('stg_smartcollect__teams')}} t ON t.id=c.team_id
-    LEFT JOIN {{ ref('stg_smartcollect__debt_types')}} dt ON dt.id=c.debt_type_id
-    LEFT JOIN {{ ref('stg_smartcollect__branches')}} br ON br.id=c.branch_id
-    LEFT JOIN {{ ref('stg_smartcollect__contact_statuses')}} cs on cs.id=c.contact_status_id
-    LEFT JOIN {{ ref('stg_smartcollect__contact_types')}} ct on ct.id=c.contact_type_id
-    LEFT JOIN {{ ref('stg_smartcollect__buckets')}} bkt on bkt.id=c.bucket_id
-    LEFT JOIN {{ ref('stg_smartcollect__delinquency_reasons')}} del ON del.id=c.delinquency_reason_id
-    LEFT JOIN {{ ref('stg_smartcollect__dispute_reasons')}} disp ON disp.id=c.dispute_reason_id
-    WHERE c.deleted_at IS NULL AND c.closed IS FALSE 
+    from 
+        {{ref('int_casefiles')}} cf
+    inner join {{ ref('int_debtors')}} d on cf.debtor_id = d.debtor_id
+    left join {{ ref('int_organizations')}} o  on cf.organization_id = o.organization_id
+    left join {{ ref('dim_users')}} u on cf.user_id = u.user_id
+    left join {{ ref('int_products')}} p on cf.product_id = p.product_id
+    left join {{ ref('int_sub_products')}} sp on cf.sub_product_id = sp.sub_product_id
+    left join {{ ref('int_debt_types')}} dt on cf.debt_type_id = dt.debt_type_id
+    left join {{ ref('int_collection_stages')}} cs on cf.collection_stage_id = cs.collection_stage_id
+    left join {{ ref('int_collection_sub_stages')}} css on cf.collection_sub_stage_id = css.collection_sub_stage_id
+    left join {{ ref('int_currencies')}} cur on cf.currency_id = cur.currency_id
+    left join {{ ref('int_countries')}} c on cf.country_id = c.country_id
+    left join {{ ref('int_branches')}} b on cf.branch_id = b.branch_id
+    left join {{ ref('int_contact_statuses')}} cst on cf.contact_status_id = cst.contact_status_id
+    left join {{ ref('int_contact_types')}} ct on cf.contact_type_id = ct.contact_type_id
+    left join {{ ref('int_buckets')}} bck on cf.bucket_id = bck.bucket_id
+    left join {{ ref('int_delinquency_reasons')}} dr on cf.delinquency_reason_id = dr.delinquency_reason_id
+    left join {{ref('int_dispute_reasons')}} dsr on cf.dispute_reason_id = dsr.dispute_reason_id
 
+    where cf.closed is FALSE 
+
+)
+
+select * from active_portfolio

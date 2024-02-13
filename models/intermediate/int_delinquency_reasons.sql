@@ -1,6 +1,6 @@
 with refined_delinquency_reason as (
     select
-        id as delinquency_id,
+        id as delinquency_reason_id,
         title as delinquency_reason,
         description        
     from 
