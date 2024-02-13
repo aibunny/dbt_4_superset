@@ -3,11 +3,12 @@ with refined_contact_types as (
         id as contact_type_id,
         title,
         description,
-        active,
         created_by,
-        created_at,
-        deleted_at
-    from {{ ref('stg_smartcollect__contact_types')}}
+        created_at
+    from 
+        {{ ref('stg_smartcollect__contact_types')}}
+    where 
+        deleted_at is null and active is True
 )
 
-select * from refined_contact_types where deleted_at is null and active is True
+select * from refined_contact_types 

@@ -4,7 +4,6 @@ with refined_sub_products as (
         product_id,
         title,
         description,
-        active,
         created_at
     from
         {{ ref('stg_smartcollect__sub_products')}}

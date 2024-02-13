@@ -6,7 +6,10 @@ with branches as (
         branch_manager,
         created_at,
         deleted_at
-    from {{ ref("stg_smartcollect__branches") }}
+    from
+        {{ ref("stg_smartcollect__branches") }}
+    where 
+        deleted_at is null
 )
 
-select * from branches where deleted_at is null
+select * from branches 

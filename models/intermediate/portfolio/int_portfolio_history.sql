@@ -24,7 +24,7 @@ SELECT
     c.score as score,
     c.last_action_date as last_action_date, 
     c.next_action_date as next_action_date, 
-    c.created_at as created_date
+    c.created_at as created_date,
 
     d.id as debtor_id,
     d.names as customers,
@@ -46,7 +46,7 @@ SELECT
     WHEN p.owner_type="agency" THEN 
     agencies.names ELSE 'No Owner' END as owner,
     del.title as delinquency,
-    disp.title as dispute, 
+    disp.title as dispute
     
 
 FROM

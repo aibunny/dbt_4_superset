@@ -4,12 +4,13 @@ with refined_contact_statuses as (
         title,
         description,
         contact_type_id,
-        active,
         dialing_priority,
         next_action_days,
-        created_by,
-        deleted_at
-    from {{ ref('stg_smartcollect__contact_statuses')}}
+        created_by
+    from 
+        {{ ref('stg_smartcollect__contact_statuses')}}
+    where 
+        deleted_at is null  and active is TRUE
 )
 
-select * from refined_contact_statuses where deleted_at is null 
+select * from refined_contact_statuses 

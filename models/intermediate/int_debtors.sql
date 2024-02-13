@@ -6,9 +6,11 @@ with refined_debtors as (
         gender,
         score,
         created_at,
-        created_by,
-        deleted_at
-    from {{ ref('stg_smartcollect__debtors') }}
+        created_by
+    from 
+        {{ ref('stg_smartcollect__debtors') }}
+    where 
+        deleted_at is null
 )
 
-select * from refined_debtors where deleted_at is null
+select * from refined_debtors 

@@ -11,11 +11,8 @@ with refined_calls as (
         call_from,
         call_duration,
         talk_duration,
-        src_trunk_name,
-        dst_trunk_name,
         status,
         type,
-        did_number,
         agent_ring_time,
         created_at
     from {{ ref('stg_smartcollect__calls')}}

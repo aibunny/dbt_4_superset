@@ -3,6 +3,8 @@ with debt_types as (
         *
     from
         {{ ref('stg_smartcollect__debt_types')}}
+    where 
+        deleted_at is null
 )
 
-select * from debt_types where deleted_at is null
+select * from debt_types 

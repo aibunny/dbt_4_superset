@@ -4,8 +4,6 @@ with refined_casefiles as (
         debtor_id,
         loan_id,
         account_state,
-        case when c.account_state = 'WRITTEN_OFF' then "Write OFF"
-        else "DEP" end as segmentation,
         principal_amount,
         loan_amount,
         arrears,
@@ -64,10 +62,11 @@ with refined_casefiles as (
         next_action_id,
         last_action_date,
         created_at,
-        closed_at,
-        deleted_at    
+        closed_at   
     from
         {{ref("stg_smartcollect__casefiles")}}
+    where 
+        deleted_at is null and closed_at is null
 )
 
-select * from case_files where deleted_at is null and closed_at is null
+select * from case_files 

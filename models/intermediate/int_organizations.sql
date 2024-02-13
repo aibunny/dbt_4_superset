@@ -11,11 +11,12 @@ with organization as (
         countries_enabled,
         teams_enabled,
         created_by,
-        deleted_at,
         created_at
     
     from
         {{ref('stg_smartcollect__organizations')}}
+    where 
+        deleted_at is null
 )
 
-select * from organization where deleted_at is null
+select * from organization 

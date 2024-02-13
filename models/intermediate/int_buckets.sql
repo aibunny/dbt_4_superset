@@ -7,13 +7,13 @@ with buckets as (
         sub_product_id,
         lower_limit,
         upper_limit,
-        active,
         days_range,
-        created_at,
-        deleted_at
+        created_at
     
-    from {{ ref('stg_smartcollect__buckets') }}
-
+    from 
+        {{ ref('stg_smartcollect__buckets') }}
+    where 
+        deleted_at is null and active is TRUE
 )
 
-select * from buckets where deleted_at is null 
+select * from buckets 
