@@ -1,7 +1,7 @@
 with branches as (
     select 
         id as branch_id,
-        title,
+        title as branch_name,
         active,
         branch_manager
     from

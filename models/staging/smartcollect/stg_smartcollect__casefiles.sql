@@ -8,7 +8,7 @@ with case_files as (
         external_id,
         loan_id,
         context,
-        COALESCE(account_state, 'ACTIVE') AS account_state,
+        account_state,
         COALESCE(principal_amount, 0.00) AS principal_amount,
         COALESCE(loan_amount, 0.00) AS loan_amount,
         COALESCE(arrears, 0.00) AS arrears,

@@ -4,7 +4,7 @@ with users as (
         ref_id,
         identity_id,
         full_name as name,
-        title,
+        title as user_title,
         user_type,
         organization_id,
         dialing_extension,

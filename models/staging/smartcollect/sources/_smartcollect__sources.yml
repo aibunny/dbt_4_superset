@@ -27,3 +27,5 @@ sources:
       - name: countries
       - name: ptps
       - name: sub_products
+      - name: collection_sub_stages
+      - name: collaterals
