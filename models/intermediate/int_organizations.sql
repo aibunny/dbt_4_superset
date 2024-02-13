@@ -9,14 +9,12 @@ with organization as (
         currency_id,
         multi_currency_enabled,
         countries_enabled,
-        teams_enabled,
-        created_by,
-        created_at
+        teams_enabled
     
     from
         {{ref('stg_smartcollect__organizations')}}
     where 
-        deleted_at is null
+        deleted_at is null and active is TRUE
 )
 
 select * from organization 

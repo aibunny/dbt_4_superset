@@ -1,10 +1,8 @@
 with refined_contact_types as (
     select
         id as contact_type_id,
-        title,
-        description,
-        created_by,
-        created_at
+        title as contact_type,
+        description
     from 
         {{ ref('stg_smartcollect__contact_types')}}
     where 

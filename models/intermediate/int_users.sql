@@ -9,8 +9,7 @@ with users as (
         organization_id,
         dialing_extension,
         branch_id,
-        team_id,
-        created_at
+        team_id
     from
         {{ref('stg_smartcollect__users')}}
     where

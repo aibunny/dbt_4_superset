@@ -1,9 +1,8 @@
 with refined_products as (
     select
         id as product_id,
-        title,
-        description,
-        created_at
+        title as product_name,
+        description as product_description
     from 
         {{ ref('stg_smartcollect__products')}}
     where 

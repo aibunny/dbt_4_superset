@@ -12,8 +12,7 @@ with payments as (
         sub_product_id,
         effort,
         owner_type,
-        owner_id,
-        created_at
+        owner_id
     from 
         {{ref('stg_smartcollect__payments')}}
     where 

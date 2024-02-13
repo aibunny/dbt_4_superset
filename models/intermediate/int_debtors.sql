@@ -4,9 +4,7 @@ with refined_debtors as (
         names,
         debtor_type,
         gender,
-        score,
-        created_at,
-        created_by
+        score
     from 
         {{ ref('stg_smartcollect__debtors') }}
     where 

@@ -3,9 +3,7 @@ with branches as (
         id as branch_id,
         title,
         active,
-        branch_manager,
-        created_at,
-        deleted_at
+        branch_manager
     from
         {{ ref("stg_smartcollect__branches") }}
     where 

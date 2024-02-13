@@ -1,15 +1,13 @@
 with buckets as (
     select
         id as bucket_id,
-        title,
+        title as bucket,
         description,
         product_id,
         sub_product_id,
         lower_limit,
         upper_limit,
-        days_range,
-        created_at
-    
+        days_range    
     from 
         {{ ref('stg_smartcollect__buckets') }}
     where 

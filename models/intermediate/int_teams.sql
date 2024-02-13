@@ -4,10 +4,9 @@ with teams as (
         organization_id,
         branch_id,
         agency_id,
-        title,
+        title as team_name,
         team_type,
-        team_leader as team_leader_id,
-        created_at
+        team_leader as team_leader_id
     from 
         {{ ref('stg_smartcollect__teams') }}
     where 

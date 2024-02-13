@@ -2,9 +2,8 @@ with refined_sub_products as (
     select 
         id as sub_product_id,
         product_id,
-        title,
-        description,
-        created_at
+        title as sub_product_name,
+        description as sub_product_description
     from
         {{ ref('stg_smartcollect__sub_products')}}
     where active is TRUE and deleted_at is null

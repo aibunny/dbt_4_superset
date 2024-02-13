@@ -25,7 +25,6 @@ SELECT
     c.last_action_date as last_action_date, 
     c.next_action_date as next_action_date, 
     c.created_at as created_date,
-
     d.id as debtor_id,
     d.names as customers,
     d.identification as identification,
