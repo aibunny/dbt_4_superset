@@ -23,6 +23,7 @@ sources:
       - name: collection_stages
       - name: payments
       - name: calls
+      - name: call_types
       - name: callbacks
       - name: countries
       - name: ptps
@@ -33,3 +34,5 @@ sources:
       - name: sms
       - name: sms_campaigns
       - name: sms_templates
+      - name: notes
+      

@@ -3,26 +3,23 @@ with refined_sms as (
         id as sms_id,
         case_file_id,
         gateway_id,
-        sms_teplate_id,
+        sms_template_id,
         sms_campaign_id,
         campaign_batch_id,
         organization_id,
         target,
         sms_type,
-        scheduled_at,
-        sent,
-        sent_at,
         cost,
         moderator,
         user_id,
         approved,
         approved_by,
-        approved_at,
-        delivery_status
+        delivery_status,
+        sent_at
     from
         {{ ref('stg_smartcollect__sms')}}
     where 
-        deleted_at is null
+        deleted_at is null and sent = 1 
 )
 
 select * from refined_sms

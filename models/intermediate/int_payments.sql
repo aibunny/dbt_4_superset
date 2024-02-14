@@ -2,7 +2,7 @@ with payments as (
     select 
         id as payment_id,
         case_file_id as cfid,
-        amount,
+        amount as payment_amount,
         payment_date,
         payment_method,
         payment_type,
