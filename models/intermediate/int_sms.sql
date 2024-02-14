@@ -12,6 +12,7 @@ with refined_sms as (
         cost,
         moderator,
         user_id,
+        created_by,
         approved,
         approved_by,
         delivery_status,
