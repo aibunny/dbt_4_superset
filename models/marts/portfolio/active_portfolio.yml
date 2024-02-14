@@ -1,6 +1,6 @@
 models:
   - name: active_portfolio
-    description:  This model provides a comprehensive overview of the portfolio,
+    description:  This dataset provides a comprehensive overview of the case files,
           including information about customers, products, organizations, users,
           teams, debt types, branches, contact statuses, contact types, buckets,
           delinquency reasons, and dispute reasons.
@@ -398,15 +398,16 @@ models:
 
         - name: created_at
           description: "The date when the case file was created."
+          tests: 
+            - not null
           meta:
             label: "Creation Date"            
             data_type: "TIMESTAMP"
-            constraints: ["CHECK (created_at IS NOT NULL)"]
-
+          
         - name: updated_at
           description: "The date when the case file was last updated."
           meta:
             label: "Last Update Date"            
             data_type: "TIMESTAMP"
-            constraints: ["CHECK (updated_at IS NOT NULL)"]
+            
 

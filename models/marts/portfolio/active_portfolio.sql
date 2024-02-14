@@ -1,5 +1,3 @@
---- lamda view
-
 with active_portfolio_lambda_view as (
   
   select
@@ -7,7 +5,8 @@ with active_portfolio_lambda_view as (
   from 
     {{ ref('int_portfolio') }} v
   where 
-     v.updated_at >= '{{ run_started_at }}'
+    (v.updated_at >= '{{ run_started_at }}' and v.updated_at is not null) 
+    or v.created_at >= '{{ run_started_at }}'
     
   union all
 
@@ -15,7 +14,8 @@ with active_portfolio_lambda_view as (
   *  
   from 
   {{ ref('int_portfolio_history') }} t
-  where t.updated_at < '{{ run_started_at }}' or updated_at is null
+  where 
+    t.updated_at < '{{ run_started_at }}' or t.updated_at is null
 )
 
 select

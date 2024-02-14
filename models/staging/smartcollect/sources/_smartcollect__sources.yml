@@ -30,3 +30,6 @@ sources:
       - name: collection_sub_stages
       - name: collaterals
       - name: closure_reasons
+      - name: sms
+      - name: sms_campaigns
+      - name: sms_templates
