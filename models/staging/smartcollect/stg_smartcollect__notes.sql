@@ -4,3 +4,4 @@ with notes as (
     from
         {{source('smartcollect','notes')}}
 )
+select * from notes
