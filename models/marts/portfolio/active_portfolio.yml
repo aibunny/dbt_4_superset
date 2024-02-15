@@ -399,7 +399,7 @@ models:
         - name: created_at
           description: "The date when the case file was created."
           tests: 
-            - not null
+            - not_null
           meta:
             label: "Creation Date"            
             data_type: "TIMESTAMP"
