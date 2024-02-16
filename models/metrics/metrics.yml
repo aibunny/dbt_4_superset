@@ -1,0 +1,14 @@
+metrics:
+  - name: total_loan_amount
+    description: "Total loan amount in the active portfolio."
+    type: simple
+    type_params:
+      measure: total_loan_amount
+    label: "Total Loan Amount"
+  - name: total_arrears
+    description: " Total arrears in the active portfolio"
+    type: simple
+    type_params:
+      measure: total_arrears
+    label: Total Arrears
+  

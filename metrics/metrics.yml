@@ -1,8 +1,0 @@
-metrics:
-  - name: total_loan_amount
-    description: "Total loan amount in the active portfolio."
-    type: simple
-    type_params:
-      measure: loan_amount
-      aggregation: sum
-    label: "Total Loan Amount"
