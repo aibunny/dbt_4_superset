@@ -7,7 +7,7 @@ models:
           The model is based on the smartcollect casefiles table and joins
           various other tables to extract relevant information. 
     columns:
-        - name: cfid
+        - name: id
           description: "The unique identifier for each case file."
           tests:
               - unique

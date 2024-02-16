@@ -1,7 +1,12 @@
 semantic_models:
   - name: active_portfolio_dim
     model: ref('active_portfolio')
-    description: "This semantic model represents the active portfolio, including various financial and casefile-related attributes."
+    description: |
+    This semantic model represents the active portfolio, including various financial and casefile-related attributes.
+    
+    defaults:
+      agg_time_dimension:  loan_taken_month
+
     entities:
       - name: id
         type: primary
@@ -11,7 +16,14 @@ semantic_models:
       - name: product_id
         type: foreign
         expr: product_id
+    
     dimensions:
+      - name: loan_taken_month
+        type: time
+        type_params:
+          time_granularity: month
+        label: Loan Taken Month
+        expr: taken_date
       - name: debtor_type
         type: string
         expr: debtor_type
@@ -48,6 +60,7 @@ semantic_models:
       - name: dispute_reason_name
         type: string
         expr: dsr.dispute_reason
+    
     measures:
       - name: total_amount
         description: "Total amount of all loans in the active portfolio."
