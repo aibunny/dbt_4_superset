@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "dbt-superset-lineage"
-version = "0.3.3"
+name = "dbt-4-superset"
+version = "0.3.4"
 description = "Make dbt docs and Apache Superset talk to one another"
-authors = ["Michal Kolacek <mkolacek@slido.com>"]
+authors = ["Michal Kolacek <mkolacek@slido.com>", "AIBUNNY <bunny@theaibunny.com>"]
 readme = "README.md"
-repository = "https://github.com/slidoapp/dbt-superset-lineage"
+repository = "https://github.com/aibunny/dbt-4-superset"
 
 [tool.poetry.scripts]
 dbt-superset-lineage = "dbt_superset_lineage.__init__:app"

@@ -1,20 +1,51 @@
 import json
 import logging
-import re
-import time
+import requests
 
 from .superset_api import Superset
 from requests import HTTPError
-from  . push_descriptions import get_datasets_from_superset, get_tables_from_dbt, \
+from  . push_descriptions import get_datasets_from_superset, \
     convert_markdown_to_plain_text
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
+def get_tables_from_dbt(dbt_manifest, dbt_db_name):
+    tables = {}
+    
+    for table_type in ['nodes', 'sources']:
+        manifest_subset = dbt_manifest[table_type]
+
+        for table_key_long in manifest_subset:
+            table = manifest_subset[table_key_long]
+            name = table['name']
+            schema = table['schema']
+            database = table['database']
+            table_key_short = schema + '.' + name
+            columns = table['columns']
+            description = table['description']
+            meta = table['meta']            
+
+            if dbt_db_name is None or database == dbt_db_name:
+                # fail if it breaks uniqueness constraint
+                assert table_key_short not in tables, \
+                    f"Table {table_key_short} is a duplicate name (schema + table) " \
+                    f"across databases. " \
+                    "This would result in incorrect matching between Superset and dbt. " \
+                    "To fix this, remove duplicates or add the ``dbt_db_name`` argument."
+
+                tables[table_key_short] = {'columns': columns, 'description': description, 'meta' : meta}
+
+    assert tables, "Manifest is empty!"
+
+    return tables
+
+
+
 def add_superset_metrics(superset, dataset):
     logging.info("Pulling metrics from superset")
     
-    res = superset.request('GET', f'/dataset/{dataset[id]}')
+    res = superset.request('GET', f'/dataset/{dataset["id"]}')
     result = res['result']
     
     dataset['metrics'] = result['metrics']
@@ -23,9 +54,13 @@ def add_superset_metrics(superset, dataset):
 
 
 
-def delete_superset_metrics(dataset_id:int, metric_id:int):
-    logging.info("Deleting metric from superset with id %s", metric_id)
-    Superset.request('DELETE', f'/dataset/{dataset_id}/metric/{metric_id}')
+def delete_superset_metrics(superset,dataset):
+    metrics = dataset['metrics']
+    
+    for metric in metrics:
+        superset.request('DELETE', f'/dataset/{dataset["id"]}/metric/{metric["id"]}')
+        logging.info("Deleting metric from superset with id %s", metric["id"])
+    
     
 
 def merge_metrics_info(dataset, tables):
@@ -33,55 +68,51 @@ def merge_metrics_info(dataset, tables):
     
     key = dataset['key']
     sst_metrics = dataset['metrics']
-    dbt_meta = tables.get(key, []).get('meta',{})
-    
+    dbt_meta = tables.get(key, []).get('meta', {})
     
     old_sst_metrics = []
-    
     new_sst_metrics = []
     
-    for metric in sst_metrics:
-        
-        old_metric_attr = []
-        
-        old_metric_attr['expression'] = metric['expression']
-        old_metric_attr['metric_name'] = metric['metric_name']
-        old_metric_attr['metric_type'] = metric['metrics_type']
-        old_metric_attr['verbose_name'] = metric['verbose_name']
-        old_metric_attr['extra'] = metric['extra'] 
-        old_metric_attr['currency'] = metric['currency'] 
-        old_metric_attr['d3format'] = metric['d3format'] 
-        
-        old_sst_metrics.append(old_metric_attr)
-        
-        #delete existing metrics on superset        
-        delete_superset_metrics(dataset[id],metric['id'])
-        
-        if 'superset_metrics' in dbt_meta:
+    if sst_metrics is not None:
+        logging.info("Pulling metrics found on Superset")
+        for metric in sst_metrics:
+            old_metric_attr = {
+                'expression': metric['expression'],
+                'metric_name': metric['metric_name'],
+                'metric_type': metric['metric_type'],
+                'verbose_name': metric['verbose_name'],
+                'extra': metric['extra'],
+                'currency': metric['currency'],
+                'd3format': metric['d3format']
+            }
+            old_sst_metrics.append(frozenset(old_metric_attr.items()))
             
-            for metric in dbt_meta['superset_metrics']:
-                new_metric_attr = []
-                
-                new_metric_attr['expression'] = convert_markdown_to_plain_text(metric['expression']) 
-                new_metric_attr['metric_type'] = convert_markdown_to_plain_text(metric['metrics_type'])
-                new_metric_attr['verbose_name'] = convert_markdown_to_plain_text(metric['verbose_name'])
-                new_metric_attr['metric_name'] = convert_markdown_to_plain_text(metric['metric_key'])
-                new_metric_attr['extra'] = convert_markdown_to_plain_text(metric['extra']) or ''
-                new_metric_attr['currency'] = convert_markdown_to_plain_text(metric['currency']) or ''
-                new_metric_attr['d3format'] = convert_markdown_to_plain_text(metric['d3format']) or ''
+    
+    if 'superset_metrics' in dbt_meta:
+        for metric in dbt_meta['superset_metrics']:
+            new_metric_attr = {
+                'expression': convert_markdown_to_plain_text(metric['expression']),
+                'metric_type': convert_markdown_to_plain_text(metric['type']) ,
+                'verbose_name': convert_markdown_to_plain_text(metric['label']),
+                'metric_name': convert_markdown_to_plain_text(metric['name']),
+                'extra':'null',
+                'currency': 'null',
+                'd3format': 'null'
+            }
+            new_sst_metrics.append(frozenset(new_metric_attr.items()))
+            
+    else:
+        logging.info("superset_metrics not found in dbt dataset.meta")
+    
+    sst_metrics_set = set(old_sst_metrics)
+    dbt_metrics_set = set(new_sst_metrics)
 
-                new_sst_metrics.append(new_metric_attr)
-            
-            sst_metrics_set = { tuple(old_sst_metrics_attr) for old_sst_metrics_attr in old_sst_metrics }
-            dbt_metrics_set = { tuple(new_sst_metrics_attr) for new_sst_metrics_attr in new_sst_metrics}
-
-            unique_metrics = sst_metrics_set.union(dbt_metrics_set)
-            new_metrics = [list(metric) for metric in unique_metrics]
-            
-            dataset['new_metrics'] = new_metrics
-            
-            return dataset
+    unique_metrics = sst_metrics_set.union(dbt_metrics_set)
+    new_metrics = [dict(metric) for metric in unique_metrics]
+    
+    dataset['new_metrics'] = new_metrics
         
+    return dataset
         
         
                 
@@ -89,12 +120,19 @@ def put_metrics_to_superset(superset, dataset):
     logging.info("Putting models and metrics to superset")
     
     new_metrics = dataset['new_metrics']
-    
+
     payload = {
         "metrics": new_metrics
     }
-        
-    superset.request('PUT', f'/dataset/{dataset['id']}', json = payload)    
+    payload = json.dumps(payload)
+    
+    print(payload)
+    
+    superset.request(
+        'PUT', 
+        f'/dataset/{dataset["id"]}',
+        json = payload
+        )    
 
 
 
@@ -129,7 +167,12 @@ def main(dbt_project_dir, dbt_db_name,
         sst_dataset_id = sst_dataset['id']
         try:
             sst_dataset_metrics =add_superset_metrics(superset, sst_dataset)
+            
             sst_dataset_w_metrics_new = merge_metrics_info(sst_dataset_metrics, dbt_tables)
+            
+            #delete existing metrics on superset        
+            delete_superset_metrics(superset,sst_dataset_metrics)
+            
             put_metrics_to_superset(superset, sst_dataset_w_metrics_new)
         except HTTPError as e:
             logging.error("The dataset with ID=%d wasn't updated. Check the error below.",
