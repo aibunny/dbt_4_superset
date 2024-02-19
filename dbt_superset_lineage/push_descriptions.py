@@ -150,8 +150,7 @@ def merge_columns_info(dataset, tables):
     dbt_columns = tables.get(key, {}).get('columns', {})
 
     sst_description = dataset['description']
-    dbt_description = tables.get(key, {}).get('description')
-    
+    dbt_description = tables.get(key, {}).get('description')  
     
     
     sst_owners = dataset['owners']

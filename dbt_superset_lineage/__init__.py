@@ -1,6 +1,7 @@
 import typer
 from .pull_dashboards import main as pull_dashboards_main
 from .push_descriptions import main as push_descriptions_main
+from .push_metrics import main as push_metrics_main
 
 app = typer.Typer()
 
@@ -55,8 +56,31 @@ def push_descriptions(dbt_project_dir: str = typer.Option('.', help="Directory p
                       superset_refresh_token: str = typer.Option(None, envvar="SUPERSET_REFRESH_TOKEN",
                                                                  help="Refresh token to Superset API.")):
 
+
     push_descriptions_main(dbt_project_dir, dbt_db_name,
                            superset_url, superset_db_id, superset_refresh_columns, superset_pause_after_update,
+                           superset_access_token, superset_refresh_token)
+
+
+
+@app.command()
+def push_descriptions(dbt_project_dir: str = typer.Option('.', help="Directory path to dbt project."),
+                      dbt_db_name: str = typer.Option(None, help="Name of your database within dbt to which the script "
+                                                                 "should be reduced to run."),
+                      superset_url: str = typer.Argument(..., help="URL of your Superset, e.g. "
+                                                                   "https://mysuperset.mycompany.com"),
+                      superset_db_id: int = typer.Option(None, help="ID of your database within Superset towards which "
+                                                                    "the push should be reduced to run."),
+                      superset_access_token: str = typer.Option(None, envvar="SUPERSET_ACCESS_TOKEN",
+                                                                help="Access token to Superset API."
+                                                                     "Can be automatically generated if "
+                                                                     "SUPERSET_REFRESH_TOKEN is provided."),
+                      superset_refresh_token: str = typer.Option(None, envvar="SUPERSET_REFRESH_TOKEN",
+                                                                 help="Refresh token to Superset API.")):
+
+
+    push_metrics_main(dbt_project_dir, dbt_db_name,
+                           superset_url, superset_db_id,
                            superset_access_token, superset_refresh_token)
 
 
