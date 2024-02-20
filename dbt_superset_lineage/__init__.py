@@ -64,7 +64,7 @@ def push_descriptions(dbt_project_dir: str = typer.Option('.', help="Directory p
 
 
 @app.command()
-def push_descriptions(dbt_project_dir: str = typer.Option('.', help="Directory path to dbt project."),
+def push_metrics(dbt_project_dir: str = typer.Option('.', help="Directory path to dbt project."),
                       dbt_db_name: str = typer.Option(None, help="Name of your database within dbt to which the script "
                                                                  "should be reduced to run."),
                       superset_url: str = typer.Argument(..., help="URL of your Superset, e.g. "

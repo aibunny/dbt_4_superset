@@ -10,7 +10,7 @@ from  . push_descriptions import get_datasets_from_superset, \
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 
-def get_tables_from_dbt(dbt_manifest, dbt_db_name):
+def get_tables_from_dbt(dbt_manifest: complex, dbt_db_name: str) -> json:
     tables = {}
     
     for table_type in ['nodes', 'sources']:
@@ -42,7 +42,7 @@ def get_tables_from_dbt(dbt_manifest, dbt_db_name):
 
 
 
-def add_superset_metrics(superset, dataset):
+def add_superset_metrics(superset:Superset, dataset: json) -> dict:
     logging.info("Pulling metrics from superset")
     
     res = superset.request('GET', f'/dataset/{dataset["id"]}')
@@ -54,7 +54,7 @@ def add_superset_metrics(superset, dataset):
 
 
 
-def delete_superset_metrics(superset,dataset):
+def delete_superset_metrics(superset: Superset,dataset: json):
     metrics = dataset['metrics']
     
     for metric in metrics:
@@ -63,7 +63,7 @@ def delete_superset_metrics(superset,dataset):
     
     
 
-def merge_metrics_info(dataset, tables):
+def merge_metrics_info(dataset: json, tables:json)-> dict:
     logging.info("Merging metrics info from Superset and manifest.json file.")
     
     key = dataset['key']
@@ -111,12 +111,12 @@ def merge_metrics_info(dataset, tables):
     new_metrics = [dict(metric) for metric in unique_metrics]
     
     dataset['new_metrics'] = new_metrics
-        
+    
     return dataset
         
         
                 
-def put_metrics_to_superset(superset, dataset):
+def put_metrics_to_superset(superset: Superset, dataset:json):
     logging.info("Putting models and metrics to superset")
     
     new_metrics = dataset['new_metrics']
@@ -124,15 +124,12 @@ def put_metrics_to_superset(superset, dataset):
     payload = {
         "metrics": new_metrics
     }
-    payload = json.dumps(payload)
-    
-    print(payload)
-    
+
     superset.request(
         'PUT', 
         f'/dataset/{dataset["id"]}',
         json = payload
-        )    
+    )    
 
 
 
