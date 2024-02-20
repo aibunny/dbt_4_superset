@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name = 'dbt-4-superset',
-    version='0.1.1',
+    version='0.1.0',
     author='AIBUNNY',
     author_email='fred@crafted.co.ke',
     description="Allows automation between superset and dbt",
@@ -18,4 +18,9 @@ setuptools.setup(
     license='MIT',
     packages=['toolbox'],
     install_requires=['requests'],
+    entry_points={
+        'console_scripts': [
+            'dbt-4-superset = dbt_4_superset.__init__:app',
+        ],
+        },
 )
