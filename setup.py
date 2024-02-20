@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name = 'dbt-4-superset',
-    version='1.0.0',
+    version='0.1.0',
     author='AIBUNNY',
     author_email='fred@crafted.co.ke',
     description="Allows automation between superset and dbt",

@@ -1,5 +1,5 @@
-from dbt_superset_lineage import __version__
+from dbt_4_superset import __version__
 
 
 def test_version():
-    assert __version__ == '0.1.0'
+    assert __version__ == '0.2.0'
