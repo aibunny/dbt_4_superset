@@ -1,4 +1,5 @@
 import logging
+import json
 import os
 from dotenv import load_dotenv
 from .superset_api import Superset
@@ -18,8 +19,9 @@ def load_env_variables(env_file_path: str):
 
 
 def create_db(superset: Superset, db_configs: dict):
+
     logging.info("Creating database on superset")
-    superset.request("POST", "/database/", json=db_configs)
+    superset.request("POST", "/database", json=db_configs)
 
 
 def get_db_configs(env_file_path: str) -> dict:
@@ -28,23 +30,39 @@ def get_db_configs(env_file_path: str) -> dict:
     load_env_variables(env_file_path)
 
     db_configs = {
-        "allow_ctas": "true",
-        "allow_cvas": "true",
-        "allow_dml": "true",
-        "allow_file_upload": os.getenv("ALLOW_FILE_UPLOAD", "false"),
-        "allow_run_async": "true",
-        "cache_timeout": 0,
-        "database_name": os.getenv("DB_NAME", "Smartcollect"),
-        "driver": os.getenv("DB_DRIVER", "psycopg2"),
+        "database_name": os.getenv("DB_NAME", "SMARTCOLLECT"),
         "engine": os.getenv("DB_ENGINE", "postgres"),
-        "username": os.getenv("DB_USERNAME", "postgres"),
-        "expose_in_sqllab": os.getenv("EXPOSE_IN_SQLLAB", "false"),
-        "impersonate_user": "true",
-        "is_managed_externally": "true",
         "sqlalchemy_uri": os.getenv("SQLALCHEMY_URI")
     }
 
     return db_configs
+
+
+def create_dataset(superset: Superset):
+    logging.info("Creating Datasets on superset")
+
+    tables = os.getenv("TABLES")
+    tables = tables.split(',')
+
+    logging.info("Creating %s of the tables found on Superset", len(tables))
+
+    for name in tables:
+        payload = {
+            "always_filter_main_dttm": False,
+            "database": 10,  # database id on superset
+            "is_managed_externally": True,
+            "normalize_columns": False,
+            "owners": [
+                1
+            ],
+            "schema": os.getenv("DB_SCHEMA", "analytics"),
+            "table_name": name
+        }
+        superset.request(
+            'POST',
+            "/dataset/",
+            json=payload
+        )
 
 
 def main(
@@ -68,4 +86,6 @@ def main(
 
     create_db(superset, db_configs)
 
-    logging.info("All done Database Created on superset!")
+    create_dataset(superset)
+
+    logging.info("All done Database and Datasets Created on superset!")

@@ -41,11 +41,13 @@ class Superset:
         logger.debug("Refreshing API token")
 
         if self.refresh_token is None:
-            logging.warning("Cannot refresh access_token, refresh_token is None")
+            logging.warning(
+                "Cannot refresh access_token, refresh_token is None")
             return False
 
         res = self.request('POST', '/security/refresh',
-                           headers={'Authorization': f'Bearer {self.refresh_token}'},
+                           headers={
+                               'Authorization': f'Bearer {self.refresh_token}'},
                            refresh_token_if_needed=False)
         self.access_token = res['access_token']
 
@@ -72,21 +74,26 @@ class Superset:
                 even after retrying with a fresh ``access_token``.
         """
 
-        logger.info("About to %s execute request for endpoint %s", method, endpoint)
+        logger.info("About to %s execute request for endpoint %s",
+                    method, endpoint)
 
         if headers is None:
             headers = {}
 
         url = self.api_url + endpoint
-        res = requests.request(method, url, headers=self._headers(**headers), **request_kwargs)
+        res = requests.request(
+            method, url, headers=self._headers(**headers), **request_kwargs)
 
         logger.debug("Request finished with status: %d", res.status_code)
 
         if refresh_token_if_needed and res.status_code == 401 \
                 and res.json().get('msg') == 'Token has expired' and self._refresh_access_token():
-            logger.debug("Retrying %s request for endpoint %s with refreshed token")
-            res = requests.request(method, url, headers=self._headers(**headers))
+            logger.debug(
+                "Retrying %s request for endpoint %s with refreshed token")
+            res = requests.request(
+                method, url, headers=self._headers(**headers))
             logger.debug("Request finished with status: %d", res.status_code)
 
         res.raise_for_status()
+
         return res.json()
