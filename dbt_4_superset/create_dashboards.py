@@ -36,10 +36,12 @@ def unzip_dashboard_files(dashboards_file_path):
             with zipfile.ZipFile(zip_file_path, 'r') as file:
                 file.extractall(target_folder)
 
+        logging.info("All files Unzipped successfully")
+
         return target_folder
+
     except Exception as e:
-        logging.error(
-            "%s", e)
+        logging.error("unzip_dashboard_files encountered:%s", e)
 
 
 def get_dashboard_folders(target_folder):
@@ -70,14 +72,21 @@ def update_database_details(target_folder):
 
             dashboard_paths.append(dash_path)
 
-            dash_database_path = os.path.join(dash_path, '/databases')
+            dash_database_path = os.path.join(dash_path, 'databases')
 
             # get database config yaml
-            database_files = [file for file in os.listdir(dash_database_path)
-                              if file.endswith('yaml')]
+            database_files = [
+                file for file in os.listdir(dash_database_path)
+                if file.endswith('.yaml')]
+
+            logging.info(
+                "Editing %s files found in %s",
+                len(database_files), dash
+            )
 
             for file in database_files:
-                yaml_file_path = os.path.join(database_files, file)
+
+                yaml_file_path = os.path.join(dash_database_path, file)
 
                 # read the database yaml file
                 with open(yaml_file_path, 'r') as yaml_file:
@@ -98,19 +107,24 @@ def update_database_details(target_folder):
                 with open(new_file_path, 'w') as new_yaml_file:
                     yaml.dump(data, new_yaml_file, default_flow_style=False)
 
+        logging.info("Database details updated successfully %s",
+                     dashboard_paths)
+
         return dashboard_paths
 
     except Exception as e:
-        logging.error("%s", e)
+        logging.error(" Update_database_details encountered: %s", e)
 
 
 def zip_updated_dashboards(
     dashboard_paths: list,
     dashboard_file_path: str
 ):
-
+    logging.info("Zipping updated dashboard files")
     zipped_dashboard_files = []
     parent_dir = os.path.dirname(dashboard_file_path)
+    parent_dir = os.path.join(parent_dir, 'updated_dashboards')
+    os.makedirs(parent_dir, exist_ok=True)
 
     try:
         for path in dashboard_paths:
@@ -118,7 +132,7 @@ def zip_updated_dashboards(
 
             zip_dash_name = f"{dashboard_name}_updated.zip"
 
-            zip_filepath = os.join(parent_dir, zip_dash_name)
+            zip_filepath = os.path.join(parent_dir, zip_dash_name)
 
             # Ensure the output directory exists
             os.makedirs(os.path.dirname(zip_filepath), exist_ok=True)
@@ -133,10 +147,12 @@ def zip_updated_dashboards(
 
             zipped_dashboard_files.append(zip_filepath)
 
+        logging.info("All files Zipped successfully")
+
         return zipped_dashboard_files
 
     except Exception as e:
-        logging.error("%s", e)
+        logging.error(" zip_updated_dashboards encountered: %s", e)
         return zipped_dashboard_files
 
 
@@ -148,10 +164,12 @@ def create_dashboards(
 
     try:
         for dashboard in zipped_dashboards_path:
-            files = {'file': (f'{os.path.basename(dashboard)}',
-                              open(dashboard, 'rb'),
-                              'application/zip')
-                     }
+            files = {
+                'file': (
+                    f'{os.path.basename(dashboard)}',
+                    open(dashboard, 'rb'),
+                    'application/zip')
+            }
             data = {
                 'passwords': json.dumps({
                     f"database/{os.getenv('DB_NAME','SMARTCOLLECT')}.yaml":
@@ -159,7 +177,11 @@ def create_dashboards(
                 })
             }
 
-            superset("POST", "dashboard/import/", json=data, files=files)
+            superset.request(
+                "POST", "/dashboard/import/",
+                json=data,
+                files=files
+            )
 
     except Exception as e:
         logging.error("Importing dashboards to superset failed because: %s", e)
@@ -188,7 +210,8 @@ def main(
     target_folder = unzip_dashboard_files(dashboards_file_path)
     updated_dashboard_paths = update_database_details(target_folder)
 
-    zipped_dashboard_paths = zip_updated_dashboards(updated_dashboard_paths)
+    zipped_dashboard_paths = zip_updated_dashboards(
+        updated_dashboard_paths, dashboards_file_path)
 
     create_dashboards(superset, zipped_dashboard_paths)
 

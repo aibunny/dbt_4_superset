@@ -17,7 +17,7 @@ def load_env_variables(env_file_path: str):
         logging.error(
             f"Failed to load environment variables from file {env_file_path}")
     else:
-        logging.error(
+        logging.info(
             f"Successfully loaded environment variables from file {env_file_path}")
 
 

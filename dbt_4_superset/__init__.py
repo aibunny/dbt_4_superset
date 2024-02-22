@@ -102,13 +102,14 @@ def push_metrics(
 
 @app.command()
 def create_db(
-    env_file_path: str = typer.Argument(
-        '.',
-        help="Directory path to env file."
-    ),
+
     superset_url: str = typer.Argument(
         ...,
         help="URL of your Superset, e.g. https://mysuperset.mycompany.com"
+    ),
+    env_file_path: str = typer.Argument(
+        '.',
+        help="Directory path to env file."
     ),
     superset_access_token: str = typer.Option(
         None, envvar="SUPERSET_ACCESS_TOKEN",
@@ -128,13 +129,14 @@ def create_db(
 
 @app.command()
 def create_dashboard(
-    env_file_path: str = typer.Argument(
-        '.',
-        help=" path to env file."
-    ),
     superset_url: str = typer.Argument(
         ...,
         help="URL of your Superset, e.g. https://mysuperset.mycompany.com"
+    ),
+
+    env_file_path: str = typer.Argument(
+        '.',
+        help=" path to env file."
     ),
 
     dashboards_file_path: str = typer.Argument(
