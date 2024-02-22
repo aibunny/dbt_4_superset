@@ -165,10 +165,10 @@ def create_dashboards(
     try:
         for dashboard in zipped_dashboards_path:
             files = {
-                'file': (
+                'formData': (
                     f'{os.path.basename(dashboard)}',
                     open(dashboard, 'rb'),
-                    'application/zip')
+                    'application/json')
             }
             data = {
                 'passwords': json.dumps({
