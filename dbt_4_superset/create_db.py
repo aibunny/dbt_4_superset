@@ -35,13 +35,11 @@ def get_db_configs(env_file_path: str) -> dict:
     if os.getenv("SQLALCHEMY_URI"):
         sql_uri = os.getenv("SQLALCHEMY_URI")
     else:
-        sql_uri = f"{os.getenv("DB_ENGINE")}+ \
-            {os.getenv("DB_DRIVER")}:// \
-            {os.getenv("DB_USER")}: \
-            {os.getenv("DB_PASSWORD")}@ \
-            {os.getenv("DB_HOST")}: \
-            {os.getenv("DB_PORT")}
-            "
+        sql_uri = (
+            f"{os.getenv('DB_ENGINE')}+{os.getenv('DB_DRIVER')}://"
+            f"{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@"
+            f"{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}"
+        )
 
     db_configs = {
         "database_name": os.getenv("DB_NAME", "SMARTCOLLECT"),
