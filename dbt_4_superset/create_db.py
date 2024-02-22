@@ -16,6 +16,9 @@ def load_env_variables(env_file_path: str):
     if r is not True:
         logging.error(
             f"Failed to load environment variables from file {env_file_path}")
+    else:
+        logging.error(
+            f"Successfully loaded environment variables from file {env_file_path}")
 
 
 def create_db(superset: Superset, db_configs: dict):
@@ -80,7 +83,7 @@ def main(
     superset = Superset(superset_url + '/api/v1',
                         access_token=superset_access_token, refresh_token=superset_refresh_token)
 
-    logging.info("Starting the script!")
+    logging.info("Starting the CREATE DB/DATASETS script!")
 
     db_configs = get_db_configs(env_file_path)
 
