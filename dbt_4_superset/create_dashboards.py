@@ -3,6 +3,7 @@ import os
 import zipfile
 import yaml
 import json
+import requests
 
 from .create_db import load_env_variables
 from .superset_api import Superset
@@ -30,14 +31,19 @@ def unzip_dashboard_files(dashboards_file_path):
         os.makedirs(target_folder, exist_ok=True)
 
         for zip_file in dashboard_zip_files:
+            extracted_dash_folder = os.path.join(
+                target_folder,
+                f"{os.path.basename(zip_file).split('.')[0]}"
+            )
+            os.makedirs(extracted_dash_folder, exist_ok=True)
 
             # extract the contents of the zip file into the target folder
             zip_file_path = os.path.join(dashboards_file_path, zip_file)
             with zipfile.ZipFile(zip_file_path, 'r') as file:
-                file.extractall(target_folder)
+                file.extractall(extracted_dash_folder)
 
         logging.info("All files Unzipped successfully")
-
+        print("!@@##", target_folder)
         return target_folder
 
     except Exception as e:
@@ -47,6 +53,7 @@ def unzip_dashboard_files(dashboards_file_path):
 def get_dashboard_folders(target_folder):
     logging.info("Getting extracted dashboard folders")
     all_dashboards = os.listdir(target_folder)
+    print("**********", target_folder)
     return all_dashboards
 
 
@@ -61,12 +68,13 @@ def update_database_details(target_folder):
     )
 
     dashboards = get_dashboard_folders(target_folder)
+    print("**********", dashboards)
     dashboard_paths = []
 
     try:
 
         for dash in dashboards:
-
+            print(dash)
             # get dashboard path
             dash_path = os.path.join(target_folder, dash)
 
@@ -87,7 +95,7 @@ def update_database_details(target_folder):
             for file in database_files:
 
                 yaml_file_path = os.path.join(dash_database_path, file)
-
+                print(yaml_file_path)
                 # read the database yaml file
                 with open(yaml_file_path, 'r') as yaml_file:
                     data = yaml.safe_load(yaml_file)
@@ -107,8 +115,8 @@ def update_database_details(target_folder):
                 with open(new_file_path, 'w') as new_yaml_file:
                     yaml.dump(data, new_yaml_file, default_flow_style=False)
 
-        logging.info("Database details updated successfully %s",
-                     dashboard_paths)
+        logging.info("Database details updated successfully  in the %s dashboard files",
+                     len(dashboard_paths))
 
         return dashboard_paths
 
@@ -125,7 +133,7 @@ def zip_updated_dashboards(
     parent_dir = os.path.dirname(dashboard_file_path)
     parent_dir = os.path.join(parent_dir, 'updated_dashboards')
     os.makedirs(parent_dir, exist_ok=True)
-
+    print(dashboard_paths)
     try:
         for path in dashboard_paths:
             dashboard_name = os.path.basename(path)
@@ -156,35 +164,37 @@ def zip_updated_dashboards(
         return zipped_dashboard_files
 
 
-def create_dashboards(
-        superset: Superset,
-        zipped_dashboards_path: list):
-
-    logging.info("Pushing Dashboards to superset")
+def create_dashboards(superset: Superset, zipped_dashboards_path: list):
+    logging.info("Pushing Dashboards to Superset")
 
     try:
         for dashboard in zipped_dashboards_path:
-            files = {
-                'formData': (
-                    f'{os.path.basename(dashboard)}',
-                    open(dashboard, 'rb'),
-                    'application/json')
-            }
-            data = {
-                'passwords': json.dumps({
-                    f"database/{os.getenv('DB_NAME','SMARTCOLLECT')}.yaml":
-                    os.getenv("DB_PASSWORD")
-                })
-            }
+            with open("/home/aibunny/Downloads/dashboard_export_20240223T140129.zip", 'rb') as dash:
+                files = {'formData': (
+                    f'{os.path.basename(dashboard)}', dash, 'application/zip')}
 
-            superset.request(
-                "POST", "/dashboard/import/",
-                json=data,
-                files=files
-            )
+                data = {
+                    'passwords': {
+                        f'databases/{os.getenv("DB_NAME", "SMARTCOLLECT")}.yaml': os.getenv("DB_PASSWORD")
+                    }
+                }
+
+                headers = {'Accept': 'application/json'}
+
+                # Separate the file and form data in the request
+                r = superset.request(
+                    "POST",
+                    "/dashboard/import",
+                    files=files,
+                    data=data,
+                    headers=headers
+                )
+
+                logging.info("Superset response: %s", r)
+                print(f'{os.path.basename(dashboard)}')
 
     except Exception as e:
-        logging.error("Importing dashboards to superset failed because: %s", e)
+        logging.error("Importing dashboards to Superset failed because: %s", e)
 
 
 def main(
@@ -215,5 +225,7 @@ def main(
 
     create_dashboards(superset, zipped_dashboard_paths)
 
-    logging.info("All Dashboard in %s  Created on superset!",
-                 dashboards_file_path)
+    logging.info(
+        "All Dashboard in %s  Created on superset!",
+        dashboards_file_path
+    )

@@ -107,5 +107,5 @@ class Superset:
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
             raise e
-
+        print(("Request finished with status: %d", res.status_code))
         return res.json()
