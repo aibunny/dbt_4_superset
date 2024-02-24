@@ -2,8 +2,7 @@ import logging
 import os
 import zipfile
 import yaml
-import json
-import requests
+
 
 from .create_db import load_env_variables
 from .superset_api import Superset
