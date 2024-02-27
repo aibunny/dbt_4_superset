@@ -21,32 +21,26 @@ def unzip_dashboard_files(dashboards_file_path):
         ]
 
         if len(dashboard_zip_files) == 0:
-            raise Exception(
-                "The path provided doesn't contain any zip files")
+            raise FileNotFoundError(
+                "No dashboard zip files found in the provided path")
 
-        # create a target folder overwrite any if exists
+        # create a target folder, overwrite if exists
         target_folder = os.path.join(
             dashboards_file_path, 'extracted_dashboards')
         os.makedirs(target_folder, exist_ok=True)
 
         for zip_file in dashboard_zip_files:
-            extracted_dash_folder = os.path.join(
-                target_folder,
-                f"{os.path.basename(zip_file).split('.')[0]}"
-            )
-            os.makedirs(extracted_dash_folder, exist_ok=True)
-
             # extract the contents of the zip file into the target folder
             zip_file_path = os.path.join(dashboards_file_path, zip_file)
             with zipfile.ZipFile(zip_file_path, 'r') as file:
-                file.extractall(extracted_dash_folder)
+                file.extractall(target_folder)
 
         logging.info("All files Unzipped successfully")
         print("!@@##", target_folder)
         return target_folder
 
     except Exception as e:
-        logging.error("unzip_dashboard_files encountered:%s", e)
+        logging.error("unzip_dashboard_files encountered: %s", e)
 
 
 def get_dashboard_folders(target_folder):
@@ -76,7 +70,7 @@ def update_database_details(target_folder):
             print(dash)
             # get dashboard path
             dash_path = os.path.join(target_folder, dash)
-
+            print("!!!!!!!!!!!", dash_path)
             dashboard_paths.append(dash_path)
 
             dash_database_path = os.path.join(dash_path, 'databases')
@@ -101,9 +95,9 @@ def update_database_details(target_folder):
                     # update the db details
                     data['sqlalchemy_uri'] = sql_uri
                     data['database_name'] = os.getenv(
-                        "DB_NAME", "SMARTCOLLECT")
+                        "SST_DB_NAME", "SMARTCOLLECT")
 
-                # Rename the file to DB_NAME.yaml
+                # Rename the file to SST_DB_NAME.yaml
                 new_file = f"{data['database_name']}.yaml"
                 new_file_path = os.path.join(dash_database_path, new_file)
 
@@ -168,14 +162,14 @@ def create_dashboards(superset: Superset, zipped_dashboards_path: list):
 
     try:
         for dashboard in zipped_dashboards_path:
-            with open("/home/aibunny/Downloads/dashboard_export_20240223T140129.zip", 'rb') as dash:
+            print("^^^^^^^^^^^^^^", dashboard)
+            with open(dashboard, 'rb') as dash:
                 files = {'formData': (
                     f'{os.path.basename(dashboard)}', dash, 'application/zip')}
 
                 data = {
-                    'passwords': {
-                        f'databases/{os.getenv("DB_NAME", "SMARTCOLLECT")}.yaml': os.getenv("DB_PASSWORD")
-                    }
+                    'passwords': '{"databases/{{DatabaseYAMLFile}}": "{{DatabasePassword}}"}',
+                    'overwrite': os.getenv("OVERWRITE", "false")
                 }
 
                 headers = {'Accept': 'application/json'}
@@ -216,7 +210,11 @@ def main(
 
     load_env_variables(env_file_path)
 
-    target_folder = unzip_dashboard_files(dashboards_file_path)
+    try:
+        target_folder = unzip_dashboard_files(dashboards_file_path)
+    except FileNotFoundError as e:
+        logging.error(f"No zip file found at {dashboards_file_path}")
+
     updated_dashboard_paths = update_database_details(target_folder)
 
     zipped_dashboard_paths = zip_updated_dashboards(

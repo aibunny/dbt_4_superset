@@ -19,7 +19,7 @@ def get_superset_tokens():
 
     try:
         res = requests.post(
-            url=os.getenv("SUPERSET_URL"),
+            url=f'{os.getenv("SUPERSET_URL")}/api/v1/security/login',
             json={
                 "username": os.getenv("SUPERSET_USERNAME"),
                 "password": os.getenv("SUPERSET_PASSWORD"),
@@ -123,8 +123,8 @@ def initiate():
         init_superset_access_token = get_superset_tokens()
         init_superset_url = os.getenv("SUPERSET_URL")
         init_env_file_path = os.getenv("ENV_PATH")
-        init_dbt_project_dir = os.getenv("DBT_PROJECT_DIR")
-        init_dash_path = os.getenv("DASHBOARDS_PATH=")
+        init_dbt_project_dir = os.getenv("DBT_PROJECT_DIR", ".")
+        init_dash_path = os.getenv("DASHBOARDS_PATH", ".")
 
         initiate_create_db(
             superset_url=init_superset_url,

@@ -1,5 +1,4 @@
 import logging
-import json
 import os
 from dotenv import load_dotenv
 from .superset_api import Superset
@@ -23,8 +22,15 @@ def load_env_variables(env_file_path: str):
 
 def create_db(superset: Superset, db_configs: dict):
 
-    logging.info("Creating database on superset")
-    superset.request("POST", "/database", json=db_configs)
+    try:
+        logging.info("Creating database on superset")
+        res = superset.request("POST", "/database", json=db_configs)
+
+        id = res['id']
+
+        return id
+    except Exception as e:
+        logging.info("Creating database failed due to: %s", e)
 
 
 def get_db_configs(env_file_path: str) -> dict:
@@ -38,11 +44,11 @@ def get_db_configs(env_file_path: str) -> dict:
         sql_uri = (
             f"{os.getenv('DB_ENGINE')}+{os.getenv('DB_DRIVER')}://"
             f"{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@"
-            f"{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}"
+            f"{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
         )
 
     db_configs = {
-        "database_name": os.getenv("DB_NAME", "SMARTCOLLECT"),
+        "database_name": os.getenv("SST_DB_NAME", "SMARTCOLLECT"),
         "engine": os.getenv("DB_ENGINE", "postgres"),
         "sqlalchemy_uri": sql_uri
     }
@@ -50,7 +56,7 @@ def get_db_configs(env_file_path: str) -> dict:
     return db_configs
 
 
-def create_dataset(superset: Superset):
+def create_dataset(superset: Superset, db_id: int):
     logging.info("Creating Datasets on superset")
 
     tables = os.getenv("TABLES")
@@ -61,7 +67,7 @@ def create_dataset(superset: Superset):
     for name in tables:
         payload = {
             "always_filter_main_dttm": False,
-            "database": 10,  # database id on superset
+            "database": db_id,  # database id on superset
             "is_managed_externally": True,
             "normalize_columns": False,
             "owners": [
@@ -70,6 +76,7 @@ def create_dataset(superset: Superset):
             "schema": os.getenv("DB_SCHEMA", "analytics"),
             "table_name": name
         }
+
         superset.request(
             'POST',
             "/dataset/",
@@ -96,8 +103,10 @@ def main(
 
     db_configs = get_db_configs(env_file_path)
 
-    create_db(superset, db_configs)
+    db_id = create_db(superset, db_configs)
+    print("$$$$$$$$$$$", db_id)
 
-    create_dataset(superset)
+    # create physical dataset after creating db
+    create_dataset(superset, db_id)
 
     logging.info("All done Database and Datasets Created on superset!")

@@ -94,18 +94,6 @@ class Superset:
                 method, url, headers=self._headers(**headers))
             logger.debug("Request finished with status: %d", res.status_code)
 
-        try:
-            res.raise_for_status()
-        except requests.exceptions.HTTPError as http_error:
-            try:
-                response_json = res.json()
-                message = f"HTTPError: {res.status_code} - {response_json}"
-            except ValueError:
-                response_text = res.text
-                message = f"HTTPError: {res.status_code} - {response_text}"
+        res.raise_for_status()
 
-        except Exception as e:
-            logger.error(f"An unexpected error occurred: {e}")
-            raise e
-        print(("Request finished with status: %d", res.status_code))
         return res.json()
