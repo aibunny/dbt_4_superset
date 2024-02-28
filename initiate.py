@@ -54,7 +54,7 @@ def initiate_create_db(
     )
 
 
-def intiate_push_descriptions(
+def initiate_push_descriptions(
         dbt_project_dir=None,
         dbt_db_name=None,
         superset_url=None,
@@ -131,16 +131,19 @@ def initiate():
             superset_access_token=init_superset_access_token,
             env_file_path=init_env_file_path
         )
-        intiate_push_descriptions(
-            dbt_project_dir=init_dbt_project_dir,
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token
-        )
+
         initiate_push_metrics(
             superset_access_token=init_superset_access_token,
             superset_url=init_superset_url,
             dbt_project_dir=init_dbt_project_dir
         )
+
+        initiate_push_descriptions(
+            dbt_project_dir=init_dbt_project_dir,
+            superset_url=init_superset_url,
+            superset_access_token=init_superset_access_token
+        )
+
         # initate_create_dashboards(
         #     env_file_path=init_env_file_path,
         #     dashboard_file_path=init_dash_path,
