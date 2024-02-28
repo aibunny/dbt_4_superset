@@ -3,6 +3,7 @@ import os
 import zipfile
 import yaml
 
+from typing import List
 
 from .create_db import load_env_variables
 from .superset_api import Superset
@@ -12,7 +13,7 @@ logging.basicConfig(
 
 
 def unzip_dashboard_files(dashboards_file_path):
-    logging.info('Unzipping Dashboard files')
+    logging.info('Unzipping Dashboard file(s)')
 
     try:
         dashboard_zip_files = [
@@ -35,8 +36,9 @@ def unzip_dashboard_files(dashboards_file_path):
             with zipfile.ZipFile(zip_file_path, 'r') as file:
                 file.extractall(target_folder)
 
-        logging.info("All files Unzipped successfully")
-        print("!@@##", target_folder)
+        logging.info("All %s file(s) Unzipped successfully",
+                     len(dashboard_zip_files))
+
         return target_folder
 
     except Exception as e:
@@ -44,15 +46,13 @@ def unzip_dashboard_files(dashboards_file_path):
 
 
 def get_dashboard_folders(target_folder):
-    logging.info("Getting extracted dashboard folders")
+
     all_dashboards = os.listdir(target_folder)
-    print("**********", target_folder)
+    logging.info("Got %s dashboard folder(s)", len(all_dashboards))
     return all_dashboards
 
 
 def update_database_details(target_folder):
-
-    logging.info("Editing DB details")
 
     sql_uri = (
         f"{os.getenv('DB_ENGINE')}+{os.getenv('DB_DRIVER')}://"
@@ -61,16 +61,18 @@ def update_database_details(target_folder):
     )
 
     dashboards = get_dashboard_folders(target_folder)
-    print("**********", dashboards)
+
     dashboard_paths = []
+
+    logging.info("Editing DB details for %s file(s)", len(dashboards))
 
     try:
 
         for dash in dashboards:
-            print(dash)
+
             # get dashboard path
             dash_path = os.path.join(target_folder, dash)
-            print("!!!!!!!!!!!", dash_path)
+
             dashboard_paths.append(dash_path)
 
             dash_database_path = os.path.join(dash_path, 'databases')
@@ -81,14 +83,14 @@ def update_database_details(target_folder):
                 if file.endswith('.yaml')]
 
             logging.info(
-                "Editing %s files found in %s",
+                "Editing %s file(s) found in %s",
                 len(database_files), dash
             )
 
             for file in database_files:
 
                 yaml_file_path = os.path.join(dash_database_path, file)
-                print(yaml_file_path)
+
                 # read the database yaml file
                 with open(yaml_file_path, 'r') as yaml_file:
                     data = yaml.safe_load(yaml_file)
@@ -106,9 +108,9 @@ def update_database_details(target_folder):
 
                 # Write the new file
                 with open(new_file_path, 'w') as new_yaml_file:
-                    yaml.dump(data, new_yaml_file, default_flow_style=False)
+                    yaml.dump(data, new_yaml_file, default_flow_style=True)
 
-        logging.info("Database details updated successfully  in the %s dashboard files",
+        logging.info("Database details updated successfully  in the %s dashboard folder(s)",
                      len(dashboard_paths))
 
         return dashboard_paths
@@ -117,29 +119,21 @@ def update_database_details(target_folder):
         logging.error(" Update_database_details encountered: %s", e)
 
 
-def zip_updated_dashboards(
-    dashboard_paths: list,
-    dashboard_file_path: str
-):
+def zip_updated_dashboards(dashboard_paths: List[str], dashboard_file_path: str) -> List[str]:
     logging.info("Zipping updated dashboard files")
     zipped_dashboard_files = []
-    parent_dir = os.path.dirname(dashboard_file_path)
-    parent_dir = os.path.join(parent_dir, 'updated_dashboards')
-    os.makedirs(parent_dir, exist_ok=True)
-    print(dashboard_paths)
+
     try:
+        parent_dir = os.path.dirname(dashboard_file_path)
+        parent_dir = os.path.join(parent_dir, 'updated_dashboards')
+        os.makedirs(parent_dir, exist_ok=True)
+
         for path in dashboard_paths:
             dashboard_name = os.path.basename(path)
-
             zip_dash_name = f"{dashboard_name}_updated.zip"
-
             zip_filepath = os.path.join(parent_dir, zip_dash_name)
 
-            # Ensure the output directory exists
-            os.makedirs(os.path.dirname(zip_filepath), exist_ok=True)
-
-            # Create a zip archive for each dashboard
-            with zipfile.ZipFile(zip_filepath, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            with zipfile.ZipFile(zip_filepath, "w") as zip_file:
                 for root, dirs, files in os.walk(path):
                     for file in files:
                         file_path = os.path.join(root, file)
@@ -149,12 +143,11 @@ def zip_updated_dashboards(
             zipped_dashboard_files.append(zip_filepath)
 
         logging.info("All files Zipped successfully")
-
         return zipped_dashboard_files
 
     except Exception as e:
-        logging.error(" zip_updated_dashboards encountered: %s", e)
-        return zipped_dashboard_files
+        logging.error("zip_updated_dashboards encountered: %s", e)
+        raise Exception("Error zipping updated files")
 
 
 def create_dashboards(superset: Superset, zipped_dashboards_path: list):
@@ -162,16 +155,28 @@ def create_dashboards(superset: Superset, zipped_dashboards_path: list):
 
     try:
         for dashboard in zipped_dashboards_path:
-            print("^^^^^^^^^^^^^^", dashboard)
+
             with open(dashboard, 'rb') as dash:
+
+                logging.info("Importing this dashboard: %s",
+                             f'{os.path.basename(dashboard)}')
+
                 files = {'formData': (
                     f'{os.path.basename(dashboard)}', dash, 'application/zip')}
 
                 data = {
                     'passwords': '{"databases/{{DatabaseYAMLFile}}": "{{DatabasePassword}}"}',
-                    'overwrite': os.getenv("OVERWRITE", "false")
+                    'overwrite': os.getenv("OVERWRITE", "true")
                 }
 
+                database_file = f'{os.getenv("SST_DB_NAME","SMARTCOLLECT")}.yaml'
+                database_pass = os.getenv("DB_PASSWORD")
+
+                data['passwords'] = data['passwords'].replace(
+                    '{{DatabaseYAMLFile}}', database_file)
+                data['passwords'] = data['passwords'].replace(
+                    '{{DatabasePassword}}', database_pass)
+                print(data)
                 headers = {'Accept': 'application/json'}
 
                 # Separate the file and form data in the request
@@ -184,7 +189,6 @@ def create_dashboards(superset: Superset, zipped_dashboards_path: list):
                 )
 
                 logging.info("Superset response: %s", r)
-                print(f'{os.path.basename(dashboard)}')
 
     except Exception as e:
         logging.error("Importing dashboards to Superset failed because: %s", e)

@@ -141,11 +141,11 @@ def initiate():
             superset_url=init_superset_url,
             dbt_project_dir=init_dbt_project_dir
         )
-        initate_create_dashboards(
-            env_file_path=init_env_file_path,
-            dashboard_file_path=init_dash_path,
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token)
+        # initate_create_dashboards(
+        #     env_file_path=init_env_file_path,
+        #     dashboard_file_path=init_dash_path,
+        #     superset_url=init_superset_url,
+        #     superset_access_token=init_superset_access_token)
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
 

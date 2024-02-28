@@ -104,7 +104,6 @@ def main(
     db_configs = get_db_configs(env_file_path)
 
     db_id = create_db(superset, db_configs)
-    print("$$$$$$$$$$$", db_id)
 
     # create physical dataset after creating db
     create_dataset(superset, db_id)
