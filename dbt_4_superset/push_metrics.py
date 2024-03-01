@@ -106,7 +106,8 @@ def merge_metrics_info(dataset: json, tables: json) -> dict:
         logging.info("superset_metrics not found in dbt dataset.meta")
 
     merged_metrics = old_sst_metrics + new_sst_metrics
-    unique_metrics = {metric['metric_name']: metric for metric in merged_metrics}.values()
+    unique_metrics = {metric['metric_name']
+        : metric for metric in merged_metrics}.values()
     dataset['new_metrics'] = list(unique_metrics)
 
     return dataset
@@ -120,36 +121,8 @@ def put_metrics_to_superset(superset: Superset, dataset: json):
     print(owners_id)
 
     payload = {
-        "always_filter_main_dttm": dataset['result']["always_filter_main_dttm"],
-        "cache_timeout": dataset['result']['cache_timeout'],
-        "columns": dataset['result']['columns'],
-        "database_id": dataset['result']['database']['id'],
-        "default_endpoint": dataset['result']['default_endpoint'],
-        "description": dataset['result']['description'],
-        "external_url": '',
-        "extra": dataset['result']['extra'],
-        "fetch_values_predicate": f"{dataset['result']['fetch_values_predicate']}",
-        "filter_select_enabled": f"{dataset['result']['filter_select_enabled']}",
-        "is_managed_externally": f"{dataset['result']['is_managed_externally']}",
-        "is_sqllab_view": f"{dataset['result']['is_sqllab_view']}",
-        "main_dttm_col": dataset['result']["main_dttm_col"],
-        "metrics": new_metrics,  # replace old metrics with new metrics
-        "normalize_columns": f"{dataset['result']['normalize_columns']}",
-        "offset": dataset['result']['offset'],
-        "owners": owners_id,
-        "schema": dataset['result']['schema'],
-        "table_name": dataset['result']['table_name'],
-        "template_params": f"{dataset['result']['template_params']}"
+        "metrics": new_metrics
     }
-
-    for column in payload['columns']:
-        column.pop("created_on", None)
-        column.pop("changed_on", None)
-        column.pop("type_generic", None)
-
-    # payload = json.dumps(payload)
-
-    print("*********", payload, "#####################")
 
     superset.request(
         'PUT',
