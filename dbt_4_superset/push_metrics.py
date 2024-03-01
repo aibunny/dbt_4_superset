@@ -1,6 +1,5 @@
 import json
 import logging
-import requests
 
 from .superset_api import Superset
 from requests import HTTPError
@@ -43,19 +42,21 @@ def get_tables_from_dbt(dbt_manifest: complex, dbt_db_name: str) -> json:
     return tables
 
 
-def add_superset_metrics(superset: Superset, dataset: json) -> dict:
-    logging.info("Pulling metrics from superset")
+def get_superset_dataset(superset: Superset, dataset: json) -> dict:
+    logging.info("Pulling dataset details from superset")
 
     res = superset.request('GET', f'/dataset/{dataset["id"]}')
     result = res['result']
 
-    dataset['metrics'] = result['metrics']
+    dataset['result'] = result
 
+    # return the complete dataset details from superset
     return dataset
 
 
 def delete_superset_metrics(superset: Superset, dataset: json):
-    metrics = dataset['metrics']
+
+    metrics = dataset['result']['metrics']
 
     for metric in metrics:
         superset.request(
@@ -64,52 +65,49 @@ def delete_superset_metrics(superset: Superset, dataset: json):
 
 
 def merge_metrics_info(dataset: json, tables: json) -> dict:
-    logging.info("Merging metrics info from Superset and manifest.json file.")
+    logging.info(
+        "Merging metrics info from Superset and dbt's target/manifest.json file.")
 
     key = dataset['key']
-    sst_metrics = dataset['metrics']
-    dbt_meta = tables.get(key, []).get('meta', {})
+    sst_metrics = dataset['result']['metrics']
+    dbt_meta = tables.get(key, {}).get('meta', {})
 
     old_sst_metrics = []
     new_sst_metrics = []
 
     if sst_metrics is not None:
         logging.info("Pulling metrics found on Superset")
-        for metric in sst_metrics:
-            old_metric_attr = {
+
+        old_sst_metrics = [
+            {
                 'expression': metric['expression'],
                 'metric_name': metric['metric_name'],
                 'metric_type': metric['metric_type'],
                 'verbose_name': metric['verbose_name'],
-                'extra': metric['extra'],
-                'currency': metric['currency'],
-                'd3format': metric['d3format']
+                'extra': metric['extra']
             }
-            old_sst_metrics.append(frozenset(old_metric_attr.items()))
+            for metric in sst_metrics
+        ]
 
     if 'superset_metrics' in dbt_meta:
-        for metric in dbt_meta['superset_metrics']:
-            new_metric_attr = {
+        logging.info("Pulling metrics found in dbt's target/manifest.json")
+
+        new_sst_metrics = [
+            {
                 'expression': convert_markdown_to_plain_text(metric['expression']),
                 'metric_type': convert_markdown_to_plain_text(metric['type']),
                 'verbose_name': convert_markdown_to_plain_text(metric['label']),
                 'metric_name': convert_markdown_to_plain_text(metric['name']),
-                'extra': 'null',
-                'currency': 'null',
-                'd3format': 'null'
+                'extra': '{"warning_markdown": ""}'
             }
-            new_sst_metrics.append(frozenset(new_metric_attr.items()))
-
+            for metric in dbt_meta['superset_metrics']
+        ]
     else:
         logging.info("superset_metrics not found in dbt dataset.meta")
 
-    sst_metrics_set = set(old_sst_metrics)
-    dbt_metrics_set = set(new_sst_metrics)
-
-    unique_metrics = sst_metrics_set.union(dbt_metrics_set)
-    new_metrics = [dict(metric) for metric in unique_metrics]
-
-    dataset['new_metrics'] = new_metrics
+    merged_metrics = old_sst_metrics + new_sst_metrics
+    unique_metrics = {metric['metric_name']: metric for metric in merged_metrics}.values()
+    dataset['new_metrics'] = list(unique_metrics)
 
     return dataset
 
@@ -118,10 +116,40 @@ def put_metrics_to_superset(superset: Superset, dataset: json):
     logging.info("Putting models and metrics to superset")
 
     new_metrics = dataset['new_metrics']
+    owners_id = [owner['id'] for owner in dataset['result']['owners']]
+    print(owners_id)
 
     payload = {
-        "metrics": new_metrics
+        "always_filter_main_dttm": dataset['result']["always_filter_main_dttm"],
+        "cache_timeout": dataset['result']['cache_timeout'],
+        "columns": dataset['result']['columns'],
+        "database_id": dataset['result']['database']['id'],
+        "default_endpoint": dataset['result']['default_endpoint'],
+        "description": dataset['result']['description'],
+        "external_url": '',
+        "extra": dataset['result']['extra'],
+        "fetch_values_predicate": f"{dataset['result']['fetch_values_predicate']}",
+        "filter_select_enabled": f"{dataset['result']['filter_select_enabled']}",
+        "is_managed_externally": f"{dataset['result']['is_managed_externally']}",
+        "is_sqllab_view": f"{dataset['result']['is_sqllab_view']}",
+        "main_dttm_col": dataset['result']["main_dttm_col"],
+        "metrics": new_metrics,  # replace old metrics with new metrics
+        "normalize_columns": f"{dataset['result']['normalize_columns']}",
+        "offset": dataset['result']['offset'],
+        "owners": owners_id,
+        "schema": dataset['result']['schema'],
+        "table_name": dataset['result']['table_name'],
+        "template_params": f"{dataset['result']['template_params']}"
     }
+
+    for column in payload['columns']:
+        column.pop("created_on", None)
+        column.pop("changed_on", None)
+        column.pop("type_generic", None)
+
+    # payload = json.dumps(payload)
+
+    print("*********", payload, "#####################")
 
     superset.request(
         'PUT',
@@ -165,11 +193,12 @@ def main(
         sst_datasets_dbt_filtered))
 
     for i, sst_dataset in enumerate(sst_datasets_dbt_filtered):
-        logging.info("Processing dataset %d/%d.", i +
-                     1, len(sst_datasets_dbt_filtered))
+        logging.info(
+            "Processing dataset %d/%d.", i +
+            1, len(sst_datasets_dbt_filtered))
         sst_dataset_id = sst_dataset['id']
         try:
-            sst_dataset_metrics = add_superset_metrics(superset, sst_dataset)
+            sst_dataset_metrics = get_superset_dataset(superset, sst_dataset)
 
             sst_dataset_w_metrics_new = merge_metrics_info(
                 sst_dataset_metrics, dbt_tables)
@@ -179,7 +208,8 @@ def main(
 
             put_metrics_to_superset(superset, sst_dataset_w_metrics_new)
         except HTTPError as e:
-            logging.error("The dataset with ID=%d wasn't updated. Check the error below.",
-                          sst_dataset_id, exc_info=e)
+            logging.error(
+                "The dataset with ID=%d wasn't updated. Check the error below.",
+                sst_dataset_id, exc_info=e)
 
     logging.info("All done!")

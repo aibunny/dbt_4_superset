@@ -94,6 +94,7 @@ class Superset:
                 method, url, headers=self._headers(**headers))
             logger.debug("Request finished with status: %d", res.status_code)
 
+        print(res.text)
         res.raise_for_status()
 
         return res.json()
