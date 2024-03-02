@@ -117,14 +117,18 @@ def initate_create_dashboards(
     )
 
 
-def initiate():
+def initiate(env_file_path=None):
     logging.info("Starting script ^_^")
     try:
         init_superset_access_token = get_superset_tokens()
         init_superset_url = os.getenv("SUPERSET_URL")
-        init_env_file_path = os.getenv("ENV_PATH")
         init_dbt_project_dir = os.getenv("DBT_PROJECT_DIR", ".")
         init_dash_path = os.getenv("DASHBOARDS_PATH", ".")
+
+        if env_file_path == None:
+            init_env_file_path = os.getenv("ENV_PATH")
+        else:
+            init_env_file_path = env_file_path
 
         initiate_create_db(
             superset_url=init_superset_url,
@@ -151,6 +155,3 @@ def initiate():
         #     superset_access_token=init_superset_access_token)
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
-
-
-initiate()
