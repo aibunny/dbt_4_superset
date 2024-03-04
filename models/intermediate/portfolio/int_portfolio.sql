@@ -13,6 +13,7 @@ with active_portfolio as (
         cf.principal_amount as principal_amount,
         cf.loan_amount as loan_amount,
         cf.arrears as arrears,
+        cf.balance as balance,
         cf.amount_repaid as amount_repaid,
         cf.total_payments as total_payments,
         cf.installment_amount as installment_amount,

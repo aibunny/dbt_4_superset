@@ -12,6 +12,7 @@ with active_portfolio as (
         cf.principal_amount as principal_amount,
         cf.loan_amount as loan_amount,
         cf.arrears as arrears,
+        cf.balance as balance,
         cf.amount_repaid as amount_repaid,
         cf.total_payments as total_payments,
         cf.installment_amount as installment_amount,
@@ -92,7 +93,7 @@ with active_portfolio as (
     left join {{ ref('int_contact_types')}} ct on cf.contact_type_id = ct.contact_type_id
     left join {{ ref('int_buckets')}} bck on cf.bucket_id = bck.bucket_id
     left join {{ ref('int_delinquency_reasons')}} dr on cf.delinquency_reason_id = dr.delinquency_reason_id
-    left join {{ref('int_dispute_reasons')}} dsr on cf.dispute_reason_id = dsr.dispute_reason_id
+    left join {{ ref('int_dispute_reasons') }} dsr on cf.dispute_reason_id = dsr.dispute_reason_id
 
     where cf.closed is FALSE 
 
