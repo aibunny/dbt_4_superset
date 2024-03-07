@@ -6,7 +6,7 @@ from dbt_4_superset.create_db import main as create_db_main
 from dbt_4_superset.create_dashboards import main as create_dashboards_main
 from dbt_4_superset.push_descriptions import main as push_descriptions_main
 from dbt_4_superset.push_metrics import main as push_metrics_main
-
+from dbt_4_superset.create_public_role_permissions import main as create_public_role_permissions_main
 
 load_dotenv()
 
@@ -117,6 +117,21 @@ def initate_create_dashboards(
     )
 
 
+def initiate_create_public_role_permissions(
+    superset_url=None,
+    superset_access_token=None,
+    superset_refresh_token=None
+):
+
+    logging.info("Intitiating Create Public roles permissions")
+
+    create_public_role_permissions_main(
+        superset_url,
+        superset_access_token,
+        superset_refresh_token
+    )
+
+
 def initiate(env_file_path=None):
     logging.info("Starting script ^_^")
     try:
@@ -148,6 +163,11 @@ def initiate(env_file_path=None):
             superset_access_token=init_superset_access_token
         )
 
+        # initiate_create_public_role_permissions(
+        #     superset_url=init_superset_url,
+        #     superset_access_token=init_superset_access_token
+        # )
+
         # initate_create_dashboards(
         #     env_file_path=init_env_file_path,
         #     dashboard_file_path=init_dash_path,
@@ -155,3 +175,6 @@ def initiate(env_file_path=None):
         #     superset_access_token=init_superset_access_token)
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
+
+
+initiate()

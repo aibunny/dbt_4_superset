@@ -185,4 +185,4 @@ def main(
                 "The dataset with ID=%d wasn't updated. Check the error below.",
                 sst_dataset_id, exc_info=e)
 
-    logging.info("All done!")
+    logging.info("All Metrics Pushed to SST!")
