@@ -44,7 +44,7 @@ def initiate_create_db(
         env_file_path=None,
         superset_refresh_token=None):
 
-    logging.info("Intiating Create DB")
+    logging.info("Intiating Create DB and Datasets")
 
     create_db_main(
         env_file_path,
@@ -98,7 +98,7 @@ def initiate_push_metrics(
     )
 
 
-def initate_create_dashboards(
+def initiate_create_dashboards(
     env_file_path=None,
     dashboard_file_path=None,
     superset_url=None,
@@ -134,16 +134,21 @@ def initiate_create_public_role_permissions(
 
 def initiate(env_file_path=None):
     logging.info("Starting script ^_^")
+
+    if env_file_path is None:
+        # for situations where the command is initiated outside
+        # smartcollect-lineage and testing
+        init_env_file_path = os.getenv("ENV_PATH")
+    else:
+        init_env_file_path = env_file_path
+
+    load_dotenv(dotenv_path=init_env_file_path)
+
     try:
         init_superset_access_token = get_superset_tokens()
         init_superset_url = os.getenv("SUPERSET_URL")
-        init_dbt_project_dir = os.getenv("DBT_PROJECT_DIR", ".")
-        init_dash_path = os.getenv("DASHBOARDS_PATH", ".")
-
-        if env_file_path == None:
-            init_env_file_path = os.getenv("ENV_PATH")
-        else:
-            init_env_file_path = env_file_path
+        init_dbt_project_dir = os.getenv("DBT_PROJECT_DIR")
+        init_dash_path = os.getenv("DASHBOARDS_PATH", None)
 
         initiate_create_db(
             superset_url=init_superset_url,
@@ -168,10 +173,15 @@ def initiate(env_file_path=None):
         #     superset_access_token=init_superset_access_token
         # )
 
-        initate_create_dashboards(
-            env_file_path=init_env_file_path,
-            dashboard_file_path=init_dash_path,
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token)
+        if init_dash_path is not None:
+
+            initiate_create_dashboards(
+                env_file_path=init_env_file_path,
+                dashboard_file_path=init_dash_path,
+                superset_url=init_superset_url,
+                superset_access_token=init_superset_access_token
+            )
+        else:
+            logging.info("SKIPPED CREATE DASHBOARDS")
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
