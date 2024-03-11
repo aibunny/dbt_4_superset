@@ -3,6 +3,7 @@ import os
 import zipfile
 import yaml
 
+
 from typing import List
 
 from .create_db import load_env_variables
@@ -124,23 +125,24 @@ def zip_updated_dashboards(dashboard_paths: List[str], dashboard_file_path: str)
     zipped_dashboard_files = []
 
     try:
-        parent_dir = os.path.dirname(dashboard_file_path)
-        parent_dir = os.path.join(parent_dir, 'updated_dashboards')
+        parent_dir = os.path.join(dashboard_file_path, 'updated_dashboards')
         os.makedirs(parent_dir, exist_ok=True)
 
-        for path in dashboard_paths:
-            dashboard_name = os.path.basename(path)
+        for dash in dashboard_paths:
+            dashboard_name = os.path.basename(dash)
             zip_dash_name = f"{dashboard_name}_updated.zip"
             zip_filepath = os.path.join(parent_dir, zip_dash_name)
 
             with zipfile.ZipFile(zip_filepath, "w") as zip_file:
-                for root, dirs, files in os.walk(path):
+                for root, dirs, files in os.walk(dash):
                     for file in files:
                         file_path = os.path.join(root, file)
-                        arcname = os.path.relpath(file_path, path)
+                        arcname = os.path.join(
+                            dashboard_name, os.path.relpath(file_path, dash))
                         zip_file.write(file_path, arcname)
 
             zipped_dashboard_files.append(zip_filepath)
+            print(zip_filepath)
 
         logging.info("All files Zipped successfully")
         return zipped_dashboard_files

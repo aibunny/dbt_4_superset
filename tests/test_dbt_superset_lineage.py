@@ -1,4 +1,4 @@
-from dbt_4_superset import __version__
+from smartcollect-lineage import __version__
 
 
 def test_version():

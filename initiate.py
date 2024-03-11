@@ -2,11 +2,11 @@ import requests
 import os
 import logging
 from dotenv import load_dotenv
-from dbt_4_superset.create_db import main as create_db_main
-from dbt_4_superset.create_dashboards import main as create_dashboards_main
-from dbt_4_superset.push_descriptions import main as push_descriptions_main
-from dbt_4_superset.push_metrics import main as push_metrics_main
-from dbt_4_superset.create_public_role_permissions import main as create_public_role_permissions_main
+from smartcollect_lineage.create_db import main as create_db_main
+from smartcollect_lineage.create_dashboards import main as create_dashboards_main
+from smartcollect_lineage.push_descriptions import main as push_descriptions_main
+from smartcollect_lineage.push_metrics import main as push_metrics_main
+from smartcollect_lineage.create_public_role_permissions import main as create_public_role_permissions_main
 
 load_dotenv()
 
@@ -145,34 +145,34 @@ def initiate(env_file_path=None):
         else:
             init_env_file_path = env_file_path
 
-        initiate_create_db(
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token,
-            env_file_path=init_env_file_path
-        )
+        # initiate_create_db(
+        #     superset_url=init_superset_url,
+        #     superset_access_token=init_superset_access_token,
+        #     env_file_path=init_env_file_path
+        # )
 
-        initiate_push_metrics(
-            superset_access_token=init_superset_access_token,
-            superset_url=init_superset_url,
-            dbt_project_dir=init_dbt_project_dir
-        )
+        # initiate_push_metrics(
+        #     superset_access_token=init_superset_access_token,
+        #     superset_url=init_superset_url,
+        #     dbt_project_dir=init_dbt_project_dir
+        # )
 
-        initiate_push_descriptions(
-            dbt_project_dir=init_dbt_project_dir,
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token
-        )
+        # initiate_push_descriptions(
+        #     dbt_project_dir=init_dbt_project_dir,
+        #     superset_url=init_superset_url,
+        #     superset_access_token=init_superset_access_token
+        # )
 
         # initiate_create_public_role_permissions(
         #     superset_url=init_superset_url,
         #     superset_access_token=init_superset_access_token
         # )
 
-        # initate_create_dashboards(
-        #     env_file_path=init_env_file_path,
-        #     dashboard_file_path=init_dash_path,
-        #     superset_url=init_superset_url,
-        #     superset_access_token=init_superset_access_token)
+        initate_create_dashboards(
+            env_file_path=init_env_file_path,
+            dashboard_file_path=init_dash_path,
+            superset_url=init_superset_url,
+            superset_access_token=init_superset_access_token)
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
 
