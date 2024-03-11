@@ -145,28 +145,28 @@ def initiate(env_file_path=None):
         else:
             init_env_file_path = env_file_path
 
-        # initiate_create_db(
-        #     superset_url=init_superset_url,
-        #     superset_access_token=init_superset_access_token,
-        #     env_file_path=init_env_file_path
-        # )
+        initiate_create_db(
+            superset_url=init_superset_url,
+            superset_access_token=init_superset_access_token,
+            env_file_path=init_env_file_path
+        )
 
-        # initiate_push_metrics(
-        #     superset_access_token=init_superset_access_token,
-        #     superset_url=init_superset_url,
-        #     dbt_project_dir=init_dbt_project_dir
-        # )
+        initiate_push_metrics(
+            superset_access_token=init_superset_access_token,
+            superset_url=init_superset_url,
+            dbt_project_dir=init_dbt_project_dir
+        )
 
-        # initiate_push_descriptions(
-        #     dbt_project_dir=init_dbt_project_dir,
-        #     superset_url=init_superset_url,
-        #     superset_access_token=init_superset_access_token
-        # )
+        initiate_push_descriptions(
+            dbt_project_dir=init_dbt_project_dir,
+            superset_url=init_superset_url,
+            superset_access_token=init_superset_access_token
+        )
 
-        # initiate_create_public_role_permissions(
-        #     superset_url=init_superset_url,
-        #     superset_access_token=init_superset_access_token
-        # )
+        initiate_create_public_role_permissions(
+            superset_url=init_superset_url,
+            superset_access_token=init_superset_access_token
+        )
 
         initate_create_dashboards(
             env_file_path=init_env_file_path,
