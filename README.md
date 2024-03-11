@@ -2,8 +2,10 @@
 
 Installation
 
+* The GITHUB_USER and GITHUB_TOKEN should be provided as environment variables
+
 ```bash
-pip install smartcollect-lineage
+pip install git+https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/crafted-systems/smartcollect-lineage.git
 ```
 
 ## Usage
@@ -71,7 +73,7 @@ $ smartc-lineage push-descriptions https://mysuperset.mycompany.com  # Push desc
 
 This command creates a database on superset and it's associated datasets which should be available on the specified schema
 
-USAGE: 
+USAGE:
 
 this command takes requires the superset instance url and an env file path containing the database credentials and details as shown in [env sample](.env.sample)
 
@@ -82,7 +84,7 @@ smartcollect-lineage create-db https://dash.lab.co.ke  /home/aibunny/crafted/lin
 
 ## Push metrics
 
-This command pushes metrics from dbt to superset 
+This command pushes metrics from dbt to superset
 
 USAGE:
 
@@ -124,7 +126,7 @@ smartcollect-lineage push-metrics https://dash.lab.co.ke  --dbt-project-dir /hom
 
 ## Create Dashboards
 
-This command creates dashboards on superset 
+This command creates dashboards on superset
 
 Usage:
 
