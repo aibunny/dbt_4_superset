@@ -160,7 +160,3 @@ The command takes in the `.env` file path which should contain all values show i
 ```bash
 smartcollect-linage initiate /home/aibunny/.env
 ```
-
-## License
-
-Licensed under the MIT license (see [LICENSE.md](LICENSE.md) file for more details).
