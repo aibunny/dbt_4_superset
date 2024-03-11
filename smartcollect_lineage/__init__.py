@@ -4,6 +4,7 @@ from .push_descriptions import main as push_descriptions_main
 from .push_metrics import main as push_metrics_main
 from .create_db import main as create_db_main
 from .create_dashboards import main as create_dashboard_main
+from .initiate import initiate
 app = typer.Typer()
 
 
@@ -158,6 +159,16 @@ def create_dashboard(
     create_dashboard_main(
         env_file_path, dashboards_file_path, superset_url,
         superset_access_token, superset_refresh_token)
+
+
+@app.command()
+def initiate(
+    env_file_path: str = typer.Argument(
+        '.',
+        help=" path to env file."
+    )
+):
+    initiate(env_file_path=env_file_path)
 
 
 if __name__ == '__main__':

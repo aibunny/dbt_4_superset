@@ -1,14 +1,14 @@
-# dbt-4-superset
+# Smartcollect-lineage
 
 Installation
 
-```
-pip install dbt-superset-lineage
+```bash
+pip install smartcollect-lineage
 ```
 
 ## Usage
 
-`dbt-superset-lineage` comes with a few basic commands: `pull-dashboards` , `push-metrics` and `push-descriptions `. The documentation for the individual commands can be shown by using the `--help` option.
+`dbt-superset-lineage` comes with a few basic commands: `pull-dashboards`, create-dashboards, create-db,  `push-metrics` and `push-descriptions `. The documentation for the individual commands can be shown by using the `--help` option.
 
 It includes a wrapper for [Superset API](https://superset.apache.org/docs/rest-api), one only needs to provide
 `SUPERSET_ACCESS_TOKEN`/`SUPERSET_REFRESH_TOKEN` (obtained via `/security/login`)
@@ -36,7 +36,7 @@ references to dbt sources and models, making them visible both separately and as
 $ cd jaffle_shop
 $ dbt compile  # Compile project to create manifest.json
 $ export SUPERSET_ACCESS_TOKEN=<TOKEN>
-$ dbt-superset-lineage pull-dashboards https://mysuperset.mycompany.com  # Pull dashboards from Superset to /models/exposures/superset_dashboards.yml
+$ smartcollect-lineage pull-dashboards https://mysuperset.mycompany.com  # Pull dashboards from Superset to /models/exposures/superset_dashboards.yml
 $ dbt docs generate # Generate dbt docs
 $ dbt docs serve # Serve dbt docs
 ```
@@ -47,7 +47,7 @@ $ dbt docs serve # Serve dbt docs
 
 ### Push descriptions
 
-Push model and column descriptions from your dbt docs to Superset as plain text so that they could be viewed
+Push model and column descriptions and labels from your dbt docs to Superset as plain text so that they could be viewed
 in Superset when creating charts.
 
 **N.B.**:
@@ -62,10 +62,102 @@ in Superset when creating charts.
 $ cd jaffle_shop
 $ dbt compile  # Compile project to create manifest.json
 $ export SUPERSET_ACCESS_TOKEN=<TOKEN>
-$ dbt-superset-lineage push-descriptions https://mysuperset.mycompany.com  # Push descrptions from dbt docs to Superset
+$ smartc-lineage push-descriptions https://mysuperset.mycompany.com  # Push descrptions from dbt docs to Superset
 ```
 
 ![Column descriptions in Superset](assets/descriptions.png)
+
+## Create DB
+
+This command creates a database on superset and it's associated datasets which should be available on the specified schema
+
+USAGE: 
+
+this command takes requires the superset instance url and an env file path containing the database credentials and details as shown in [env sample](.env.sample)
+
+```bash
+smartcollect-lineage create-db https://dash.lab.co.ke  /home/aibunny/crafted/lineage/dbt-4-superset/.env
+
+```
+
+## Push metrics
+
+This command pushes metrics from dbt to superset 
+
+USAGE:
+
+* The command requires the superset instance url and the dbt project path
+
+```bash
+smartcollect-lineage push-metrics https://dash.lab.co.ke  --dbt-project-dir /home/aibunny/crafted/dbt/dbt-smartcollect-pro/
+
+```
+
+**NB:**
+
+* This command assumes that all metrics have been tested and should be used with caution since it takes an unconventional approach requiring you to create the metrics on your model description on dbt in this format. Ensure the `expressions` are in Upper Case SQL format as superset runs into errors when done differently
+
+```yaml
+
+ meta:
+      superset_metrics:
+        - name: Total Files
+          label: Total Files
+          expression: COUNT(id)
+          type: count
+
+        - name: Total Principal
+          label: Total Principal
+          expression: SUM(principal_amount)
+          type: sum
+
+        - name: Total Arrears
+          label: Total Arrears
+          expression: SUM(arrears)
+          type: sum
+
+        - name: Total Balance
+          label: Total Balance
+          expression: SUM(balance)
+          type: sum
+```
+
+## Create Dashboards
+
+This command creates dashboards on superset 
+
+Usage:
+
+* The command expects the url for the superset instance, the `.env` file path which should contain the db URI as in [.env.sample](.env.sample) and the location to where the dashboards to be created are
+
+```bash
+create-dashboard https://dash.lab.co.ke  /home/aibunny/crafted/lineage/smartcollect-lineage/.env /home/aibunny/Downloads/
+
+```
+
+**NB:**
+
+* Ensure that all dashboards are in the same directory
+
+## Initiate
+
+This command runs all the above commands in this order:
+
+```bash
+>>create-db
+>>push-metrics
+>>push-descriptions
+>>create-dashboards
+
+```
+
+Usage:
+
+The command takes in the `.env` file path which should contain all values show in [.env.sample](.env.sample)
+
+```bash
+smartcollect-linage initiate /home/aibunny/.env
+```
 
 ## License
 

@@ -60,27 +60,34 @@ def create_dataset(superset: Superset, db_id: int):
     logging.info("Creating Datasets on superset")
 
     tables = os.getenv("TABLES")
-    tables = tables.split(',')
 
-    logging.info("Creating %s of the tables found on Superset", len(tables))
+    if tables is not None:
+        tables = tables.split(',')
 
-    for name in tables:
-        payload = {
-            "always_filter_main_dttm": False,
-            "database": db_id,  # database id on superset
-            "is_managed_externally": True,
-            "normalize_columns": False,
-            "owners": [
-                1
-            ],
-            "schema": os.getenv("DB_SCHEMA", "analytics"),
-            "table_name": name
-        }
+        logging.info(
+            "Creating %s of the tables found on Superset", len(tables))
 
-        superset.request(
-            'POST',
-            "/dataset/",
-            json=payload
+        for name in tables:
+            payload = {
+                "always_filter_main_dttm": False,
+                "database": db_id,  # database id on superset
+                "is_managed_externally": True,
+                "normalize_columns": False,
+                "owners": [
+                    1
+                ],
+                "schema": os.getenv("DB_SCHEMA", "analytics"),
+                "table_name": name
+            }
+
+            superset.request(
+                'POST',
+                "/dataset/",
+                json=payload
+            )
+    else:
+        logging.info(
+            "skipping creating datasets since no tables were provided in the .env"
         )
 
 

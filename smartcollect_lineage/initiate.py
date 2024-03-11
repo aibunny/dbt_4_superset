@@ -2,11 +2,11 @@ import requests
 import os
 import logging
 from dotenv import load_dotenv
-from smartcollect_lineage.create_db import main as create_db_main
-from smartcollect_lineage.create_dashboards import main as create_dashboards_main
-from smartcollect_lineage.push_descriptions import main as push_descriptions_main
-from smartcollect_lineage.push_metrics import main as push_metrics_main
-from smartcollect_lineage.create_public_role_permissions import main as create_public_role_permissions_main
+from .create_db import main as create_db_main
+from .create_dashboards import main as create_dashboards_main
+from .push_descriptions import main as push_descriptions_main
+from .push_metrics import main as push_metrics_main
+from .create_public_role_permissions import main as create_public_role_permissions_main
 
 load_dotenv()
 
@@ -163,10 +163,10 @@ def initiate(env_file_path=None):
             superset_access_token=init_superset_access_token
         )
 
-        initiate_create_public_role_permissions(
-            superset_url=init_superset_url,
-            superset_access_token=init_superset_access_token
-        )
+        # initiate_create_public_role_permissions(
+        #     superset_url=init_superset_url,
+        #     superset_access_token=init_superset_access_token
+        # )
 
         initate_create_dashboards(
             env_file_path=init_env_file_path,
@@ -175,6 +175,3 @@ def initiate(env_file_path=None):
             superset_access_token=init_superset_access_token)
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)
-
-
-initiate()
