@@ -1,10 +1,10 @@
 with refined_debtors as (
     select
         id as debtor_id,
-        names,
+        coalesce(names,'unknown') as names,
         debtor_type,
-        gender,
-        score
+        coalesce(gender,'unknown') as gender,
+        coalesce(score,0) as score
     from 
         {{ ref('stg_smartcollect__debtors') }}
     where 

@@ -36,7 +36,7 @@ with refined_casefiles as (
         closed,
         traction,
         traction_date,
-        score,
+        coalesce(score,0) as score,
         debtor_id,
         loan_id,
         organization_id, 
