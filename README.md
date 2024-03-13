@@ -101,7 +101,14 @@ smartcollect-lineage push-metrics https://dash.lab.co.ke  --dbt-project-dir /hom
 
 ```yaml
 
- meta:
+ models:
+ - name: active_portfolio
+   description:
+      #some description
+   columns:
+      - name: some_comlumn_name
+      # more columns .....
+   meta:
       superset_metrics:
         - name: Total Files
           label: Total Files
