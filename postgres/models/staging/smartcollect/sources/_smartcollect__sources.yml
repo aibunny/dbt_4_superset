@@ -1,8 +1,8 @@
 version: 2
 
-sources: 
+sources:
   - name: smartcollect
-    schema: public
+    schema: smartcollect
     tables:
       - name: case_files
       - name: debtors
@@ -35,4 +35,3 @@ sources:
       - name: sms_campaigns
       - name: sms_templates
       - name: notes
-      
