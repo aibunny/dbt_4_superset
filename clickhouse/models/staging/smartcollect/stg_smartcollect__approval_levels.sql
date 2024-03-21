@@ -3,7 +3,7 @@ select
     organization_id,
     module as approval_level_module,
     description as approval_level_description,
-    approval_name as approval_level_name,
+    approval_name as approval_level,
     approval_level,
     is_required,
     created_by,

@@ -3,7 +3,7 @@
 with branches as(
     select
         id as branch_id,
-        title as branch_name,
+        title as branch,
         active as is_active,
         branch_manager,
         organization_id,
