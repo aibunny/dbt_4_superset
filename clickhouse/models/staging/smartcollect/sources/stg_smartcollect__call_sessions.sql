@@ -18,7 +18,7 @@ select
     session_end_reason_text as call_session_end_reason_text,
     disposed as call_session_is_disposed,
     disposed_action as call_session_disposed_action,
-    deleted_by::timestamp as deleted_by,
+    deleted_by,
     created_at::timestamp as created_at,
     updated_at::timestamp as updated_at,
     deleted_at::timestamp as deleted_at

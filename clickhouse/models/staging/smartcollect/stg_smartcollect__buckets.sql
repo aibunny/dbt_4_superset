@@ -11,9 +11,9 @@ with buckets as(
         coalesce(upper_limit,0) as upper_limit,
         active as is_active,
         days_range,
-        created_by::timestamp as created_by,
-        updated_by::timestamp as updated_by,
-        deleted_by::timestamp as deleted_by,
+        created_by,
+        updated_by,
+        deleted_by,
         created_at::timestamp as created_at,
         updated_at::timestamp as updated_at,
         deleted_at::timestamp as deleted_at
