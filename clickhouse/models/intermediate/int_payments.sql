@@ -16,7 +16,7 @@ with payments as (
     from 
         {{ref('stg_smartcollect__payments')}}
     where 
-        deleted_at is null and is_confirmed is TRUE and is_reversed is FALSE
+        deleted_at is null and is_confirmed = 1 and is_reversed = 0
 )
 
 select * from payments 

@@ -7,7 +7,7 @@
 
 with active_portfolio as (
     select
-        cf.id as id,
+        cf.cfid as id,
         cf.account_state as account_state,
         cf.principal_amount as principal_amount,
         cf.loan_amount as loan_amount,
@@ -95,7 +95,7 @@ with active_portfolio as (
     left join {{ ref('int_delinquency_reasons')}} dr on cf.delinquency_reason_id = dr.delinquency_reason_id
     left join {{ ref('int_dispute_reasons') }} dsr on cf.dispute_reason_id = dsr.dispute_reason_id
 
-    where cf.closed is FALSE 
+    where cf.closed = 0
 
 )
 

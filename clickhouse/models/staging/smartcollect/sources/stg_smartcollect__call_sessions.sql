@@ -1,0 +1,26 @@
+select
+    id as call_session_id,
+    call_id,
+    call_type,
+    recording_id,
+    pbx_id,
+    case_file_id,
+    user_id,
+    organization_id,
+    campaign_id,
+    session_start::timestamp as call_session_start_date_time,
+    session_end::timestamp as call_session_end_date_time,
+    status as call_session_status,
+    caller as call_session_caller,
+    callee as call_session_callee,
+    dial_type as call_session_dial_type,
+    session_end_reason_code as call_session_end_reason_code,
+    session_end_reason_text as call_session_end_reason_text,
+    disposed as call_session_is_disposed,
+    disposed_action as call_session_disposed_action,
+    deleted_by::timestamp as deleted_by,
+    created_at::timestamp as created_at,
+    updated_at::timestamp as updated_at,
+    deleted_at::timestamp as deleted_at
+    
+from {{ source('smartcollect', 'call_campaigns')}}

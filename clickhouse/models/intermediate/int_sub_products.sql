@@ -6,7 +6,7 @@ with refined_sub_products as (
         description as sub_product_description
     from
         {{ ref('stg_smartcollect__sub_products')}}
-    where active is TRUE and deleted_at is null
+    where active = 1 and deleted_at is null
 )
 
 select * from refined_sub_products

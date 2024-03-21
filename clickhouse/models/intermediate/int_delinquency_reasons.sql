@@ -6,7 +6,7 @@ with refined_delinquency_reason as (
     from 
         {{ ref("stg_smartcollect__delinquency_reasons") }}
     where 
-        deleted_at is null and active = TRUE
+        deleted_at is null and active = 1
 )
 
 select * from refined_delinquency_reason 

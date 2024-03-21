@@ -9,7 +9,7 @@ with refined_contact_statuses as (
     from 
         {{ ref('stg_smartcollect__contact_statuses')}}
     where 
-        deleted_at is null  and active is TRUE
+        deleted_at is null  and active = 1
 )
 
 select * from refined_contact_statuses 

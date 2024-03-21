@@ -11,7 +11,7 @@ with buckets as (
     from 
         {{ ref('stg_smartcollect__buckets') }}
     where 
-        deleted_at is null and active is TRUE
+        deleted_at is null and active = 1
 )
 
 select * from buckets 

@@ -7,7 +7,7 @@ with refined_collection_sub_stages as (
     from 
         {{ref('stg_smartcollect__collection_sub_stages')}}
     where
-        active is TRUE and deleted_at is null
+        active = 1 and deleted_at is null
 )
 
 select * from refined_collection_sub_stages

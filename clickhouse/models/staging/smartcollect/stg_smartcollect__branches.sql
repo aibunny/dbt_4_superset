@@ -1,9 +1,20 @@
 --- branches
 
 with branches as(
-    SELECT 
-        *
-    FROM
+    select
+        id as branch_id,
+        title as branch_name,
+        active as is_active,
+        branch_manager,
+        organization_id,
+        created_by::timestamp as created_by,
+        updated_by::timestamp as updated_by,
+        deleted_by::timestamp as deleted_by,
+        created_at::timestamp as created_at,
+        updated_at::timestamp as updated_at,
+        deleted_at::timestamp as deleted_at
+    
+    from
         {{source('smartcollect', 'branches')}}
 )
 

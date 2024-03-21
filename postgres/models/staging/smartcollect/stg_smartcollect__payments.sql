@@ -3,7 +3,7 @@
 with payments as (
 select
     id,
-    COALESCE(amount, 0.00) AS amount,
+    COALESCE(amount, 0) AS amount,
     payment_date,
     payment_method,
     payment_type,
@@ -21,8 +21,8 @@ select
     sub_product_id,
     owner_type,
     owner_id,
-    COALESCE(balance_before, 0.0) AS balance_before,
-    COALESCE(balance_after, 0.0) AS balance_after,
+    COALESCE(balance_before, 0) AS balance_before,
+    COALESCE(balance_after, 0) AS balance_after,
     created_by,
     updated_by,
     deleted_by,

@@ -7,7 +7,7 @@ with refined_sms_campaigns as (
         runs_to
     from 
         {{ref('stg_smartcollect__sms_campaigns')}}
-    where active is TRUE and deleted_at is null
+    where active = 1 and deleted_at is null
 )
 
 select * from refined_sms_campaigns

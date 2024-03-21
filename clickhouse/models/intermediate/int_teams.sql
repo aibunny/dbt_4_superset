@@ -10,7 +10,7 @@ with teams as (
     from 
         {{ ref('stg_smartcollect__teams') }}
     where 
-        deleted_at is null and active is True
+        deleted_at is null and active = 1
 )
 
 

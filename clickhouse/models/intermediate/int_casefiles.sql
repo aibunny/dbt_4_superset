@@ -69,4 +69,4 @@ with refined_casefiles as (
         deleted_at is null
 )
 
-select * from case_files 
+select * from refined_casefiles 

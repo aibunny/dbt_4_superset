@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: smartcollect
-    schema: public
+    schema: smartcollect
     tables:
       - name: case_files
       - name: debtors

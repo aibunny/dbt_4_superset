@@ -18,7 +18,7 @@ with debt_types as (
         created_at,
         updated_at,
         deleted_at,
-        COALESCE(score, 0.0) AS score
+        COALESCE(score, 0) AS score
     from
         {{source('smartcollect', 'debtors')}}
 )

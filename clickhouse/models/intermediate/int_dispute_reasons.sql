@@ -6,7 +6,7 @@ with refined_dispute_reasons as (
     from
         {{ ref('stg_smartcollect__dispute_reasons')}}
     where 
-        deleted_at is null and active is TRUE
+        deleted_at is null and active = 1
 )
 
 select * from refined_dispute_reasons 

@@ -6,7 +6,7 @@ with refined_countries as (
     from
         {{ref('stg_smartcollect__countries')}}
     where 
-        deleted_at is null and active is TRUE
+        deleted_at is null and active = 1
 )
 
 select * from refined_countries

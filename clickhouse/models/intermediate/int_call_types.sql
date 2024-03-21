@@ -6,7 +6,7 @@ with refined_call_types as (
         created_by
     from 
         {{ref('stg_smartcollect__call_types')}}
-    where active is TRUE and deleted_at is null
+    where active = 1 and deleted_at is null
 )
 
 select * from refined_call_types

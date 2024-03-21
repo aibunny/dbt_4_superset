@@ -6,7 +6,7 @@ with refined_contact_types as (
     from 
         {{ ref('stg_smartcollect__contact_types')}}
     where 
-        deleted_at is null and active is True
+        deleted_at is null and active = 1
 )
 
 select * from refined_contact_types 

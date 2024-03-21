@@ -6,7 +6,7 @@ with debt_types as (
     from
         {{ ref('stg_smartcollect__debt_types')}}
     where 
-        deleted_at is null and active is TRUE
+        deleted_at is null and active = 1
 )
 
 select * from debt_types 
