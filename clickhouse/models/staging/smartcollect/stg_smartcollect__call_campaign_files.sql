@@ -12,4 +12,4 @@ select
     is_locked call_campaign_file_is_locked
 
 from    
-    {{source('smartcollect', 'stg_smartcollect__call_campaign_files')}}
+    {{source('smartcollect', 'call_campaign_files')}}

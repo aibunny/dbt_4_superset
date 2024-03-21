@@ -11,4 +11,4 @@ select
     created_at::timestamp as created_at,
     deleted_at::timestamp as deleted_at
     
-from {{ source('smartcollect', 'actions')}}
+from {{ source('smartcollect', 'actions_taken')}}

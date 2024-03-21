@@ -6,6 +6,7 @@ sources:
       - name: actions_taken
       - name: addresses
       - name: approval_levels
+      - name: approvals
       - name: bpmn_workflow_processes
       - name: branches
       - name: buckets
@@ -29,6 +30,7 @@ sources:
       - name: closure_reasons
       - name: collaterals
       - name: collection_stages
+      - name: collection_strategies
       - name: collection_sub_stages
       - name: contact_statuses
       - name: contact_types
@@ -65,6 +67,7 @@ sources:
       - name: phones
       - name: products
       - name: ptps
+      - name: received_sms
       - name: recommendations
       - name: related_cases
       - name: role_user
