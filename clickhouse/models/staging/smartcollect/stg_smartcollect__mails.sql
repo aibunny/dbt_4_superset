@@ -16,7 +16,7 @@ select
     target,
     batch_no,
     attachment_path,
-    scheduled_at::timestamp as scheduled_at,
+    case when scheduled_at is not null then scheduled_at::timestamp else scheduled_at end as scheduled_at,
     sent,
     send_failure_reason,
     sent_at::timestamp as sent_at,

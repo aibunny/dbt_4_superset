@@ -18,7 +18,7 @@ select
     approved_by,
     updated_by,
     created_at::timestamp as created_at,
-    approved_at::timestamp as approved_at,
+    case when approved_at is not null then approved_at::timestamp else approved_at end as approved_at,
     case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
 
 
