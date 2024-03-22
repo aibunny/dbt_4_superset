@@ -3,7 +3,7 @@ select
     comment,
     status,
     maker_checker_task_id,
-    created_by as comment_created_by,
-    created_at::timestamp as comment_created_at
+    created_by as created_by,
+    created_at::timestamp as created_at
 from
     {{ source('smartcollect', 'maker_checker_comments') }}

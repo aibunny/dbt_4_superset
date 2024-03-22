@@ -7,7 +7,8 @@ with organizations as (
         names as organization_names,
         tagline as organization_tagline,
         agency_id as agency_id,
-        active as organization_active,
+        is_primary as organization_is_primary,
+        organization_type_id,
         address as organization_address,
         phone as organization_phone,
         email as organization_email,
@@ -24,14 +25,13 @@ with organizations as (
         last_edited_time as organization_last_edited_time,
         created_by,
         updated_by,
-        deleted_by,
         created_at::timestamp as created_at,
-        updated_at::timestamp as updated_at,
-        deleted_at::timestamp as eleted_at,
-        is_primary as organization_is_primary,
-        organization_type_id
+        updated_at::timestamp as updated_at
+
     from
         {{ source('smartcollect', 'organizations') }}
+    where
+        deleted_at is null and active = 1
 )
 
 select * from organizations

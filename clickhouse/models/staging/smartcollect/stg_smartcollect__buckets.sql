@@ -9,17 +9,17 @@ with buckets as(
         sub_product_id,
         coalesce(lower_limit, 0) as lower_limit,
         coalesce(upper_limit,0) as upper_limit,
-        active as is_active,
         days_range,
         created_by,
         updated_by,
-        deleted_by,
         created_at::timestamp as created_at,
-        updated_at::timestamp as updated_at,
-        deleted_at::timestamp as deleted_at
+        updated_at::timestamp as updated_at
         
     from
         {{source('smartcollect', 'buckets')}}
+    
+    where
+        deleted_at is null and active = 1
 )
 
 select * from buckets

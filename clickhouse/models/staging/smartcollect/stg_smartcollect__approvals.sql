@@ -10,11 +10,11 @@ select
     assignees as approval_assignees,
     claimed as is_approval_claimed,
     claimed_by::timestamp as created_by,
-    deleted_by,
-    created_at::timestamp as created_at,    
-    deleted_at::timestamp as deleted_at
+    created_at::timestamp as created_at
     
 from {{ source('smartcollect', 'approvals')}}
+where
+    deleted_at is null 
 
 
 #TODO: Flatted approval assignees

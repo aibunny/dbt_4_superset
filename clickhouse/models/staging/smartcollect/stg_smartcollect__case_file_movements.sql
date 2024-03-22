@@ -8,9 +8,9 @@ select
     extra_attributes,
     created_by,
     approved_by,
-    deleted_by,
     created_at::timestamp as created_at,
-    approved_at::timestamp as created_at,
-    deleted_at::timestamp as deleted_at
+    approved_at::timestamp as approved_at
 from 
     {{ source('smartcollect', 'case_file_movements')}}
+where
+    deleted_at is null

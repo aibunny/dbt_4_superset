@@ -11,7 +11,9 @@ select
     processed,
     created_at,
     updated_at,
-    deleted_at,
     timestamp::timestamp as imestamp,
     received_at::timestamp as received_received_at
-from {{ source('smartcollect', 'received_sms') }}
+from 
+    {{ source('smartcollect', 'received_sms') }}
+where
+    deleted_at is null

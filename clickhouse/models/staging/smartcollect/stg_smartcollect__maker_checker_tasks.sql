@@ -20,10 +20,11 @@ select
     deadline as maker_checker_task_deadline,
     created_by,
     updated_by,
-    deleted_by,
     created_at::timestamp as created_at,
     updated_at::timestamp as updated_at,
-    deleted_at::timestamp as deleted_at,
     status_date::timestamp as status_date
 
 from {{ source('smartcollect', 'maker_checker_tasks') }}
+
+where
+    deleted_at is null

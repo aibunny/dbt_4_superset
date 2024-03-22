@@ -7,9 +7,10 @@ select
     addressable_type,
     created_by,
     updated_by,
-    deleted_by,
-    created_at::timestamp as created_at,
-    deleted_at::timestamp as deleted_at
+    created_at::timestamp as created_at
     
 from {{ source('smartcollect', 'addresses')}}
+
+where
+    deleted_at is null
 

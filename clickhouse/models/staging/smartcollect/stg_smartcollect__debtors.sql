@@ -14,13 +14,13 @@ with debt_types as (
         COALESCE(external_id, '') AS external_id,
         created_by,
         updated_by,
-        deleted_by,
         created_at,
         updated_at,
-        deleted_at,
         COALESCE(score, 0)  AS score
     from
         {{source('smartcollect', 'debtors')}}
+    where
+        deleted_at is null
 )
 
 select * from debt_types

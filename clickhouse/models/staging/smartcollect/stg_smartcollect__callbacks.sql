@@ -8,9 +8,11 @@ select
     status as callback_status,
     notes as callback_notes,
     created_at::timestamp as created_at,
-    updated_at::timestamp as updated_at,
-    deleted_at::timestamp as deleted_at
+    updated_at::timestamp as updated_at
     
 from
     {{source('smartcollect', 'callbacks')}}
+
+where
+    deleted_at is null
 

@@ -22,9 +22,9 @@ select
     sent_at::timestamp as sent_at,
     created_by as mail_created_by,
     updated_by as mail_updated_by,
-    deleted_by as mail_deleted_by,
     created_at::timestamp as mail_created_at,
-    updated_at::timestamp as mail_updated_at,
-    deleted_at::timestamp as mail_deleted_at
+    updated_at::timestamp as mail_updated_at
 from
     {{ source('smartcollect', 'mails') }}
+where
+    deleted_at is null

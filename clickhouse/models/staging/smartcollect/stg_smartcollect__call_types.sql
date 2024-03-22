@@ -6,12 +6,13 @@ with call_types as (
         tag as call_type_tag,
         created_by,
         updated_by,
-        deleted_by,
-        created_at::timestamp as created_at,
-        deleted_at::timestamp as deleted_at
+        created_at::timestamp as created_at
     
     from
         {{source('smartcollect','call_types')}}
+
+    where
+        deleted_at is null
 )
 
 select * from call_types

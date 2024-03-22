@@ -11,10 +11,11 @@ select
     object_type_id,
     created_by as note_created_by,
     updated_by as note_updated_by,
-    deleted_by as note_deleted_by,
     created_at::timestamp as note_created_at,
-    updated_at::timestamp as note_updated_at,
-    deleted_at::timestamp as note_deleted_at
+    updated_at::timestamp as note_updated_at
+
 from
     {{ source('smartcollect', 'notes') }}
+where
+    deleted_at is null 
 

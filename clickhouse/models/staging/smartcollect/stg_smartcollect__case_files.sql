@@ -78,7 +78,6 @@ with case_files as (
         created_by,
         updated_by,
         closed_by,
-        deleted_by,
         closed_at::timestamp as closed_at,
         reactivated_at::timestamp as reactivated_at,
         last_synced_at::timestamp as last_synced_at,
@@ -90,11 +89,12 @@ with case_files as (
         workflow_task_id,
         workflow_task_type,
         created_at:timestamp as created_at,
-        updated_at::timestamp as updated_at,
-        deleted_at::timestamp as deleted_at
+        updated_at::timestamp as updated_at        
 
     from
         {{ source('smartcollect', 'case_files') }} 
+    where
+        deleted_at is null
 )
 
 select * from case_files
