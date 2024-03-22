@@ -1,10 +1,10 @@
 select
-    id as bpmn_workflow_id
-    title as bpmn_workflow_title,
+    id as bpmn_workflow_id,
+    title as bpmn_workflow_name,
     description as bpmn_workflow_description,
     module as bpmn_workflow_module,
     trigger as bpmn_workflow_trigger,
-    is_global as is_bpmn_workflow_global
+    is_global as is_bpmn_workflow_global,
     organization_id,
     process_id as bpmn_workflow_process_id,
     workflow_engine as bpmn_workflow_engine,
@@ -14,7 +14,8 @@ select
     created_by,
     updated_by,
     created_at::timestamp as created_at,
-    updated_at::timestamp as updated_at
+    case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+
     
 from {{ source('smartcollect', 'bpmn_workflow_processes')}}
 

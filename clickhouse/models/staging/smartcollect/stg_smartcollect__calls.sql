@@ -7,9 +7,7 @@ with calls as (
         case_file_id,
         call_campaign_id,
         user_id,
-        pbx_sn as pbx_serial_number,
-        call_id,
-        time_start::timestamp as call_start_date_time
+        time_start::timestamp as call_start_date_time,
         call_from,
         call_to,
         call_duration as call_duration_in_seconds,

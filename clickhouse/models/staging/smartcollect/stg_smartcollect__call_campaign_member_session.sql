@@ -1,5 +1,5 @@
 select
-    id as call_campaign_member_session_id
+    id as call_campaign_member_session_id,
     call_campaign_id,
     user_id,
     is_paused as call_campaign_member_session_is_paused,

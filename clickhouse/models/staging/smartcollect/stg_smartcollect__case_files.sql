@@ -88,8 +88,9 @@ with case_files as (
         COALESCE(score, 0) AS score,
         workflow_task_id,
         workflow_task_type,
-        created_at:timestamp as created_at,
-        updated_at::timestamp as updated_at        
+        created_at::timestamp as created_at,
+        case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+        
 
     from
         {{ source('smartcollect', 'case_files') }} 

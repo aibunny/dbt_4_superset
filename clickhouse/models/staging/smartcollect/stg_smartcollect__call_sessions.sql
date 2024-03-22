@@ -19,9 +19,10 @@ select
     disposed as call_session_is_disposed,
     disposed_action as call_session_disposed_action,
     created_at::timestamp as created_at,
-    updated_at::timestamp as updated_at
+    case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+
     
-from {{ source('smartcollect', 'call_campaigns')}}
+from {{ source('smartcollect', 'call_sessions')}}
 
 where
     deleted_at is null 

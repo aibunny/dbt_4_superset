@@ -1,7 +1,7 @@
 select
     id as casefile_movement_id,
-    move_to_id, -- as move_to_id,
-    move_from_id,
+    moved_to_id, -- as move_to_id,
+    moved_from_id,
     cfid as case_file_id,
     movement_type as casefile_movement_type,
     movement_completed as is_case_file_movement_completed,
