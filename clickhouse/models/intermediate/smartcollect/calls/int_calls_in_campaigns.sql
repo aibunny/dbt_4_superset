@@ -33,6 +33,9 @@ with calls_in_campaigns as(
         {{ref('stg_smartcollect__call_campaigns')}} cc on c.call_campaign_id = cc.call_campaign_id
     left join 
         {{ref('stg_smartcollect__call_callibrations')}} cr on c.call_id = cr.call_id
+    
+    where
+        c.call_campaign_id is not null
 )
 
 select 

@@ -5,7 +5,6 @@ with sms_in_campaigns as (
         s.organization_id as organization_id,
         s.user_id as user_id,
         s.moderator as moderator,
-        s.target as sms_target,
         s.sms_type as sms_type,
         s.scheduled_at as scheduled_at,
         s.approved as sms_approved,
@@ -22,15 +21,13 @@ with sms_in_campaigns as (
         sc.created_by as sms_campaign_created_by,
         sc.created_at as sms_campaign_created_at
 
-
-
-
-
     from
         {{ref('stg_smartcollect__sms')}} s
     left join
         {{ref('stg_smartcollect__sms_campaigns')}} sc on s.sms_campaign_id = sc.sms_campaign_id
 
+    where 
+        s.sms_campaign_id is not null
 )
 
 select * from sms_in_campaigns

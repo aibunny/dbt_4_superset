@@ -23,6 +23,9 @@ with mail_campaigns as(
         {{ref('stg_smartcollect__mails')}} m
     left join
         {{ref('stg_smartcollect__mail_campaigns')}} mc on m.mail_campaign_id = mc.mail_campaign_id
+    
+    where
+        m.mail_campaign_id is not null
 
 )
 
