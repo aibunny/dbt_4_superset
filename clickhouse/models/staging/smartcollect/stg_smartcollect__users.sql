@@ -1,12 +1,25 @@
 --- users
 
 with users as (
-
     select
-        *, 
-        CONCAT(u.first_name, ' ', u.last_name) as full_name
+        id as user_id,
+        concat(upper(first_name), ' ', upper(last_name)) as user_name,
+        upper(title) as user_title,
+        upper(user_type) as user_type,
+        {{ coalesce_to_uuid('organization_id') }},
+        {{ coalesce_to_uuid('branch_id')}},
+        {{ coalesce_to_uuid('team_id')}},
+        created_by,
+        updated_by,
+        created_at,
+        {{ coalesce_to_timestamp('updated_at')}}
+
+        
     from
-        {{source('smartcollect', 'users')}} u
+        {{source('smartcollect', 'users')}} 
+
+    where
+        deleted_at is null and active = 1
 )
 
 select * from users

@@ -8,14 +8,14 @@ with teams as (
         t.team_type as team_type,
         o.organization_name as organization_name,        
         b.branch_name as branch_name,
-        u.full_name as team_leader,
+        u.user_name as team_leader,
         t.created_at,
         t.updated_at
 
     from
         {{ref('stg_smartcollect__teams')}} t
     left join
-        {{ref('stg_smartcollect__users')}} u on t.team_leader = u.id
+        {{ref('stg_smartcollect__users')}} u on t.team_leader = u.user_id
     left join
         {{ref('stg_smartcollect__branches')}} b on t.branch_id = b.branch_id
     left join 
