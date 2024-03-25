@@ -1,6 +1,6 @@
 select
     id as client_contact_id,
-    title as client_contact,
+    upper(title) as client_contact,
     designation as client_contact_designation,
     phone,
     email,

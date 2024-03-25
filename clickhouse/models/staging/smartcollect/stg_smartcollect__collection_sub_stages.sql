@@ -1,7 +1,7 @@
 with collection_sub_stages as (
     select
         id as collection_sub_stage_id,
-        title as collection_sub_stage_name,
+        upper(title) as collection_sub_stage_name,
         description as collection_sub_stage_description,
         tag,
         collection_stage_id,

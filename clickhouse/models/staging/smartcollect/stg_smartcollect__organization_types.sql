@@ -1,6 +1,6 @@
 select
     id as organization_type_id,
-    title as organization_type_title,
+    upper(title) as organization_type_title,
     description as organization_type_description,
     created_by as created_by,
     created_at::timestamp as created_at,

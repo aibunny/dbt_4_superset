@@ -1,7 +1,7 @@
 with sms_campaigns as (
     select
         id as sms_campaign_id,
-        title as sms_campaign_name,
+        upper(title) as sms_campaign_name,
         organization_id,
         description,
         target as sms_campaign_target,

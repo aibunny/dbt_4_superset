@@ -3,7 +3,7 @@
 with organizations as (
     select
         id as organization_id,
-        names as organization_name,
+        upper(names) as organization_name,
         tagline as organization_tagline,
         is_primary as organization_is_primary,
         {{ coalesce_to_uuid('organization_type_id') }},

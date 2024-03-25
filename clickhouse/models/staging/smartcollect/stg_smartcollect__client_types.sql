@@ -1,6 +1,6 @@
 select
     id as client_type_id,
-    title as client_type,
+    upper(title) as client_type,
     description as client_type_description,
     created_by,
     updated_by,

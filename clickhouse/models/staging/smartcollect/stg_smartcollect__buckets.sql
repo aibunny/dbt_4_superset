@@ -3,7 +3,7 @@
 with buckets as(
     select
         id as bucket_id,
-        title as bucket_name,
+        upper(title) as bucket_name,
         description as bucket_description,
         product_id,
         sub_product_id,

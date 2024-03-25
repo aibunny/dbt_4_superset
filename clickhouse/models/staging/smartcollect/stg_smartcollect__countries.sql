@@ -1,7 +1,7 @@
 with countries as (
     select 
         id as country_id,
-        title as country_name,
+        upper(title) as country_name,
         slug as country_slug,
         calling_code as country_calling_code,
         currency_id,

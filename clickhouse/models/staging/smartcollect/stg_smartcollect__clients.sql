@@ -1,6 +1,6 @@
 select
     id as client_id,
-    title as client,
+    upper(title) as client,
     client_type_id,
     country_id,
     branch_id,
