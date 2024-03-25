@@ -3,11 +3,10 @@
 with organizations as (
     select
         id as organization_id,
-        ref_id as organization_ref_id,
         names as organization_name,
         tagline as organization_tagline,
         is_primary as organization_is_primary,
-        organization_type_id as organization_type_id,
+        {{ coalesce_to_uuid('organization_type_id') }},
         address as organization_address,
         phone as organization_phone,
         email as organization_email,
@@ -24,8 +23,8 @@ with organizations as (
         last_edited_time as organization_last_edited_time,
         created_by,
         updated_by,
-        created_at::timestamp as created_at,
-        case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+        {{ coalesce_to_timestamp('created_at')}},
+        {{ coalesce_to_timestamp('updated_at')}}
 
 
     from
