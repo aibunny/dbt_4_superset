@@ -1,9 +1,9 @@
 select
     id as notification_id,
     type as notification_type,
-    notifiable_type,
-    notifiable_id,
-    organization_id,
+    notifiable_type,    
+    {{ coalesce_to_uuid('notifiable_id') }},
+    {{ coalesce_to_uuid('organization_id') }},
     title as notification_title,
     content as notification_content,
     extra_attributes as notification_extra_attributes,

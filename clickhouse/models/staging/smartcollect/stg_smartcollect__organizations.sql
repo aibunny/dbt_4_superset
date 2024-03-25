@@ -4,11 +4,10 @@ with organizations as (
     select
         id as organization_id,
         ref_id as organization_ref_id,
-        names as organization_names,
+        names as organization_name,
         tagline as organization_tagline,
-        agency_id as agency_id,
         is_primary as organization_is_primary,
-        organization_type_id,
+        organization_type_id as organization_type_id,
         address as organization_address,
         phone as organization_phone,
         email as organization_email,

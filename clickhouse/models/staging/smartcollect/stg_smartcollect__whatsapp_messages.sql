@@ -1,7 +1,7 @@
 select
     id as whatsapp_message_id,
-    case_file_id,
-    organization_id,
+    {{ coalesce_to_uuid('case_file_id') }},
+    {{ coalesce_to_uuid('organization_id') }},
     whatsapp_phone_number,
     whatsapp_phone_number_id,
     business_account_id,

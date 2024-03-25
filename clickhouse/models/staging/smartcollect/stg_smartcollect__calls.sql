@@ -3,10 +3,10 @@
 with calls as (
     select
         id as call_id,
-        organization_id,
-        case_file_id,
-        call_campaign_id,
-        user_id,
+        {{ coalesce_to_uuid('organization_id') }},
+        {{ coalesce_to_uuid('case_file_id') }},
+        {{ coalesce_to_uuid('call_campaign_id') }},
+        {{ coalesce_to_uuid('user_id') }},
         time_start as call_start_date_time,
         call_from,
         call_to,

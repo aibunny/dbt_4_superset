@@ -5,7 +5,7 @@ select
     module as bpmn_workflow_module,
     trigger as bpmn_workflow_trigger,
     is_global as is_bpmn_workflow_global,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     process_id as bpmn_workflow_process_id,
     workflow_engine as bpmn_workflow_engine,
     extra_attributes as bpmn_workflow_attributes,

@@ -2,7 +2,7 @@ select
     id as collection_strategy_id,
     title as collection_strategy,
     description as collection_strategy_description,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     created_by,
     updated_by,
     created_at::timestamp as created_at,

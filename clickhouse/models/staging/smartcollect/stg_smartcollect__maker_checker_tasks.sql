@@ -2,7 +2,7 @@ select
     id as maker_checker_task_id,
     title as maker_checker_task,
     description as maker_checker_task_description,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     status as maker_checker_task_status,
     priority as maker_checker_task_priority,
     completed as maker_checker_task_completed,

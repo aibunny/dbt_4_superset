@@ -2,7 +2,7 @@ select
     id as workflow_task_id,
     title as workflow_task_name,
     description as workflow_task_description,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     status as workflow_task_status,
     priority,
     completed,

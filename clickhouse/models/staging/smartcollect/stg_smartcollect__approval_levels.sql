@@ -1,6 +1,6 @@
 select
     id as approval_level_id,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     module as approval_level_module,
     description as approval_level_description,
     approval_name,

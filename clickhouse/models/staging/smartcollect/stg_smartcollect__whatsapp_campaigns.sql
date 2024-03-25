@@ -5,7 +5,7 @@ select
     target as whatsapp_campaign_target,
     runs_from,
     runs_to,
-    organization_id,
+    {{ coalesce_to_uuid('organization_id') }},
     extra_attributes,
     created_by,
     updated_by,
