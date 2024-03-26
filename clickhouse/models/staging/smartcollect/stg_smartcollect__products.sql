@@ -1,9 +1,15 @@
 --- products
 
 with products as (
-select
-    *
-from
+    select
+        id as product_id,
+        upper(title) as product_name,
+        description as description,
+        created_by,
+        updated_by,
+        created_at,
+        {{ coalesce_to_timestamp('updated_at')}}
+    from
     {{ source('smartcollect', 'products')}}
 )
 

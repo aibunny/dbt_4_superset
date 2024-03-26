@@ -1,21 +1,17 @@
---debt_types
+--debtors
 
-with debt_types as (
+with debtors as (
     select
-        id,
-        COALESCE(salutation, '') AS salutation,
-        names,
-        COALESCE(identification, '') AS identification,
+        id as debtor_id,
         COALESCE(customer_no, '') AS customer_no,
-        debtor_type,
-        COALESCE(pin_number, '') AS pin_number,
+        upper(debtor_type) as debtor_type,
+        COALESCE(pin_number, '') as pin_number,
         COALESCE(gender, '') AS gender,
-        dob,
-        COALESCE(external_id, '') AS external_id,
+        coalesce(dob, toDate('1980-01-01')) as date_of_birth,
         created_by,
         updated_by,
         created_at,
-        updated_at,
+        {{ coalesce_to_timestamp('updated_at')}},
         COALESCE(score, 0)  AS score
     from
         {{source('smartcollect', 'debtors')}}
@@ -23,7 +19,7 @@ with debt_types as (
         deleted_at is null
 )
 
-select * from debt_types
+select * from debtors
 
 
 
