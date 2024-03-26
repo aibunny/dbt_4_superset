@@ -50,7 +50,6 @@ with refined_case_files as(
         c.last_paid_amount as last_paid_amount,
         c.is_new_allocation as is_new_allocation,
         c.score as score,
-        
         c.traction as traction,
         c.closed as closed,
         c.allocated as allocated,
@@ -67,6 +66,7 @@ with refined_case_files as(
         c.closed_by as closed_by,
         c.loan_count as loan_count,
         c.workflow_task_type as workflow_task_type,
+
         d.debtor_type as debtor_type,
         d.gender as debtor_gender,
         o.organization_name as organization_name,
@@ -85,9 +85,9 @@ with refined_case_files as(
         cu.currency_symbol as currency,
         dt.debt_type as debt_type,
         cs.collection_stage_name as collection_stage,
-        cs.collection_sub_stage_name as collection_sub_stage,
+        css.collection_sub_stage_name as collection_sub_stage,
         ct.contact_type_name as contact_type,
-        ct.contact_status_name as contact_status,
+        cst.contact_status_name as contact_status,
         dr.delinquency_reason as delinquency_reason,
         ds.dispute_reason as dispute_reason,
         wt.workflow_task_name as workflow_task,
@@ -125,9 +125,9 @@ with refined_case_files as(
         {{ ref('int_products') }} p on 
         c.sub_product_id = p.sub_product_id
         or c.product_id = p.product_id
-    left join
-        {{ref('int_clients') }} cl on
-        c.client_id = cl.client_id
+    -- left join
+    --     {{ref('int_clients') }} cl on
+    --     c.client_id = cl.client_id
     left join
         {{ref('stg_smartcollect__buckets')}} b on
         c.bucket_id = b.bucket_id
@@ -139,12 +139,19 @@ with refined_case_files as(
         c.debt_type_id = dt.debt_type_id
     left join
         {{ ref('int_collection_stages')}} cs on
-        c.collection_sub_stage_id = cs.collection_sub_stage_id
-        or  c.collection_stage_id = cs.collection_stage_id
+        c.collection_stage_id = cs.collection_stage_id
+    left join
+        {{ ref('stg_smartcollect__collection_sub_stages')}} css on
+        c.collection_stage_id = css.collection_sub_stage_id
+
     left join 
-        {{ ref('int_contacts')}} ct on
-        c.contact_type_id = ct.contact_type_id
-        or c.contact_status_id = ct.contact_status_id
+        {{ ref('stg_smartcollect__contact_types')}} ct on
+        c.contact_type_id = ct.contact_type_id        
+    
+    left join 
+        {{ ref('stg_smartcollect__contact_statuses')}} cst on
+        c.contact_status_id = cst.contact_status_id
+
     left join
         {{ ref('stg_smartcollect__delinquency_reasons')}} dr on
         c.delinquency_reason_id = dr.delinquency_reason_id

@@ -8,7 +8,7 @@ models:
       The model is based on the smartcollect casefiles table and joins
       various other tables to extract relevant information.
     columns:
-       - name: case_file_id
+      - name: case_file_id
         description: "The unique identifier for each case file."
         tests:
           - unique
@@ -125,7 +125,6 @@ models:
           label: "Workflow Task ID"
           data_type: "UUID"
 
-
       - name: interest_amount
         description: "The amount of interest associated with the loan."
         meta:
@@ -237,8 +236,8 @@ models:
           label: "Amount Repaid"
           data_type: "DECIMAL(18, 2)"
           constraints: ["CHECK (amount_repaid >= 0)"]
-      
-            - name: total_payments
+
+      - name: total_payments
         description: "The overall sum of payments made for the case file."
         meta:
           label: "Total Payments"
@@ -375,7 +374,7 @@ models:
         meta:
           label: "Workflow Task Type"
           data_type: "VARCHAR(50)"
-      
+
       - name: debtor_type
         description: "The type of debtor associated with the case file (e.g., individual, organization)."
         meta:
@@ -529,9 +528,9 @@ models:
       - name: workflow_task_completed
         description: "Indicates whether the workflow task associated with the case file is completed."
         meta:
-          label:"Workflow Task Completed"
+          label: "Workflow Task Completed"
           data_type: "BOOLEAN"
-      
+
       - name: next_installment_date
         description: "The date for the next installment payment associated with the case file."
         meta:
@@ -543,7 +542,7 @@ models:
         meta:
           label: "Approval Date"
           data_type: "DATE"
-          
+
       - name: disbursment_date
         description: "The date when the loan amount was disbursed."
         meta:
