@@ -50,6 +50,7 @@ with refined_case_files as(
         c.last_paid_amount as last_paid_amount,
         c.is_new_allocation as is_new_allocation,
         c.score as score,
+        
         c.traction as traction,
         c.closed as closed,
         c.allocated as allocated,
@@ -66,7 +67,6 @@ with refined_case_files as(
         c.closed_by as closed_by,
         c.loan_count as loan_count,
         c.workflow_task_type as workflow_task_type,
-
         d.debtor_type as debtor_type,
         d.gender as debtor_gender,
         o.organization_name as organization_name,

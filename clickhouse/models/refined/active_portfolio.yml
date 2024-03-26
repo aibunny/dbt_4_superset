@@ -1,0 +1,679 @@
+models:
+  - name: int_case_files
+    description:
+      This dataset provides a comprehensive overview of the case files,
+      including information about customers, products, organizations, users,
+      teams, debt types, branches, contact statuses, contact types, buckets,
+      delinquency reasons, and dispute reasons.
+      The model is based on the smartcollect casefiles table and joins
+      various other tables to extract relevant information.
+    columns:
+       - name: case_file_id
+        description: "The unique identifier for each case file."
+        tests:
+          - unique
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+
+      - name: organization_id
+        description: "The identifier for the organization associated with the case file."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+
+      - name: user_id
+        description: "The identifier for the user associated with the case file."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+
+      - name: loan_id
+        description: "The identifier for the loan associated with the case file."
+        meta:
+          label: "Loan ID"
+          data_type: "UUID"
+
+      - name: team_id
+        description: "The identifier for the team associated with the case file."
+        meta:
+          label: "Team ID"
+          data_type: "UUID"
+
+      - name: branch_id
+        description: "The identifier for the branch associated with the case file."
+        meta:
+          label: "Branch ID"
+          data_type: "UUID"
+
+      - name: product_id
+        description: "The identifier for the product associated with the case file."
+        meta:
+          label: "Product ID"
+          data_type: "UUID"
+
+      - name: sub_product_id
+        description: "The identifier for the sub-product associated with the case file."
+        meta:
+          label: "Sub-Product ID"
+          data_type: "UUID"
+
+      - name: client_id
+        description: "The identifier for the client associated with the case file."
+        meta:
+          label: "Client ID"
+          data_type: "UUID"
+
+      - name: bucket_id
+        description: "The identifier for the bucket associated with the case file."
+        meta:
+          label: "Bucket ID"
+          data_type: "UUID"
+
+      - name: currency_id
+        description: "The identifier for the currency associated with the case file."
+        meta:
+          label: "Currency ID"
+          data_type: "UUID"
+
+      - name: debt_type_id
+        description: "The identifier for the debt type associated with the case file."
+        meta:
+          label: "Debt Type ID"
+          data_type: "UUID"
+
+      - name: collection_stage_id
+        description: "The identifier for the collection stage associated with the case file."
+        meta:
+          label: "Collection Stage ID"
+          data_type: "UUID"
+
+      - name: collection_sub_stage_id
+        description: "The identifier for the collection sub-stage associated with the case file."
+        meta:
+          label: "Collection Sub-Stage ID"
+          data_type: "UUID"
+
+      - name: contact_status_id
+        description: "The identifier for the contact status associated with the case file."
+        meta:
+          label: "Contact Status ID"
+          data_type: "UUID"
+
+      - name: contact_type_id
+        description: "The identifier for the contact type associated with the case file."
+        meta:
+          label: "Contact Type ID"
+          data_type: "UUID"
+
+      - name: delinquency_reason_id
+        description: "The identifier for the delinquency reason associated with the case file."
+        meta:
+          label: "Delinquency Reason ID"
+          data_type: "UUID"
+
+      - name: dispute_reason_id
+        description: "The identifier for the dispute reason associated with the case file."
+        meta:
+          label: "Dispute Reason ID"
+          data_type: "UUID"
+
+      - name: workflow_task_id
+        description: "The identifier for the workflow task associated with the case file."
+        meta:
+          label: "Workflow Task ID"
+          data_type: "UUID"
+
+
+      - name: interest_amount
+        description: "The amount of interest associated with the loan."
+        meta:
+          label: "Interest Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (interest_amount >= 0)"]
+
+      - name: interest_rate
+        description: "The interest rate applicable to the loan."
+        meta:
+          label: "Interest Rate"
+          data_type: "DECIMAL(5, 2)"
+          constraints: ["CHECK (interest_rate >= 0)"]
+
+      - name: emi
+        description: "The fixed monthly payment amount for the loan."
+        meta:
+          label: "Equated Monthly Installment (EMI)"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (emi >= 0)"]
+
+      - name: waived
+        description: "The amount waived from the total outstanding."
+        meta:
+          label: "Waived Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (waived >= 0)"]
+
+      - name: waived_balance
+        description: "The remaining balance after amount waiver."
+        meta:
+          label: "Waived Balance"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (waived_balance >= 0)"]
+
+      - name: discount
+        description: "The amount discounted from the total outstanding."
+        meta:
+          label: "Discount Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (discount >= 0)"]
+
+      - name: discount_balance
+        description: "The remaining balance after applying the discount."
+        meta:
+          label: "Discount Balance"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (discount_balance >= 0)"]
+
+      - name: overdraw_charges
+        description: "Charges incurred due to overdrawing from the account."
+        meta:
+          label: "Overdraw Charges"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (overdraw_charges >= 0)"]
+
+      - name: penalty_amount
+        description: "The amount charged as a penalty for overdue payments."
+        meta:
+          label: "Penalty Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (penalty_amount >= 0)"]
+
+      - name: ledger_fee
+        description: "Fee associated with maintaining the account ledger."
+        meta:
+          label: "Ledger Fee"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (ledger_fee >= 0)"]
+
+      - name: agency_commission
+        description: "Commission earned by the agency associated with the case file."
+        meta:
+          label: "Agency Commission"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (agency_commission >= 0)"]
+
+      - name: principal_amount
+        description: "The initial amount of the loan or principal."
+        meta:
+          label: "Principal Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (principal_amount >= 0)"]
+
+      - name: loan_amount
+        description: "The total amount of the loan, including any additional fees or charges."
+        meta:
+          label: "Loan Amount"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (loan_amount >= 0)"]
+
+      - name: arrears
+        description: "The amount of overdue payments or debts."
+        meta:
+          label: "Arrears"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (arrears >= 0)"]
+
+      - name: balance
+        description: "The amount of money still owed."
+        meta:
+          label: "Balance"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (balance >= 0)"]
+
+      - name: amount_repaid
+        description: "The total amount that has been repaid towards the loan."
+        meta:
+          label: "Amount Repaid"
+          data_type: "DECIMAL(18, 2)"
+          constraints: ["CHECK (amount_repaid >= 0)"]
+      
+            - name: total_payments
+        description: "The overall sum of payments made for the case file."
+        meta:
+          label: "Total Payments"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: installment_amount
+        description: "The amount due for each installment."
+        meta:
+          label: "Installment Amount"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: installment_balance
+        description: "The remaining balance for the current installment."
+        meta:
+          label: "Installment Balance"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: next_installment_amount
+        description: "The amount due for the next installment."
+        meta:
+          label: "Next Installment Amount"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: last_paid_amount
+        description: "The amount of the last payment made."
+        meta:
+          label: "Last Paid Amount"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: is_new_allocation
+        description: "Indicates whether the allocation is new."
+        meta:
+          label: "New Allocation Status"
+          data_type: "BOOLEAN"
+
+      - name: score
+        description: "The score associated with the case file."
+        meta:
+          label: "Score"
+          data_type: "DECIMAL(5, 2)"
+
+      - name: traction
+        description: "The traction associated with the case file."
+        meta:
+          label: "Traction"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: closed
+        description: "Indicates whether the case file is closed."
+        meta:
+          label: "Closed"
+          data_type: "BOOLEAN"
+
+      - name: allocated
+        description: "Indicates whether the case file is allocated."
+        meta:
+          label: "Allocated"
+          data_type: "BOOLEAN"
+
+      - name: account_state
+        description: "The current state of the case file's account (e.g., active, closed, etc.)."
+        meta:
+          label: "Account State"
+          data_type: "VARCHAR(50)"
+
+      - name: has_manual_update
+        description: "Indicates whether the case file has been manually updated."
+        meta:
+          label: "Has Manual Update"
+          data_type: "BOOLEAN"
+
+      - name: case_branch
+        description: "The branch associated with the case file."
+        meta:
+          label: "Case Branch"
+          data_type: "VARCHAR(50)"
+
+      - name: batch_no
+        description: "The batch number associated with the case file."
+        meta:
+          label: "Batch Number"
+          data_type: "VARCHAR(50)"
+
+      - name: days_past_due
+        description: "The number of days the payment is overdue."
+        meta:
+          label: "Days Past Due (DPD)"
+          data_type: "INT"
+
+      - name: loan_term
+        description: "The duration of the loan term in months."
+        meta:
+          label: "Loan Term"
+          data_type: "INT"
+
+      - name: term_fees
+        description: "Fees associated with the loan term."
+        meta:
+          label: "Term Fees"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: allocation_type
+        description: "The type of allocation for the case file."
+        meta:
+          label: "Allocation Type"
+          data_type: "VARCHAR(50)"
+
+      - name: is_visible
+        description: "Indicates whether the case file is visible."
+        meta:
+          label: "Is Visible"
+          data_type: "BOOLEAN"
+
+      - name: created_by
+        description: "The user who created the case file."
+        meta:
+          label: "Created By"
+          data_type: "VARCHAR(255)"
+
+      - name: closed_by
+        description: "The user who closed the case file."
+        meta:
+          label: "Closed By"
+          data_type: "VARCHAR(255)"
+
+      - name: loan_count
+        description: "The count of loans associated with the case file."
+        meta:
+          label: "Loan Count"
+          data_type: "INT"
+
+      - name: workflow_task_type
+        description: "The type of workflow task associated with the case file."
+        meta:
+          label: "Workflow Task Type"
+          data_type: "VARCHAR(50)"
+      
+      - name: debtor_type
+        description: "The type of debtor associated with the case file (e.g., individual, organization)."
+        meta:
+          label: "Debtor Type"
+          data_type: "VARCHAR(50)"
+
+      - name: debtor_gender
+        description: "The gender of the debtor associated with the case file."
+        meta:
+          label: "Debtor Gender"
+          data_type: "VARCHAR(10)"
+
+      - name: organization_name
+        description: "The name of the organization associated with the case file."
+        meta:
+          label: "Organization Name"
+          data_type: "VARCHAR(255)"
+
+      - name: organization_is_primary
+        description: "Indicates whether the organization associated with the case file is primary."
+        meta:
+          label: "Is Primary Organization"
+          data_type: "BOOLEAN"
+
+      - name: organization_type
+        description: "The type of organization associated with the case file."
+        meta:
+          label: "Organization Type"
+          data_type: "VARCHAR(255)"
+
+      - name: country
+        description: "The country associated with the case file."
+        meta:
+          label: "Country"
+          data_type: "VARCHAR(50)"
+
+      - name: user_name
+        description: "The name of the user associated with the case file."
+        meta:
+          label: "User Name"
+          data_type: "VARCHAR(255)"
+
+      - name: user_type
+        description: "The type of user associated with the case file."
+        meta:
+          label: "User Type"
+          data_type: "VARCHAR(50)"
+
+      - name: branch_name
+        description: "The name of the branch associated with the case file."
+        meta:
+          label: "Branch Name"
+          data_type: "VARCHAR(255)"
+
+      - name: team_name
+        description: "The name of the team associated with the case file."
+        meta:
+          label: "Team Name"
+          data_type: "VARCHAR(255)"
+
+      - name: product_name
+        description: "The name of the product associated with the case file."
+        meta:
+          label: "Product Name"
+          data_type: "VARCHAR(255)"
+
+      - name: sub_product_name
+        description: "The name of the sub-product associated with the case file."
+        meta:
+          label: "Sub-Product Name"
+          data_type: "VARCHAR(255)"
+
+      - name: bucket_name
+        description: "The name of the bucket associated with the case file."
+        meta:
+          label: "Bucket Name"
+          data_type: "VARCHAR(255)"
+
+      - name: bucket_upper_limit
+        description: "The upper limit of the bucket associated with the case file."
+        meta:
+          label: "Bucket Upper Limit"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: bucket_lower_limit
+        description: "The lower limit of the bucket associated with the case file."
+        meta:
+          label: "Bucket Lower Limit"
+          data_type: "DECIMAL(18, 2)"
+
+      - name: currency
+        description: "The currency symbol used in the case file."
+        meta:
+          label: "Currency"
+          data_type: "VARCHAR(10)"
+
+      - name: debt_type
+        description: "The type of debt associated with the case file."
+        meta:
+          label: "Debt Type"
+          data_type: "VARCHAR(50)"
+
+      - name: collection_stage
+        description: "The stage of collection associated with the case file."
+        meta:
+          label: "Collection Stage"
+          data_type: "VARCHAR(50)"
+
+      - name: collection_sub_stage
+        description: "The sub-stage of collection associated with the case file."
+        meta:
+          label: "Collection Sub-Stage"
+          data_type: "VARCHAR(50)"
+
+      - name: contact_type
+        description: "The type of contact associated with the case file."
+        meta:
+          label: "Contact Type"
+          data_type: "VARCHAR(50)"
+
+      - name: contact_status
+        description: "The status of contact associated with the case file."
+        meta:
+          label: "Contact Status"
+          data_type: "VARCHAR(50)"
+
+      - name: delinquency_reason
+        description: "The reason for delinquency associated with the case file."
+        meta:
+          label: "Delinquency Reason"
+          data_type: "VARCHAR(255)"
+
+      - name: dispute_reason
+        description: "The reason for dispute associated with the case file."
+        meta:
+          label: "Dispute Reason"
+          data_type: "VARCHAR(255)"
+
+      - name: workflow_task
+        description: "The name of the workflow task associated with the case file."
+        meta:
+          label: "Workflow Task"
+          data_type: "VARCHAR(255)"
+
+      - name: workflow_task_status
+        description: "The status of the workflow task associated with the case file."
+        meta:
+          label: "Workflow Task Status"
+          data_type: "VARCHAR(50)"
+
+      - name: workflow_task_completed
+        description: "Indicates whether the workflow task associated with the case file is completed."
+        meta:
+          label:"Workflow Task Completed"
+          data_type: "BOOLEAN"
+      
+      - name: next_installment_date
+        description: "The date for the next installment payment associated with the case file."
+        meta:
+          label: "Next Installment Date"
+          data_type: "DATE"
+
+      - name: approval_date
+        description: "The date when the case file was approved."
+        meta:
+          label: "Approval Date"
+          data_type: "DATE"
+          
+      - name: disbursment_date
+        description: "The date when the loan amount was disbursed."
+        meta:
+          label: "Disbursement Date"
+          data_type: "DATE"
+
+      - name: loan_taken_date
+        description: "The date when the loan was taken by the debtor."
+        meta:
+          label: "Loan Taken Date"
+          data_type: "DATE"
+
+      - name: loan_due_date
+        description: "The due date for the repayment of the loan."
+        meta:
+          label: "Loan Due Date"
+          data_type: "DATE"
+
+      - name: last_synced_at
+        description: "The date when the case file was last synchronized."
+        meta:
+          label: "Last Synchronized Date"
+          data_type: "TIMESTAMP"
+
+      - name: traction_date
+        description: "The date of the traction event associated with the case file."
+        meta:
+          label: "Traction Date"
+          data_type: "DATE"
+
+      - name: last_action_date
+        description: "The date of the last action taken on the case file."
+        meta:
+          label: "Last Action Date"
+          data_type: "DATE"
+
+      - name: next_action_date
+        description: "The date of the next action scheduled for the case file."
+        meta:
+          label: "Next Action Date"
+          data_type: "DATE"
+
+      - name: last_paid_date
+        description: "The date when the last payment was made for the case file."
+        meta:
+          label: "Last Paid Date"
+          data_type: "DATE"
+
+      - name: closed_at
+        description: "The date when the case file was closed."
+        meta:
+          label: "Closed Date"
+          data_type: "DATE"
+
+      - name: reactivated_at
+        description: "The date when the case file was reactivated, if applicable."
+        meta:
+          label: "Reactivation Date"
+          data_type: "DATE"
+
+      - name: created_at
+        description: "The date when the case file was created."
+        meta:
+          label: "Creation Date"
+          data_type: "TIMESTAMP"
+
+      - name: updated_at
+        description: "The date when the case file was last updated."
+        meta:
+          label: "Last Update Date"
+          data_type: "TIMESTAMP"
+
+    meta:
+      superset_metrics:
+        - name: Total Files
+          label: Total Files
+          expression: count(case_file_id)
+          type: count
+
+        - name: Total Principal
+          label: Total Principal
+          expression: SUM(principal_amount)
+          type: sum
+
+        - name: Total Arrears
+          label: Total Arrears
+          expression: SUM(arrears)
+          type: sum
+
+        - name: Total Balance
+          label: Total Balance
+          expression: SUM(balance)
+          type: sum
+
+        - name: Total Amount Repaid
+          label: Total Amount Repaid
+          expression: SUM(amount_repaid)
+          type: sum
+
+        - name: Total Installment Amount
+          label: Total Installment Amount
+          expression: SUM(installment_amount)
+          type: sum
+
+        - name: Total Installment Balance
+          label: Total Installment Balance
+          expression: SUM(installment_balance)
+          type: sum
+
+        - name: Total Interest Amount
+          label: Total Interest Amount
+          expression: SUM(interest_amount)
+          type: sum
+
+        - name: Average Interest Rate
+          label: Average Interest Rate
+          expression: avg(interest_rate)
+          type: avg
+
+        - name: Average EMI
+          label: Average EMI
+          expression: AVG(emi)
+          type: avg
+
+        - name: Total Waived Amount
+          label: Total Waived Amount
+          expression: SUM(waived)
+          type: avg
+
+        - name: Total Agency Commission
+          label: Total Agency Commission
+          expression: SUM(agency_commission)
+          type: sum
