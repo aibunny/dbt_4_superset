@@ -24,10 +24,10 @@ with calls_in_campaigns as(
         cc.call_campaign_dialling_extension as call_campaign_dialling_extension,
         cc.call_campaign_dial_mode as call_campaign_dial_mode,
         cc.call_campaign_start_date_time as call_campaign_start_date_time,
-        cc.call_campaign_end_date_time as call_campaign_end_date_time,        
+        cc.call_campaign_end_date_time as call_campaign_end_date_time,
         cc.created_by as call_campaign_created_by,
-        cc.created_at as campaign_created_at,
-        cc.updated_at as campaign_updated_at
+        cc.created_at as created_at,
+        cc.updated_at as updated_at
     
     from {{ref('stg_smartcollect__calls')}} c
     left join 
@@ -43,6 +43,8 @@ with calls_in_campaigns as(
     
     where
         c.call_campaign_id != {{default_uuid(target.type)}}
+        and created_at >= {{ runtime(run_started_at, target.type)}}
+        
 )
 
 select 

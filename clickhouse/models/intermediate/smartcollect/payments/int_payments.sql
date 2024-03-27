@@ -1,6 +1,6 @@
+
 with refined_payments as (
-    select
-        
+    select        
         p.payment_id as payment_id,
         p.case_file_id as case_file_id,
         p.product_id as product_id,
@@ -8,7 +8,7 @@ with refined_payments as (
         p.owner_id as owner_id,
         case
             when owner_type = 'internal' then
-            u.user_id else {{ uuid_macro( target.type)}}
+            u.user_id else {{ default_uuid( target.type)}}
             end as user_id,
         p.amount as amount,
         p.payment_date as payment_date,
@@ -47,7 +47,7 @@ with refined_payments as (
     left join 
         {{ ref('stg_smartcollect__users')}} u 
         on p.owner_id = u.user_id
-    
+        
 )
 
 select * from refined_payments

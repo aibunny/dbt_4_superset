@@ -1,4 +1,10 @@
 -- This are calls outside call campaigns and their ratings
+{{
+    config(
+        materialized = 'view'
+    )
+}}
+
 
 with calls_outside_campaigns as(
     select
@@ -23,8 +29,7 @@ with calls_outside_campaigns as(
     from 
         {{ref('stg_smartcollect__calls')}} c
     left join  
-        {{ref('stg_smartcollect__call_callibrations')}} cr
-        on c.call_id = cr.call_id
+        {{ref('stg_smartcollect__call_callibrations')}} cr on c.call_id = cr.call_id
     left join
         {{ ref('stg_smartcollect__organizations')}} o 
         on c.organization_id = o.organization_id
@@ -33,6 +38,7 @@ with calls_outside_campaigns as(
         on c.user_id = u.user_id
     where
         c.call_campaign_id = {{default_uuid(target.type)}}
+        and c.created_at >= {{ runtime(run_started_at, target.type)}}
 )   
 
 select 

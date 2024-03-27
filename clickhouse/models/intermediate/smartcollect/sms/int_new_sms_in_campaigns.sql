@@ -39,6 +39,7 @@ with sms_in_campaigns as (
 
     where 
         s.sms_campaign_id != {{default_uuid(target.type)}}
+        and s.created_at >= {{runtime(run_started_at,target.type)}}
 )
 
 select * from sms_in_campaigns

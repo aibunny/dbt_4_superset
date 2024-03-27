@@ -19,7 +19,7 @@
 
 
 
-{% macro uuid_macro(target_type) %}
+{% macro default_uuid(target_type) %}
   {% if target_type == 'clickhouse' %}
     toUUID('{{ var("missing_uuid") }}')
   {% else %}

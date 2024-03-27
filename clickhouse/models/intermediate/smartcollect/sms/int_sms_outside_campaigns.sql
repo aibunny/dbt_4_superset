@@ -14,11 +14,22 @@ with sms_outside_campaigns as (
         s.sent as sms_sent,
         s.sent_at as sms_sent_at,
         s.cost as sms_cost,
+        o.organization_name as organization,
+        u.user_name as user_name, 
         s.created_at as sms_created_at
     from
         {{ref('stg_smartcollect__sms')}} s
+
+    left join
+        {{ref('stg_smartcollect__organizations')}} o
+        on s.organization_id = o.organization_id
+
+    left join
+        {{ref('stg_smartcollect__users')}} u
+        on s.user_id = u.user_id
+    
     where
-        s.sms_campaign_id is null
+        s.sms_campaign_id = {{default_uuid(target.type)}}
 
 )
 
