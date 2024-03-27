@@ -3,7 +3,7 @@
 with products as (
     select
         id as product_id,
-        upper(title) as product_name,
+        title as product_name,
         description as description,
         created_by,
         updated_by,

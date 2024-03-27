@@ -2,7 +2,7 @@ with sub_products as (
     select 
         id as sub_product_id,
         product_id as product_id,
-        upper(title) as sub_product_name,
+        title as sub_product_name,
         description as description,
         created_by,
         updated_by,

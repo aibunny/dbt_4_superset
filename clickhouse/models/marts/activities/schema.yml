@@ -1,0 +1,82 @@
+models:
+  - name: activities
+    description: "This dataset captures user activities related to case files, call types, contact statuses, and organization information."
+    columns:
+      - name: activity_id
+        description: "The unique identifier for each user activity."
+        tests:
+          - unique
+        meta:
+          label: "Activity ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+
+      - name: case_file_id
+        description: "The identifier of the case file associated with the activity."
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: call_type_id
+        description: "The identifier of the call type associated with the activity."
+        meta:
+          label: "Call Type ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: contact_status_id
+        description: "The identifier of the contact status associated with the activity."
+        meta:
+          label: "Contact Status ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: activity
+        description: "The type of activity performed by the user."
+        meta:
+          label: "Activity"
+          data_type: "VARCHAR(255)"
+
+      - name: call_type
+        description: "The type of call associated with the activity eg; RIGHT PARTY CONTACT."
+        meta:
+          label: "Call Type"
+          data_type: "VARCHAR(255)"
+      - name: contact_status
+        description: "The status of contact associated with the activity eg; DISPUTING"
+        meta:
+          label: "Contact Status"
+          data_type: "VARCHAR(255)"
+
+      - name: organization
+        description: "The organization associated with the activity."
+        meta:
+          label: "Organization"
+          data_type: "VARCHAR(255)"
+
+      - name: branch
+        description: "The branch associated with the activity."
+        meta:
+          label: "Branch"
+          data_type: "VARCHAR(255)"
+
+      - name: team
+        description: "The team within the organization associated with the activity."
+        meta:
+          label: "Team"
+          data_type: "VARCHAR(255)"
+
+      - name: user
+        description: "The user within the organization associated with the activity."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+
+      - name: created_at
+        description: "The date and time when the action was performed."
+        tests:
+          - not_null
+        meta:
+          label: "Creation Date"
+          data_type: "TIMESTAMP"

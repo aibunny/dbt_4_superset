@@ -1,6 +1,6 @@
 select
     id as bpmn_workflow_id,
-    upper(title) as bpmn_workflow_name,
+    title as bpmn_workflow_name,
     description as bpmn_workflow_description,
     module as bpmn_workflow_module,
     trigger as bpmn_workflow_trigger,

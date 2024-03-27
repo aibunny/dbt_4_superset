@@ -1,0 +1,262 @@
+models:
+  - name: calls_in_campaigns
+    description: "This dataset captures calls made within call campaigns along with associated details such as call ratings."
+    columns:
+      - name: call_id
+        description: "The unique identifier for each call."
+        tests:
+          - unique
+        meta:
+          label: "Call ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+
+      - name: case_file_id
+        description: "The identifier of the case file associated with the call."
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: user_id
+        description: "The identifier of the user who made the call."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: organization_id
+        description: "The identifier of the organization associated with the call."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: call_from
+        description: "The source of the call."
+        meta:
+          label: "Call From"
+          data_type: "VARCHAR(255)"
+
+      - name: call_to
+        description: "The destination of the call."
+        meta:
+          label: "Call To"
+          data_type: "VARCHAR(255)"
+
+      - name: call_ring_time_seconds
+        description: "The duration the call rang before being answered, in seconds."
+        meta:
+          label: "Call Ring Time (Seconds)"
+          data_type: "INTEGER"
+
+      - name: call_talk_time_in_seconds
+        description: "The duration of the call conversation, in seconds."
+        meta:
+          label: "Call Talk Time (Seconds)"
+          data_type: "INTEGER"
+
+      - name: source_trunk_name
+        description: "The name of the source trunk."
+        meta:
+          label: "Source Trunk Name"
+          data_type: "VARCHAR(255)"
+
+      - name: destination_trunk_name
+        description: "The name of the destination trunk."
+        meta:
+          label: "Destination Trunk Name"
+          data_type: "VARCHAR(255)"
+
+      - name: call_status
+        description: "The status of the call."
+        meta:
+          label: "Call Status"
+          data_type: "VARCHAR(255)"
+
+      - name: call_type
+        description: "The type of call."
+        meta:
+          label: "Call Type"
+          data_type: "VARCHAR(255)"
+
+      - name: agent_ring_time
+        description: "The time it took for an agent to answer the call, in seconds."
+        meta:
+          label: "Agent Ring Time (Seconds)"
+          data_type: "INTEGER"
+
+      - name: call_made_at
+        description: "The date and time when the call was made."
+        tests:
+          - not_null
+        meta:
+          label: "Call Made At"
+          data_type: "TIMESTAMP"
+
+      - name: user
+        description: "The name of the user who made the call."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+
+      - name: organization
+        description: "The name of the organization associated with the call."
+        meta:
+          label: "Organization"
+          data_type: "VARCHAR(255)"
+
+      - name: call_rating
+        description: "The rating assigned to the call."
+        meta:
+          label: "Call Rating"
+          data_type: "INTEGER"
+
+      - name: call_campaign_id
+        description: "The identifier of the call campaign associated with the call."
+        meta:
+          label: "Call Campaign ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+
+      - name: call_campaign
+        description: "The name of the call campaign associated with the call."
+        meta:
+          label: "Call Campaign"
+          data_type: "VARCHAR(255)"
+
+      - name: call_campaign_dialling_extension
+        description: "The dialing extension used in the call campaign."
+        meta:
+          label: "Dialing Extension"
+          data_type: "VARCHAR(255)"
+
+      - name: call_campaign_dial_mode
+        description: "The dialing mode used in the call campaign."
+        meta:
+          label: "Dial Mode"
+          data_type: "VARCHAR(255)"
+
+      - name: call_campaign_start_date_time
+        description: "The start date and time of the call campaign."
+        meta:
+          label: "Campaign Start Date Time"
+          data_type: "TIMESTAMP"
+
+      - name: call_campaign_end_date_time
+        description: "The end date and time of the call campaign."
+        meta:
+          label: "Campaign End Date Time"
+          data_type: "TIMESTAMP"
+
+      - name: campaign_created_at
+        description: "The date and time when the call campaign was created."
+        meta:
+          label: "Campaign Creation Date"
+          data_type: "TIMESTAMP"
+
+      - name: campaign_updated_at
+        description: "The date and time when the call campaign was last updated."
+        meta:
+          label: "Campaign Last Update Date"
+          data_type: "TIMESTAMP"
+
+
+models:
+  - name: calls
+    description: "This dataset captures calls made outside call campaigns along with associated details such as call ratings."
+    columns:
+      - name: call_id
+        description: "The unique identifier for each call."
+        tests:
+          - unique
+        meta:
+          label: "Call ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: case_file_id
+        description: "The identifier of the case file associated with the call."
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The identifier of the user who made the call."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: organization_id
+        description: "The identifier of the organization associated with the call."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: call_from
+        description: "The source of the call."
+        meta:
+          label: "Call From"
+          data_type: "VARCHAR(255)"
+      - name: call_to
+        description: "The destination of the call."
+        meta:
+          label: "Call To"
+          data_type: "VARCHAR(255)"
+      - name: call_ring_time_seconds
+        description: "The duration the call rang before being answered, in seconds."
+        meta:
+          label: "Call Ring Time (Seconds)"
+          data_type: "INTEGER"
+      - name: call_talk_time_in_seconds
+        description: "The duration of the call conversation, in seconds."
+        meta:
+          label: "Call Talk Time (Seconds)"
+          data_type: "INTEGER"
+      - name: source_trunk_name
+        description: "The name of the source trunk."
+        meta:
+          label: "Source Trunk Name"
+          data_type: "VARCHAR(255)"
+      - name: destination_trunk_name
+        description: "The name of the destination trunk."
+        meta:
+          label: "Destination Trunk Name"
+          data_type: "VARCHAR(255)"
+      - name: call_status
+        description: "The status of the call."
+        meta:
+          label: "Call Status"
+          data_type: "VARCHAR(255)"
+      - name: call_type
+        description: "The type of call."
+        meta:
+          label: "Call Type"
+          data_type: "VARCHAR(255)"
+      - name: agent_ring_time
+        description: "The time it took for an agent to answer the call, in seconds."
+        meta:
+          label: "Agent Ring Time (Seconds)"
+          data_type: "INTEGER"
+      - name: call_made_at
+        description: "The date and time when the call was made."
+        tests:
+          - not_null
+        meta:
+          label: "Call Made At"
+          data_type: "TIMESTAMP"
+      - name: user
+        description: "The name of the user who made the call."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+      - name: organization
+        description: "The name of the organization associated with the call."
+        meta:
+          label: "Organization"
+          data_type: "VARCHAR(255)"
+      - name: call_rating
+        description: "The rating assigned to the call."
+        meta:
+          label: "Call Rating"
+          data_type: "INTEGER"
+

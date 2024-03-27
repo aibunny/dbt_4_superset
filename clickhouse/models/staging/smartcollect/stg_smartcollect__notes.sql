@@ -1,7 +1,7 @@
 select
     id as note_id,
     contents as contents,
-    upper(update_type) as update_type,
+    update_type as update_type,
     case_file_id,
     contact_status_id,
     call_type_id,

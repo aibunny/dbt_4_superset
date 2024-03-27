@@ -1,6 +1,6 @@
 select
     id as whatsapp_campaign_id,
-    upper(title) as whatsapp_campaign_name,
+    title as whatsapp_campaign_name,
     description as whatsapp_campaign_description,
     target as whatsapp_campaign_target,
     runs_from,

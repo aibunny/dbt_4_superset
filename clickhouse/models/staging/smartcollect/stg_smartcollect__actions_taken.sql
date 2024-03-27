@@ -1,6 +1,6 @@
 select
     id as action_id,
-    upper(title) as action_title,
+    title as action_title,
     slug as action_slug,
     description as action_description,
     active as action_is_active,

@@ -1,0 +1,124 @@
+models:
+  - name: organization
+    description: "This dataset contains refined information about organizations, including details about branches, teams, and users associated with each organization."
+    columns:
+      - name: organization_id
+        description: "The unique identifier for each organization."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: organization_type_id
+        description: "The identifier representing the type of organization."
+        meta:
+          label: "Organization Type ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: country_id
+        description: "The identifier representing the country associated with the organization."
+        meta:
+          label: "Country ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: team_id
+        description: "The unique identifier for each team associated with the organization."
+        meta:
+          label: "Team ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: team_leader_id
+        description: "The identifier representing the team leader of each team associated with the organization."
+        meta:
+          label: "Team Leader ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The unique identifier for each user associated with the organization."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: organization_is_primary
+        description: "Indicates whether the organization is primary or not."
+        meta:
+          label: "Is Primary Organization"
+          data_type: "BOOLEAN"
+      - name: organization_type
+        description: "The type of organization."
+        meta:
+          label: "Organization Type"
+          data_type: "VARCHAR(255)"
+      - name: organization
+        description: "The name of the organization."
+        meta:
+          label: "Organization Name"
+          data_type: "VARCHAR(255)"
+      - name: country
+        description: "The name of the country associated with the organization."
+        meta:
+          label: "Country Name"
+          data_type: "VARCHAR(255)"
+      - name: organization_countries_enabled
+        description: "Indicates whether multiple countries are enabled for the organization."
+        meta:
+          label: "Organization Countries Enabled"
+          data_type: "BOOLEAN"
+      - name: organization_teams_enabled
+        description: "Indicates whether teams are enabled for the organization."
+        meta:
+          label: "Organization Teams Enabled"
+          data_type: "BOOLEAN"
+      - name: organization_branches_enabled
+        description: "Indicates whether branches are enabled for the organization."
+        meta:
+          label: "Organization Branches Enabled"
+          data_type: "BOOLEAN"
+      - name: organization_multi_currency_enabled
+        description: "Indicates whether multiple currencies are enabled for the organization."
+        meta:
+          label: "Organization Multi-Currency Enabled"
+          data_type: "BOOLEAN"
+      - name: branch
+        description: "The name of the branch associated with the organization."
+        meta:
+          label: "Branch Name"
+          data_type: "VARCHAR(255)"
+      - name: branch_manager
+        description: "The manager of the branch associated with the organization."
+        meta:
+          label: "Branch Manager"
+          data_type: "VARCHAR(255)"
+      - name: team
+        description: "The name of the team associated with the organization."
+        meta:
+          label: "Team Name"
+          data_type: "VARCHAR(255)"
+      - name: team_type
+        description: "The type of team associated with the organization."
+        meta:
+          label: "Team Type"
+          data_type: "VARCHAR(255)"
+      - name: team_leader
+        description: "The leader of the team associated with the organization."
+        meta:
+          label: "Team Leader"
+          data_type: "VARCHAR(255)"
+      - name: user
+        description: "The name of the user associated with the organization."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+      - name: created_at
+        description: "The date and time when the organization was created."
+        tests:
+          - not_null
+        meta:
+          label: "Created At"
+          data_type: "TIMESTAMP"
+      - name: updated_at
+        description: "The date and time when the organization was last updated."
+        tests:
+          - not_null
+        meta:
+          label: "Updated At"
+          data_type: "TIMESTAMP"

@@ -3,7 +3,7 @@
 with contact_types as (
     select
         id as contact_type_id,
-        upper(title) as contact_type_name,
+        title as contact_type_name,
         description as contact_type_description,
         tag as contact_type_tag,
         created_by,

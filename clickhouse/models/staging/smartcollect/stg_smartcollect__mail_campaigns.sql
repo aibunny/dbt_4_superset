@@ -1,6 +1,6 @@
 select
     id as mail_campaign_id,
-    upper(title) as mail_campaign_name,
+    title as mail_campaign_name,
     description as mail_campaign_description,
     target as mail_campaign_target,
     runs_to as mail_campaign_end_date,

@@ -1,6 +1,6 @@
 select
     id as segment_id,
-    upper(title) as segment,
+    title as segment,
     description as segment_description,
     is_visible as segment_is_visible,
     created_by,

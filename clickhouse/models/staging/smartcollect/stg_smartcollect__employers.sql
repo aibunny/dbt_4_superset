@@ -1,6 +1,6 @@
 select
     id as employer_id,
-    upper(title) as employer_name,
+    title as employer_name,
     debtor_id,
     is_current,
     created_by as created_by,

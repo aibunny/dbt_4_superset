@@ -1,6 +1,6 @@
 select
     id as whatsapp_account_id,
-    upper(title) as whatsapp_account_name,
+    title as whatsapp_account_name,
     description as whatsapp_account_description,
     organization_id,
     whatsapp_phone_number_id,

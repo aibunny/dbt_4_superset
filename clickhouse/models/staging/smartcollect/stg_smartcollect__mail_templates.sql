@@ -1,6 +1,6 @@
 select
     id,
-    upper(title),
+    title,
     subject,
     {{ coalesce_to_uuid('organization_id') }},
     target,

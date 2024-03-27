@@ -1,6 +1,6 @@
 select
     id as maker_checker_task_id,
-    upper(title) as maker_checker_task,
+    title as maker_checker_task,
     description as maker_checker_task_description,
     {{ coalesce_to_uuid('organization_id') }},
     status as maker_checker_task_status,

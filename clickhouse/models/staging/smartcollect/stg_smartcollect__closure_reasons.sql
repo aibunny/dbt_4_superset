@@ -1,7 +1,7 @@
 with closure_reasons as (
     select
         id as closure_reason_id,
-        upper(title) as closure_reason,
+        title as closure_reason,
         description as closure_reason_description,
         tag as closure_reason_tag,
         created_by,

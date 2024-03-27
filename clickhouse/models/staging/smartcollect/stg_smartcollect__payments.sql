@@ -19,7 +19,7 @@ with payments as (
         case_file_id,
         product_id,
         sub_product_id,
-        upper(owner_type) as owner_type,
+        owner_type as owner_type,
         owner_id,
         COALESCE(balance_before, 0) AS balance_before,
         COALESCE(balance_after, 0) AS balance_after,

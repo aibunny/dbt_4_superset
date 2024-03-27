@@ -4,7 +4,7 @@ select
     notifiable_type,    
     {{ coalesce_to_uuid('notifiable_id') }},
     {{ coalesce_to_uuid('organization_id') }},
-    upper(title) as notification_title,
+    title as notification_title,
     content as notification_content,
     extra_attributes as notification_extra_attributes,
     read_at::timestamp as notification_read_at,

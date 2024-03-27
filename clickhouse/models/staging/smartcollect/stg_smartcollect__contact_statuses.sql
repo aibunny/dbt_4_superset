@@ -3,7 +3,7 @@
 with contact_statuses as (
     select
         id as contact_status_id,
-        upper(title) as contact_status_name,
+        title as contact_status_name,
         description as contact_status_description,
         tag as contact_status_tag,
         contact_type_id as contact_type_id,

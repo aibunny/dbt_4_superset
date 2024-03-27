@@ -1,6 +1,6 @@
 select
     id as collection_strategy_id,
-    upper(title) as collection_strategy,
+    title as collection_strategy,
     description as collection_strategy_description,
     {{ coalesce_to_uuid('organization_id') }},
     created_by,

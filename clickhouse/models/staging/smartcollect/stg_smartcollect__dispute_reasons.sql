@@ -3,7 +3,7 @@
 with dispute_reasons as (
     select
         id as dispute_reason_id,
-        upper(title) as dispute_reason,
+        title as dispute_reason,
         description,
         created_by,
         updated_by,

@@ -3,7 +3,7 @@
 with teams as (
     select
         id as team_id,
-        upper(title) as team_name,
+        title as team_name,
         {{ coalesce_to_uuid('organization_id') }},
         {{ coalesce_to_uuid('branch_id') }},
         team_type as team_type,

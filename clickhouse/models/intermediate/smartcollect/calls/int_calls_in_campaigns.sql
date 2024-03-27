@@ -24,8 +24,7 @@ with calls_in_campaigns as(
         cc.call_campaign_dialling_extension as call_campaign_dialling_extension,
         cc.call_campaign_dial_mode as call_campaign_dial_mode,
         cc.call_campaign_start_date_time as call_campaign_start_date_time,
-        cc.call_campaign_end_date_time as call_campaign_end_date_time,        
-        cc.created_by as call_campaign_created_by,
+        cc.call_campaign_end_date_time as call_campaign_end_date_time,
         cc.created_at as campaign_created_at,
         cc.updated_at as campaign_updated_at
     

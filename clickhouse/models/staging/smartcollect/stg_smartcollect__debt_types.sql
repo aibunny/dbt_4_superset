@@ -3,7 +3,7 @@
 with debt_types as (
 	select
 		id as debt_type_id,
-		upper(title) as debt_type,
+		title as debt_type,
 		created_by,
         updated_by,
         created_at,

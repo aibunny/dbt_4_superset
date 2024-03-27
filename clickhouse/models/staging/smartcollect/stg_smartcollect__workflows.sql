@@ -1,6 +1,6 @@
 select 
     id as workflow_id,
-    upper(title) as workflow_name,
+    title as workflow_name,
     description as workflow_description,
     module as workflow_module,
     trigger as workflow_trigger,

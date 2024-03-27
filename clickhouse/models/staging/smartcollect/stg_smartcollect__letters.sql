@@ -1,6 +1,6 @@
 select
     id as letter_id,
-    upper(title) as letter_name,
+    title as letter_name,
     description as letter_description,
     {{ coalesce_to_uuid('case_file_id') }},
     file_name,

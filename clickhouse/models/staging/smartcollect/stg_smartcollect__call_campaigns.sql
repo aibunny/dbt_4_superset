@@ -1,7 +1,7 @@
 select
     id as call_campaign_id,
     {{ coalesce_to_uuid('organization_id') }},
-    upper(title) as call_campaign_name,
+    title as call_campaign_name,
     description as call_campaign_description,
     dialing_extension as call_campaign_dialling_extension,
     dial_mode as call_campaign_dial_mode,

@@ -4,7 +4,7 @@ with debtors as (
     select
         id as debtor_id,
         COALESCE(customer_no, '') AS customer_no,
-        upper(debtor_type) as debtor_type,
+        debtor_type as debtor_type,
         COALESCE(pin_number, '') as pin_number,
         COALESCE(gender, '') AS gender,
         coalesce(dob, toDate('1980-01-01')) as date_of_birth,

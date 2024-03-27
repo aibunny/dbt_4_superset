@@ -1,0 +1,112 @@
+models:
+  - name: payments
+    description: "This dataset contains refined information about payments, including details about the payment method, type, and owner."
+    columns:
+      - name: payment_id
+        description: "The unique identifier for each payment."
+        meta:
+          label: "Payment ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: case_file_id
+        description: "The unique identifier for each case file associated with the payment."
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: product_id
+        description: "The identifier representing the product associated with the payment."
+        meta:
+          label: "Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: sub_product_id
+        description: "The identifier representing the sub-product associated with the payment."
+        meta:
+          label: "Sub-Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: owner_id
+        description: "The identifier representing the owner of the payment."
+        meta:
+          label: "Owner ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The unique identifier for each user associated with the payment."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: amount
+        description: "The amount of the payment."
+        meta:
+          label: "Amount"
+          data_type: "DECIMAL"
+      - name: payment_date
+        description: "The date of the payment."
+        meta:
+          label: "Payment Date"
+          data_type: "DATE"
+      - name: payment_method
+        description: "The method used for the payment."
+        meta:
+          label: "Payment Method"
+          data_type: "VARCHAR(255)"
+      - name: payment_type
+        description: "The type of payment."
+        meta:
+          label: "Payment Type"
+          data_type: "VARCHAR(255)"
+      - name: effort
+        description: "The effort associated with the payment."
+        meta:
+          label: "Effort"
+          data_type: "INT"
+      - name: payment_confirmed
+        description: "Indicates whether the payment is confirmed."
+        meta:
+          label: "Payment Confirmed"
+          data_type: "BOOLEAN"
+      - name: confirmed_date
+        description: "The date when the payment was confirmed."
+        meta:
+          label: "Confirmed Date"
+          data_type: "TIMESTAMP"
+      - name: payment_reversed
+        description: "Indicates whether the payment is reversed."
+        meta:
+          label: "Payment Reversed"
+          data_type: "BOOLEAN"
+      - name: user_name
+        description: "The name of the user associated with the payment."
+        meta:
+          label: "User Name"
+          data_type: "VARCHAR(255)"
+      - name: owner_is_external
+        description: "Indicates whether the owner of the payment is external."
+        meta:
+          label: "Owner Is External"
+          data_type: "BOOLEAN"
+      - name: case_file_balance
+        description: "The balance of the case file after the payment."
+        meta:
+          label: "Case File Balance"
+          data_type: "DECIMAL"
+      - name: product
+        description: "The name of the product associated with the payment."
+        meta:
+          label: "Product Name"
+          data_type: "VARCHAR(255)"
+      - name: sub_product
+        description: "The name of the sub-product associated with the payment."
+        meta:
+          label: "Sub-Product Name"
+          data_type: "VARCHAR(255)"
+      - name: created_at
+        description: "The date and time when the payment record was created."
+        tests:
+          - not_null
+        meta:
+          label: "Created At"
+          data_type: "TIMESTAMP"

@@ -2,7 +2,7 @@
 with delinquency_reasons as (
     select 
         id as delinquency_reason_id,
-        upper(title) as delinquency_reason,
+        title as delinquency_reason,
         description as description,
         created_by,
         updated_by,
