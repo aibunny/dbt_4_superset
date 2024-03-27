@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized='view'
+    )
+}}
+
 with refined_organization as (
     select 
         o.organization_id as organization_id,
@@ -24,13 +30,17 @@ with refined_organization as (
         o.updated_at as updated_at
 
     from 
-        {{ref("int_organization")}} o
+        {{ref("ref_organization")}} o
     left join 
         {{ref('int_branches')}} b on o.organization_id = b.organization_id
     left join 
         {{ref('int_teams')}} t on o.organization_id = t.organization_id 
     left join 
         {{ref('int_users')}} u on o.organization_id = u.organization_id
+    
+    where
+        (o.updated_at >= {{runtime(run_started_at, target.type)}}
+        and updated_at is null) or created_at >= {{runtime(run_started_at, target.type)}}
 )
 
 select * from refined_organization

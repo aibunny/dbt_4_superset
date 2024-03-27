@@ -31,7 +31,11 @@ clean-targets: # directories to be removed by `dbt clean`
 models:
   clickhouse:
     # Config indicated by + and applies to all files under models/example/
-    example:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: incremental
+    marts:
       +materialized: view
 
 vars:

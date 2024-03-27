@@ -1,10 +1,3 @@
-
-{{
-    config(
-        materialized='table'
-    )
-}}
-
 with refined_case_files as(
     select
         c.case_file_id as case_file_id,
@@ -116,7 +109,7 @@ with refined_case_files as(
         {{ ref('stg_smartcollect__debtors') }} d on 
         c.debtor_id = d.debtor_id
     left join
-        {{ ref('int_organization') }} o on 
+        {{ ref('ref_organization') }} o on 
         c.organization_id = o.organization_id 
     left join
         {{ ref('int_users') }} u on
@@ -164,4 +157,3 @@ with refined_case_files as(
 )
 
 select * from refined_case_files
-

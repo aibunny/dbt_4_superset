@@ -1,5 +1,5 @@
 models:
-  - name: int_case_files
+  - name: PortfolioData
     description:
       This dataset provides a comprehensive overview of the case files,
       including information about customers, products, organizations, users,
