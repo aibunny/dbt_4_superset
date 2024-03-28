@@ -3,6 +3,7 @@
 with calls_in_campaigns as(
     select
         c.call_id as call_id,
+        c.call_campaign_id as call_campaign_id,
         c.case_file_id as case_file_id,
         c.user_id as user_id,
         c.organization_id as organization_id,
@@ -19,7 +20,6 @@ with calls_in_campaigns as(
         u.user_name as user,
         o.organization_name as organization,
         cr.call_rating as call_rating,
-        cc.call_campaign_id as call_campaign_id,
         cc.call_campaign_name as call_campaign,
         cc.call_campaign_dialling_extension as call_campaign_dialling_extension,
         cc.call_campaign_dial_mode as call_campaign_dial_mode,
@@ -41,8 +41,7 @@ with calls_in_campaigns as(
         on c.user_id = u.user_id
     
     where
-        c.call_campaign_id != {{default_uuid(target.type)}}
-        and created_at >= {{ runtime(run_started_at, target.type)}}
+    created_at >= {{ runtime(run_started_at, target.type)}}
         
 )
 

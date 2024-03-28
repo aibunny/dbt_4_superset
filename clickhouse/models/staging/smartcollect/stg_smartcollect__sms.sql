@@ -12,7 +12,7 @@ with sms as (
         gateway_id,        
         target,
         batch_no,
-        sms_type) as sms_type,
+        sms_type as sms_type,
         {{ coalesce_to_timestamp('scheduled_at')}},
         sent,
         sent_at,--TODO: Cast to datetime 
@@ -22,7 +22,7 @@ with sms as (
         approved,
         approved_by,
         {{ coalesce_to_timestamp('approved_at')}},
-        delivery_status) as delivery_status,
+        delivery_status as delivery_status,
         {{ coalesce_to_timestamp('created_at')}},
         {{ coalesce_to_timestamp('updated_at')}},
         created_by,

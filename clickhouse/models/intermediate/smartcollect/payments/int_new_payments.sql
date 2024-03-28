@@ -26,7 +26,7 @@ with refined_payments as (
         p.is_reversed as payment_reversed,
         case 
             when owner_type = 'internal' then
-            u.user_name else 'UNKNOWN'
+            u.user_name else 'Unknown'
             end as user_name,
         case 
             when owner_type = 'external' then

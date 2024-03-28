@@ -1,6 +1,7 @@
 with sms_in_campaigns as (
     select
         s.sms_id as sms_id,
+        s.sms_campaign_id as sms_campaign_id,
         s.case_file_id as case_file_id,
         s.organization_id as organization_id,
         s.user_id as user_id,
@@ -38,7 +39,7 @@ with sms_in_campaigns as (
         on s.user_id = u.user_id
 
     where 
-        s.sms_campaign_id != {{default_uuid(target.type)}}
+        s.created_at >= {{runtime(run_started_at,target.type)}}
 )
 
 select * from sms_in_campaigns

@@ -1,6 +1,6 @@
 {{
     config(
-        alias = 'Promises To Pay'
+        alias = 'PTPs'
     )
 }}
 

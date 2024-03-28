@@ -8,7 +8,7 @@ with whatsapp_messages as(
         wm.whatsapp_account_id as whatsapp_account_id,
         wm.message_direction as whatsapp_message_direction,
         wm.message_type as whatsapp_message_type,
-        case when wm.message_status is null then 'unknown' else wm.message_status end as whatsapp_message_status,
+        case when wm.message_status is null then 'Unknown' else wm.message_status end as whatsapp_message_status,
         wm.sender as whatsapp_message_sender
     from
         {{ref('stg_smartcollect__whatsapp_messages')}} wm
