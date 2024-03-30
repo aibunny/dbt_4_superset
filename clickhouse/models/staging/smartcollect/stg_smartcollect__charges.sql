@@ -12,8 +12,8 @@ with charges as (
 		coalesce(balance_before_charge,0) as balance_before_charge,
 		coalesce(balance_after_charge,0) as balance_after_charge,
 		comments,
-		created_at::timestamp as created_at,
-		case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+		created_at,
+		{{ coalesce_to_timestamp('updated_at')}}
 
 	from
 		{{source('smartcollect', 'charges')}}

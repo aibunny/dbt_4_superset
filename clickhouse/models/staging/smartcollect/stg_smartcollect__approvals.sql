@@ -9,8 +9,8 @@ select
     priority as approval_priority,
     assignees as approval_assignees,
     claimed as is_approval_claimed,
-    claimed_by::timestamp as created_by,
-    created_at::timestamp as created_at
+    {{coalesce_to_uuid('claimed_by')}},
+    created_at
     
 from {{ source('smartcollect', 'approvals')}}
 where

@@ -19,7 +19,7 @@ with users as (
         {{source('smartcollect', 'users')}} 
 
     where
-        deleted_at is null and active = 1
+        deleted_at is null and active = {{ get_active_value(target.type) }}
 )
 
 select * from users

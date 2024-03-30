@@ -13,7 +13,7 @@ with dispute_reasons as (
     from
         {{source('smartcollect', 'dispute_reasons')}}
     where
-		deleted_at is null and active = 1
+		deleted_at is null and active = {{ get_active_value(target.type) }}
     
 )
 

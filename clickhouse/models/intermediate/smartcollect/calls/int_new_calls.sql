@@ -25,8 +25,8 @@ with calls_in_campaigns as(
         cc.call_campaign_dial_mode as call_campaign_dial_mode,
         cc.call_campaign_start_date_time as call_campaign_start_date_time,
         cc.call_campaign_end_date_time as call_campaign_end_date_time,
-        cc.created_at as created_at,
-        cc.updated_at as updated_at
+        cc.created_at as campaign_created_at,
+        cc.updated_at as campaign_updated_at
     
     from {{ref('stg_smartcollect__calls')}} c
     left join 
@@ -41,7 +41,7 @@ with calls_in_campaigns as(
         on c.user_id = u.user_id
     
     where
-    created_at >= {{ runtime(run_started_at, target.type)}}
+    c.created_at >= {{ runtime(run_started_at, target.type)}}
         
 )
 

@@ -40,7 +40,7 @@ with refined_organization as (
     
     where
         (o.updated_at >= {{runtime(run_started_at, target.type)}}
-        and updated_at is null) or created_at >= {{runtime(run_started_at, target.type)}}
+        and o.updated_at is null) or o.created_at >= {{runtime(run_started_at, target.type)}}
 )
 
 select * from refined_organization

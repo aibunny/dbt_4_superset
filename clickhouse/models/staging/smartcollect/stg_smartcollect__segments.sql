@@ -11,4 +11,4 @@ select
 from 
     {{ source('smartcollect', 'segments') }}
 where
-    deleted_at is null and active = 1
+    deleted_at is null and active = {{ get_active_value(target.type) }}

@@ -7,7 +7,7 @@ select
     addressable_type,
     created_by,
     updated_by,
-    created_at::timestamp as created_at
+    created_at
     
 from {{ source('smartcollect', 'addresses')}}
 

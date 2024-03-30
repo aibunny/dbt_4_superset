@@ -12,7 +12,7 @@ with delinquency_reasons as (
     from
         {{source('smartcollect', 'delinquency_reasons')}}
     where
-		deleted_at is null and active = 1
+		deleted_at is null and active = {{ get_active_value(target.type) }}
 )
 
 select * from delinquency_reasons

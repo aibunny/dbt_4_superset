@@ -17,4 +17,4 @@ from
     {{source('smartcollect','clients')}}
 
 where
-    deleted_at is null and active = 1
+    deleted_at is null and active = {{ get_active_value(target.type) }}

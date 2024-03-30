@@ -3,7 +3,7 @@ select
     call_id,
     ratings  as call_rating,
     comments as json_comment_array,
-    created_at::timestamp as created_at
+    created_at
 from 
     {{ source('smartcollect', 'call_callibrations')}}
 

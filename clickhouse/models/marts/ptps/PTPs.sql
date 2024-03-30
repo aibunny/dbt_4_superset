@@ -12,7 +12,7 @@ with ptp_mart as (
     
     union all
 
-    select
+    select   
         *
     from
         {{ref('int_new_ptps')}}

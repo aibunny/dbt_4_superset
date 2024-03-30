@@ -18,8 +18,8 @@ select
     session_end_reason_text as call_session_end_reason_text,
     disposed as call_session_is_disposed,
     disposed_action as call_session_disposed_action,
-    created_at::timestamp as created_at,
-    case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at
+    created_at,
+    {{ coalesce_to_timestamp('updated_at')}}
 
     
 from {{ source('smartcollect', 'call_sessions')}}

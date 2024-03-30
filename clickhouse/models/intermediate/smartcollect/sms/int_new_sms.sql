@@ -20,7 +20,6 @@ with sms_in_campaigns as (
         sc.sms_campaign_name as sms_campaign_name,
         sc.sms_campaign_target as sms_campaign_target,
         sc.sms_campaign_end_date as sms_campaign_end_date,
-        sc.created_by as sms_campaign_created_by,
         sc.created_at as sms_campaign_created_at
 
     from

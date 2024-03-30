@@ -1,0 +1,117 @@
+models:
+  - name: sms
+    description: "This dataset contains information about sent out SMS messages, including details about the SMS campaign, delivery status, and costs."
+    columns:
+      - name: sms_id
+        description: "The unique identifier for each sent out SMS message."
+        meta:
+          label: "SMS ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: sms_campaign_id
+        description: "The identifier representing the SMS campaign associated with the sent out SMS message."
+        meta:
+          label: "SMS Campaign ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: case_file_id
+        description: "The identifier representing the case file associated with the sent out SMS message."
+        meta:
+          label: "Case File ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: organization_id
+        description: "The identifier representing the organization associated with the sent out SMS message."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The unique identifier for each user associated with the sent out SMS message."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: moderator
+        description: "The moderator involved in the sent out SMS message."
+        meta:
+          label: "Moderator"
+          data_type: "VARCHAR(255)"
+      - name: sms_type
+        description: "The type of sent out SMS message."
+        meta:
+          label: "SMS Type"
+          data_type: "VARCHAR(255)"
+      - name: scheduled_at
+        description: "The scheduled date and time for sending out the SMS message."
+        meta:
+          label: "Scheduled At"
+          data_type: "TIMESTAMP"
+      - name: sms_approved
+        description: "Indicates whether the SMS message is approved."
+        meta:
+          label: "SMS Approved"
+          data_type: "BOOLEAN"
+      - name: delivery_status
+        description: "The delivery status of the sent out SMS message."
+        meta:
+          label: "Delivery Status"
+          data_type: "VARCHAR(255)"
+      - name: sms_template_id
+        description: "The identifier representing the SMS template associated with the sent out SMS message."
+        meta:
+          label: "SMS Template ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: sms_sent
+        description: "Indicates whether the SMS message is sent."
+        meta:
+          label: "SMS Sent"
+          data_type: "BOOLEAN"
+      - name: sms_sent_at
+        description: "The date and time when the SMS message was sent."
+        meta:
+          label: "SMS Sent At"
+          data_type: "TIMESTAMP"
+      - name: sms_cost
+        description: "The cost associated with sending out the SMS message."
+        meta:
+          label: "SMS Cost"
+          data_type: "DECIMAL"
+      - name: user
+        description: "The name of the user associated with the sent out SMS message."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+      - name: organization
+        description: "The name of the organization associated with the sent out SMS message."
+        meta:
+          label: "Organization"
+          data_type: "VARCHAR(255)"
+      - name: sms_created_at
+        description: "The date and time when the sent out SMS message record was created."
+        tests:
+          - not_null
+        meta:
+          label: "SMS Created At"
+          data_type: "TIMESTAMP"
+      - name: sms_campaign_name
+        description: "The name of the SMS campaign associated with the sent out SMS message."
+        meta:
+          label: "SMS Campaign Name"
+          data_type: "VARCHAR(255)"
+      - name: sms_campaign_target
+        description: "The target of the SMS campaign associated with the sent out SMS message."
+        meta:
+          label: "SMS Campaign Target"
+          data_type: "VARCHAR(255)"
+      - name: sms_campaign_end_date
+        description: "The end date of the SMS campaign associated with the sent out SMS message."
+        meta:
+          label: "SMS Campaign End Date"
+          data_type: "DATE"
+      - name: sms_campaign_created_at
+        description: "The date and time when the SMS campaign associated with the sent out SMS message was created."
+        meta:
+          label: "SMS Campaign Created At"
+          data_type: "TIMESTAMP"

@@ -20,8 +20,8 @@ select
     deadline as maker_checker_task_deadline,
     created_by,
     updated_by,
-    created_at::timestamp as created_at,
-    case when updated_at is not null then updated_at::timestamp else updated_at end as updated_at,
+    created_at,
+    {{ coalesce_to_timestamp('updated_at')}},
 
     status_date::timestamp as status_date
 

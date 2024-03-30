@@ -15,4 +15,4 @@ select
 from
     {{ source('smartcollect', 'payment_plans') }}
 where
-    deleted_at is null and active = 1
+    deleted_at is null and active = {{ get_active_value(target.type) }}

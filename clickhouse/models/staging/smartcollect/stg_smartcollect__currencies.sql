@@ -10,7 +10,7 @@ with currencies as (
     from 
         {{source('smartcollect','currencies')}}
     where
-        deleted_at is null and active = 1
+        deleted_at is null and active = {{ get_active_value(target.type) }}
 )
 
 select * from currencies

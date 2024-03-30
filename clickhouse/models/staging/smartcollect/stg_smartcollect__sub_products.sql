@@ -12,7 +12,7 @@ with sub_products as (
     from 
         {{source('smartcollect','sub_products')}}
     where
-        deleted_at is null and active = 1
+        deleted_at is null and active = {{ get_active_value(target.type) }}
 )
 
 select * from sub_products

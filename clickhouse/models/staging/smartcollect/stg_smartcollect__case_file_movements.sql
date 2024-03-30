@@ -8,7 +8,7 @@ select
     extra_attributes,
     created_by,
     approved_by,
-    created_at::timestamp as created_at,
+    created_at,
     approved_at::timestamp as approved_at
 from 
     {{ source('smartcollect', 'case_file_movements')}}

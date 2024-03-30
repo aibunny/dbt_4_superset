@@ -1,0 +1,108 @@
+models:
+  - name: PTPs
+    description: "This dataset contains information about Promises to Pay (PTPs), including details about the promised amount, payment plan, and user involved."
+    columns:
+      - name: ptp_id
+        description: "The unique identifier for each Promise to Pay."
+        meta:
+          label: "PTP ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: product_id
+        description: "The identifier representing the product associated with the PTP case file."
+        meta:
+          label: "Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: sub_product_id
+        description: "The identifier representing the sub-product associated with the PTP case file."
+        meta:
+          label: "Sub-Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The unique identifier for each user associated with the PTP."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: payment_plan_id
+        description: "The identifier representing the payment plan associated with the PTP."
+        meta:
+          label: "Payment Plan ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: promised_amount
+        description: "The amount promised in the PTP."
+        meta:
+          label: "Promised Amount"
+          data_type: "DECIMAL"
+      - name: amount_paid
+        description: "The amount paid in the PTP."
+        meta:
+          label: "Amount Paid"
+          data_type: "DECIMAL"
+      - name: ptp_type
+        description: "The type of the Promise to Pay."
+        meta:
+          label: "PTP Type"
+          data_type: "VARCHAR(255)"
+      - name: ptp_state
+        description: "The state of the Promise to Pay."
+        meta:
+          label: "PTP State"
+          data_type: "VARCHAR(255)"
+      - name: product
+        description: "The name of the product associated with the PTP."
+        meta:
+          label: "Product Name"
+          data_type: "VARCHAR(255)"
+      - name: sub_product
+        description: "The name of the sub-product associated with the PTP."
+        meta:
+          label: "Sub-Product Name"
+          data_type: "VARCHAR(255)"
+      - name: user
+        description: "The name of the user associated with the PTP."
+        meta:
+          label: "User Name"
+          data_type: "VARCHAR(255)"
+      - name: payment_plan_type
+        description: "The type of payment plan associated with the PTP."
+        meta:
+          label: "Payment Plan Type"
+          data_type: "VARCHAR(255)"
+      - name: payment_plan_amount
+        description: "The amount due in the payment plan associated with the PTP."
+        meta:
+          label: "Payment Plan Amount"
+          data_type: "DECIMAL"
+      - name: escalated_on
+        description: "The date when the PTP was escalated."
+        meta:
+          label: "Escalated On"
+          data_type: "DATE"
+      - name: escalated_to
+        description: "The entity to which the PTP was escalated."
+        meta:
+          label: "Escalated To"
+          data_type: "VARCHAR(255)"
+      - name: date_paid
+        description: "The date when the PTP was paid."
+        meta:
+          label: "Date Paid"
+          data_type: "DATE"
+      - name: created_at
+        description: "The date and time when the PTP record was created."
+        tests:
+          - not_null
+        meta:
+          label: "Created At"
+          data_type: "TIMESTAMP"
+      - name: updated_at
+        description: "The date and time when the PTP record was last updated."
+        tests:
+          - not_null
+        meta:
+          label: "Updated At"
+          data_type: "TIMESTAMP"

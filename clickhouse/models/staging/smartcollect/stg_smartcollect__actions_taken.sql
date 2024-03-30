@@ -8,10 +8,10 @@ select
     created_by,
     updated_by,
     deleted_by,
-    created_at::timestamp as created_at,
+    created_at,
     deleted_at::timestamp as deleted_at
     
 from 
     {{ source('smartcollect', 'actions_taken')}}
 where
-    deleted_at is null and active = 1
+    deleted_at is null and active = {{ get_active_value(target.type) }}

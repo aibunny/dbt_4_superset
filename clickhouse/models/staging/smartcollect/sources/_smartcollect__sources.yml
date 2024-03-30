@@ -2,6 +2,7 @@ version: 2
 
 sources:
   - name: smartcollect
+    schema: public
     tables:
       - name: actions_taken
       - name: addresses

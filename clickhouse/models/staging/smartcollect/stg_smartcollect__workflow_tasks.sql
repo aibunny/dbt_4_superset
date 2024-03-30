@@ -11,12 +11,12 @@ select
     assignees,
     task_id,
     task_type,
-    due_date::timestamp as  due_date,
-    follow_up_date::timestamp as follow_up_date,
-    deadline::timestamp as deadline,
+    {{ coalesce_to_timestamp('due_date')}},
+    {{ coalesce_to_timestamp('follow_up_date')}},
+    deadline,
     created_by,
     updated_by,
-    created_at::timestamp as created_at,
+    created_at,
     {{ coalesce_to_timestamp('updated_at')}},
 
     {{ coalesce_to_timestamp('status_date')}}
