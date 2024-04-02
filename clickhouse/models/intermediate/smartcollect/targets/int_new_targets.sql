@@ -17,7 +17,6 @@ with refined_targets as (
         t.month_year as month_year,
         t.date as date,
         t.targetable_type as target_group,
-
         p.product as product,
         sp.sub_product as sub_product,
         u.user_name as user,

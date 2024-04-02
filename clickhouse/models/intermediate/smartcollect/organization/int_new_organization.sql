@@ -12,6 +12,7 @@ with refined_organization as (
         t.team_id as team_id,
         t.team_leader_id as team_leader_id,
         u.user_id as user_id,
+        b.branch_id as branch_id,
         o.organization_is_primary as organization_is_primary,
         o.organization_type as organization_type,
         o.organization_name as organization,

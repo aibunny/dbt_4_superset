@@ -1,5 +1,5 @@
 models:
-  - name: activities
+  - name: Activities
     description: "This dataset captures user activities related to case files, call types, contact statuses, and organization information."
     columns:
       - name: activity_id
@@ -80,3 +80,9 @@ models:
         meta:
           label: "Creation Date"
           data_type: "TIMESTAMP"
+    meta:
+      superset_metrics:
+        - name: Total Activities
+          label: Total Activities
+          expression: count(activity_id)
+          type: count

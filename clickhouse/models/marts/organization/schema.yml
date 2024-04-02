@@ -1,5 +1,5 @@
 models:
-  - name: organization
+  - name: Organization
     description: "This dataset contains refined information about organizations, including details about branches, teams, and users associated with each organization."
     columns:
       - name: organization_id
@@ -36,6 +36,12 @@ models:
         description: "The unique identifier for each user associated with the organization."
         meta:
           label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: branch_id
+        description: "The unique identifier for each branch associated with the organization (where applicable)."
+        meta:
+          label: "Branch ID"
           data_type: "UUID"
           constraints: ["FOREIGN KEY"]
       - name: organization_is_primary
@@ -122,3 +128,30 @@ models:
         meta:
           label: "Updated At"
           data_type: "TIMESTAMP"
+
+    meta:
+      superset_metrics:
+        - name: Total Organizations
+          label: Total Organizations
+          expression: count(organization_id)
+          type: count
+
+        - name: Total Countries
+          label: Total Countries
+          expression: count(country_id)
+          type: count
+
+        - name: Total Teams
+          label: Total Teams
+          expression: count(team_id)
+          type: count
+
+        - name: Total Users
+          label: Total Users
+          expression: count(user_id)
+          type: count
+
+        - name: Total Branches
+          label: Total Branches
+          expression: count(branch_id)
+          type: count

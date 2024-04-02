@@ -1,5 +1,5 @@
 models:
-  - name: sms
+  - name: Sget_source_schemaget_source_schemaget_source_schemams
     description: "This dataset contains information about sent out SMS messages, including details about the SMS campaign, delivery status, and costs."
     columns:
       - name: sms_id
@@ -115,3 +115,14 @@ models:
         meta:
           label: "SMS Campaign Created At"
           data_type: "TIMESTAMP"
+    meta:
+      superset_metrics:
+        - name: Total SMS
+          label: Total SMS
+          expression: count(sms_id)
+          type: count
+
+        - name: Total SMS Campaigns
+          label: Total SMS Campaigns
+          expression: count(sms_campaign_id)
+          type: count

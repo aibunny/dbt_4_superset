@@ -106,3 +106,19 @@ models:
         meta:
           label: "Updated At"
           data_type: "TIMESTAMP"
+    meta:
+      superset_metrics:
+        - name: Total PTPs
+          label: Total PTPs
+          expression: count(ptp_id)
+          type: count
+
+        - name: Total Promised Amount
+          label: Total Promised Amount
+          expression: SUM(promised_amount)
+          type: sum
+
+        - name: Total Amount Paid
+          label: Total Amount Paid
+          expression: SUM(amount_paid)
+          type: sum

@@ -12,6 +12,7 @@
 
 
 
+
 {% macro runtime(run_started_at, target_type) %}
   {% if target_type == 'clickhouse' %}
     toDateTime64(parseDateTimeBestEffort('{{ run_started_at | trim }}'), 3, 'UTC')
@@ -19,6 +20,7 @@
     '{{ run_started_at }}'
   {% endif %}
 {% endmacro %}
+
 
 
 
@@ -55,6 +57,8 @@
 {% endmacro %}
 
 
+
+
 {% macro get_active_value(target_type) %}
   {% if target_type == 'clickhouse' %}
     1
@@ -62,3 +66,13 @@
     True
   {% endif %}
 {% endmacro %}
+
+
+
+{% macro get_source_schema(target_type)%}
+  {%if target_type == 'clickhouse'%}}
+    'smartcollect'
+  {%else%}
+    'public'
+  {%endif%}
+{% endmacro%}

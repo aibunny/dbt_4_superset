@@ -1,0 +1,114 @@
+models:
+  - name: Targets
+    description: "This dataset contains data from Targets it's a unified view of targets with additional details such as user names, team names, branch names, organization names where applicable and product details."
+    columns:
+      - name: target_id
+        description: "The unique identifier for each target."
+        meta:
+          label: "Target ID"
+          data_type: "UUID"
+          constraints: ["PRIMARY KEY"]
+      - name: product_id
+        description: "The identifier representing the product associated with the target."
+        meta:
+          label: "Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: sub_product_id
+        description: "The identifier representing the sub-product associated with the target."
+        meta:
+          label: "Sub-Product ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: user_id
+        description: "The unique identifier for each user associated with the target."
+        meta:
+          label: "User ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: team_id
+        description: "The identifier representing the team associated with the target."
+        meta:
+          label: "Team ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: branch_id
+        description: "The identifier representing the branch associated with the target."
+        meta:
+          label: "Branch ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: organization_id
+        description: "The identifier representing the organization associated with the target."
+        meta:
+          label: "Organization ID"
+          data_type: "UUID"
+          constraints: ["FOREIGN KEY"]
+      - name: target_amount
+        description: "The target amount."
+        meta:
+          label: "Target Amount"
+          data_type: "NUMERIC"
+      - name: month_year
+        description: "The month and year associated with the target."
+        meta:
+          label: "Month-Year"
+          data_type: "VARCHAR(255)"
+      - name: date
+        description: "The date associated with the target."
+        meta:
+          label: "Date"
+          data_type: "DATE"
+      - name: target_group
+        description: "The targetable type or group associated with the target."
+        meta:
+          label: "Target Group"
+          data_type: "VARCHAR(255)"
+      - name: product
+        description: "The name of the product associated with the target."
+        meta:
+          label: "Product"
+          data_type: "VARCHAR(255)"
+      - name: sub_product
+        description: "The name of the sub-product associated with the target."
+        meta:
+          label: "Sub-Product"
+          data_type: "VARCHAR(255)"
+      - name: user
+        description: "The name of the user associated with the target."
+        meta:
+          label: "User"
+          data_type: "VARCHAR(255)"
+      - name: team
+        description: "The name of the team associated with the target."
+        meta:
+          label: "Team"
+          data_type: "VARCHAR(255)"
+      - name: branch
+        description: "The name of the branch associated with the target."
+        meta:
+          label: "Branch"
+          data_type: "VARCHAR(255)"
+      - name: organization
+        description: "The name of the organization associated with the target."
+        meta:
+          label: "Organization"
+          data_type: "VARCHAR(255)"
+      - name: created_at
+        description: "The date and time when the target record was created."
+        tests:
+          - not_null
+        meta:
+          label: "Created At"
+          data_type: "TIMESTAMP"
+    meta:
+      superset_metrics:
+        - name: Total Targets
+          label: Total Target
+          expression: count(target_id)
+          type: count
+
+        - name: Total Target Amount
+          label: Total Target Amount
+          expression: SUM(target_amount)
+          type: sum

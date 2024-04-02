@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: smartcollect
-    schema: smartcollect
+    schema: "{{ get_source_schema(target.type) }}"
     tables:
       - name: actions_taken
       - name: addresses

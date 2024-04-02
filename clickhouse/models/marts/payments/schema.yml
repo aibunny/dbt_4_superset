@@ -1,5 +1,5 @@
 models:
-  - name: payments
+  - name: Payments
     description: "This dataset contains refined information about payments, including details about the payment method, type, and owner."
     columns:
       - name: payment_id
@@ -110,3 +110,14 @@ models:
         meta:
           label: "Created At"
           data_type: "TIMESTAMP"
+    meta:
+      superset_metrics:
+        - name: Total Payments
+          label: Total Payments
+          expression: count(payment_id)
+          type: count
+
+        - name: Total Payment Amount
+          label: Total Payment Amount
+          expression: SUM(amount)
+          type: sum

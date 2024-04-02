@@ -1,11 +1,11 @@
 models:
-  - name: portfolio
+  - name: Portfolio
     description:
       This dataset provides a comprehensive overview of the case files,
       including information about customers, products, organizations, users,
       teams, debt types, branches, contact statuses, contact types, buckets,
       delinquency reasons, and dispute reasons.
-      The model is based on the smartcollect casefiles table and joins
+      The model is based on the smartcollect case files table and joins
       various other tables to extract relevant information.
     columns:
       - name: case_file_id
@@ -670,9 +670,69 @@ models:
         - name: Total Waived Amount
           label: Total Waived Amount
           expression: SUM(waived)
-          type: avg
+          type: sum
 
         - name: Total Agency Commission
           label: Total Agency Commission
           expression: SUM(agency_commission)
           type: sum
+
+        - name: Total Organizations
+          label: Total Organizations
+          expression: count(organization_id)
+          type: count
+
+        - name: Total Countries
+          label: Total Countries
+          expression: count(country_id)
+          type: count
+
+        - name: Total Teams
+          label: Total Teams
+          expression: count(team_id)
+          type: count
+
+        - name: Total Users
+          label: Total Users
+          expression: count(user_id)
+          type: count
+
+        - name: Total Branches
+          label: Total Branches
+          expression: count(branch_id)
+          type: count
+
+        - name: Total Products
+          label: Total Products
+          expression: count(product_id)
+          type: count
+
+        - name: Total Sub-Products
+          label: Total Sub-Products
+          expression: count(sub_product_id)
+          type: count
+
+        - name: Total Buckets
+          label: Total Buckets
+          expression: count(bucket_id)
+          type: count
+
+        - name: Total Currencies
+          label: Total Currencies
+          expression: count(currency_id)
+          type: count
+
+        - name: Total Debt Types
+          label: Total Debt Types
+          expression: count(debt_type_id)
+          type: count
+
+        - name: Total Collection Stages
+          label: Total Collection Stages
+          expression: count(collection_stage_id)
+          type: count
+
+        - name: Total Sub-Collection Stages
+          label: Total SubCollection Stages
+          expression: count(collection_sub_stages_id)
+          type: count
