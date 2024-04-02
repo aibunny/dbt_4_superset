@@ -9,6 +9,6 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
 from
-    {{ source('smartcollect', 'employers') }}
+    {{ source(var('source_db'), 'employers') }}
 where
     deleted_at is null 

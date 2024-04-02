@@ -10,7 +10,7 @@ with collection_sub_stages as (
         created_at,
         {{ coalesce_to_timestamp('updated_at')}}
     from
-        {{ source('smartcollect', 'collection_sub_stages') }}
+        {{ source(var('source_db'), 'collection_sub_stages') }}
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

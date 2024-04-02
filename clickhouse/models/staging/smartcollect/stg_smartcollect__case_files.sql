@@ -4,7 +4,7 @@ with case_files as (
     select
         id as case_file_id,
         {{ coalesce_to_uuid('debtor_id') }},
-        {{ coalesce_to_uuid('loan_id') }},
+        loan_id,
         {{ coalesce_to_uuid('organization_id') }},
         {{ coalesce_to_uuid('user_id') }},
         {{ coalesce_to_uuid('team_id') }},
@@ -13,7 +13,7 @@ with case_files as (
         {{ coalesce_to_uuid('next_action_id') }},
         {{ coalesce_to_uuid('product_id') }},
         {{ coalesce_to_uuid('sub_product_id') }},
-        {{ coalesce_to_uuid('client_id') }},
+        -- {{ coalesce_to_uuid('client_id') }},
         -- {{ coalesce_to_uuid('partner_id') }},
         {{ coalesce_to_uuid('bucket_id') }},
         {{ coalesce_to_uuid('currency_id') }},
@@ -91,7 +91,7 @@ with case_files as (
         
 
     from
-        {{ source('smartcollect', 'case_files') }} 
+        {{ source(var('source_db'), 'case_files') }} 
     where
         deleted_at is null
 )

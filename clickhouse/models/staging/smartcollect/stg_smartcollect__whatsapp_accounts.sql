@@ -13,6 +13,6 @@ select
 
     
 from
-    {{ source('smartcollect', 'whatsapp_accounts') }}
+    {{ source(var('source_db'), 'whatsapp_accounts') }}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}

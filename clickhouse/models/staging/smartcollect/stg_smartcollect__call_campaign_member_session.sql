@@ -7,4 +7,4 @@ select
     extra_attributes as call_campaign_member_session_extra_attributes,
     created_at
 from
-    {{source('smartcollect', 'call_campaign_member_sessions')}}
+    {{source(var('source_db'), 'call_campaign_member_sessions')}}

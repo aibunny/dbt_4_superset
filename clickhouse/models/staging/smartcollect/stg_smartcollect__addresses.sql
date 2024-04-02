@@ -9,7 +9,7 @@ select
     updated_by,
     created_at
     
-from {{ source('smartcollect', 'addresses')}}
+from {{ source(var('source_db'), 'addresses')}}
 
 where
     deleted_at is null

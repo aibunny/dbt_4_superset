@@ -13,6 +13,6 @@ select
                                                         
 
 from 
-    {{ source('smartcollect','client_contacts')}}
+    {{ source(var('source_db'),'client_contacts')}}
 where
     deleted_at is null

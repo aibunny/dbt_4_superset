@@ -15,7 +15,7 @@ select
     {{coalesce_to_timestamp('updated_at')}}
 
 from
-    {{ source('smartcollect', 'notes') }}
+    {{ source(var('source_db'), 'notes') }}
 where
     deleted_at is null 
 

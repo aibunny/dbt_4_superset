@@ -23,6 +23,6 @@ select
 
 
 from
-    {{ source('smartcollect', 'whatsapp_messages') }}
+    {{ source(var('source_db'), 'whatsapp_messages') }}
 where 
     deleted_at is null 

@@ -21,6 +21,6 @@ select
 
     {{ coalesce_to_timestamp('status_date')}}
 from
-    {{ source('smartcollect', 'workflow_tasks') }}
+    {{ source(var('source_db'), 'workflow_tasks') }}
 where 
     deleted_at is null

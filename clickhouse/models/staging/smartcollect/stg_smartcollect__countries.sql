@@ -11,7 +11,7 @@ with countries as (
 
 
     from
-        {{source('smartcollect','countries')}}
+        {{source(var('source_db'),'countries')}}
     where 
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

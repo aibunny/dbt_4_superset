@@ -25,7 +25,7 @@ select
 
     status_date::timestamp as status_date
 
-from {{ source('smartcollect', 'maker_checker_tasks') }}
+from {{ source(var('source_db'), 'maker_checker_tasks') }}
 
 where
     deleted_at is null

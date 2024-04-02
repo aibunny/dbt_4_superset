@@ -14,6 +14,6 @@ select
     timestamp::timestamp as imestamp,
     received_at::timestamp as received_received_at
 from 
-    {{ source('smartcollect', 'received_sms') }}
+    {{ source(var('source_db'), 'received_sms') }}
 where
     deleted_at is null

@@ -13,4 +13,4 @@ select
     created_at::timestamp as notification_created_at,
     updated_at::timestamp as notification_updated_at
 from
-    {{ source('smartcollect', 'notifications') }}
+    {{ source(var('source_db'), 'notifications') }}

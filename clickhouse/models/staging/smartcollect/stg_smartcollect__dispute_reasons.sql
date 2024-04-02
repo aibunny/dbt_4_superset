@@ -11,7 +11,7 @@ with dispute_reasons as (
         {{ coalesce_to_timestamp('updated_at')}}
 
     from
-        {{source('smartcollect', 'dispute_reasons')}}
+        {{source(var('source_db'), 'dispute_reasons')}}
     where
 		deleted_at is null and active = {{ get_active_value(target.type) }}
     

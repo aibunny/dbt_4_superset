@@ -22,7 +22,7 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
     
-from {{ source('smartcollect', 'call_sessions')}}
+from {{ source(var('source_db'), 'call_sessions')}}
 
 where
     deleted_at is null 

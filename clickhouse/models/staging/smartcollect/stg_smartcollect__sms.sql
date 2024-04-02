@@ -29,7 +29,7 @@ with sms as (
         updated_by,
         send_failure_reason
     from
-        {{ source('smartcollect', 'sms') }}
+        {{ source(var('source_db'), 'sms') }}
     where
         deleted_at is null
 )

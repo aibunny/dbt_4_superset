@@ -16,7 +16,7 @@ with charges as (
 		{{ coalesce_to_timestamp('updated_at')}}
 
 	from
-		{{source('smartcollect', 'charges')}}
+		{{source(var('source_db'), 'charges')}}
 
 	where
     deleted_at is null

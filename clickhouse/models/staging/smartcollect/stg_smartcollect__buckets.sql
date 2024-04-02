@@ -17,7 +17,7 @@ with buckets as(
 
         
     from
-        {{source('smartcollect', 'buckets')}}
+        {{source(var('source_db'), 'buckets')}}
     
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}

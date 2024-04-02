@@ -11,7 +11,7 @@ with debt_types as (
 
 		
 	from
-		{{source('smartcollect', 'debt_types')}}
+		{{source(var('source_db'), 'debt_types')}}
 	where
 		deleted_at is null and active = {{ get_active_value(target.type) }}
 )

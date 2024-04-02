@@ -11,7 +11,7 @@ with collection_stages as (
 
         
     from
-        {{ source('smartcollect', 'collection_stages') }}
+        {{ source(var('source_db'), 'collection_stages') }}
     where
     deleted_at is null and active = {{ get_active_value(target.type) }}
 

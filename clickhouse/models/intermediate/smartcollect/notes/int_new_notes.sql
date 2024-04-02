@@ -34,7 +34,7 @@ with refined_notes as (
         on n.case_file_id = p.case_file_id
     
     where
-        created_at >= {{runtime(run_started_at,target.type)}}
+        n.created_at >= {{runtime(run_started_at,target.type)}}
 )
 
 select * from refined_notes

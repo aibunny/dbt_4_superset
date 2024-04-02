@@ -11,6 +11,6 @@ select
     created_at,
     approved_at::timestamp as approved_at
 from 
-    {{ source('smartcollect', 'case_file_movements')}}
+    {{ source(var('source_db'), 'case_file_movements')}}
 where
     deleted_at is null

@@ -12,7 +12,7 @@ select
 
     
 from
-    {{source('smartcollect', 'callbacks')}}
+    {{source(var('source_db'), 'callbacks')}}
 
 where
     deleted_at is null

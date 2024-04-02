@@ -22,7 +22,7 @@ with calls as (
         coalesce(agent_ring_time,0) as agent_ring_time,
         created_at
     from
-        {{ source('smartcollect', 'calls')}}
+        {{ source(var('source_db'), 'calls')}}
     )
 
 select * from calls

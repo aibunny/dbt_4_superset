@@ -9,7 +9,7 @@ with call_types as (
         created_at
     
     from
-        {{source('smartcollect','call_types')}}
+        {{source(var('source_db'),'call_types')}}
 
     where
         deleted_at is null

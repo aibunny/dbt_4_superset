@@ -6,4 +6,4 @@ select
     created_by as created_by,
     created_at
 from
-    {{ source('smartcollect', 'maker_checker_comments') }}
+    {{ source(var('source_db'), 'maker_checker_comments') }}

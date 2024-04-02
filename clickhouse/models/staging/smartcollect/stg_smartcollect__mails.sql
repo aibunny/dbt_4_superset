@@ -24,6 +24,6 @@ select
     created_at::timestamp as mail_created_at,
     updated_at::timestamp as mail_updated_at
 from
-    {{ source('smartcollect', 'mails') }}
+    {{ source(var('source_db'), 'mails') }}
 where
     deleted_at is null

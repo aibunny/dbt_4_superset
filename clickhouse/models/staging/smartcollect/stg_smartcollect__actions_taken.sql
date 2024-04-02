@@ -12,6 +12,6 @@ select
     deleted_at::timestamp as deleted_at
     
 from 
-    {{ source('smartcollect', 'actions_taken')}}
+    {{ source(var('source_db'), 'actions_taken')}}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}

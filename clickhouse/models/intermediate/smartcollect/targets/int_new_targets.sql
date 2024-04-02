@@ -17,8 +17,8 @@ with refined_targets as (
         t.month_year as month_year,
         t.date as date,
         t.targetable_type as target_group,
-        p.product as product,
-        sp.sub_product as sub_product,
+        p.product_name as product,
+        sp.sub_product_name as sub_product,
         u.user_name as user,
         tm.team_name as team,
         b.branch_name as branch,
@@ -52,12 +52,13 @@ with refined_targets as (
     left join
         {{ ref('stg_smartcollect__branches')}} b 
         on t.targetable_id = b.branch_id
-
-    (t.updated_at >= {{ runtime(run_started_at, target.type) }}
-        and t.updated_at is not null )
-        or t.created_at >= {{ runtime(run_started_at, target.type) }}
+    
+    where
+        (
+            t.updated_at >= {{ runtime(run_started_at, target.type) }}
+            and t.updated_at is not null 
+        )  or t.created_at >= {{ runtime(run_started_at, target.type) }}
 )
 
-)
 
 select * from refined_targets

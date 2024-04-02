@@ -7,4 +7,4 @@ select
     failure_reason,
     created_at
 from 
-    {{ source('smartcollect', 'skiptraces') }}
+    {{ source(var('source_db'), 'skiptraces') }}

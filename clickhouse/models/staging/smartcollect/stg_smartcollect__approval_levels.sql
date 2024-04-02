@@ -13,6 +13,6 @@ select
 
     
 from 
-    {{ source('smartcollect', 'approval_levels')}}
+    {{ source(var('source_db'), 'approval_levels')}}
 where
     deleted_at is null 

@@ -51,7 +51,7 @@
   {% else %}
     case
     when {{ column_name }} is null then null
-    else TO_DATE({{ column_name }}::text,'YYYYMMDD') end as {{ column_name }}
+    else TO_DATE({{ column_name }}::text,'YYYY-MM-DD') end as {{ column_name }}
   {% endif %}
 
 {% endmacro %}
@@ -67,12 +67,3 @@
   {% endif %}
 {% endmacro %}
 
-
-
-{% macro get_source_schema(target_type)%}
-  {%if target_type == 'clickhouse'%}}
-    'smartcollect'
-  {%else%}
-    'public'
-  {%endif%}
-{% endmacro%}

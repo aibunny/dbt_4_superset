@@ -12,7 +12,7 @@ select
     {{coalesce_to_uuid('claimed_by')}},
     created_at
     
-from {{ source('smartcollect', 'approvals')}}
+from {{ source(var('source_db'), 'approvals')}}
 where
     deleted_at is null 
 

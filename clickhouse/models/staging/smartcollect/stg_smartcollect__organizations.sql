@@ -28,7 +28,7 @@ with organizations as (
 
 
     from
-        {{ source('smartcollect', 'organizations') }}
+        {{ source(var('source_db'), 'organizations') }}
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

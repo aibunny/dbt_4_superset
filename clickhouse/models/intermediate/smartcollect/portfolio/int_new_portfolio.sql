@@ -15,7 +15,6 @@ with refined_case_files as(
         c.branch_id as branch_id,
         c.product_id as product_id,
         c.sub_product_id as sub_product_id,
-        c.client_id as client_id,
         c.bucket_id as bucket_id,
         c.currency_id as currency_id,
         c.debt_type_id as debt_type_id,

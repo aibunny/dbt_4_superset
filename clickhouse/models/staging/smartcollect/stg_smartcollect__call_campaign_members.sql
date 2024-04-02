@@ -4,4 +4,4 @@ select
     {{ coalesce_to_uuid('user_id') }},
     is_paused
 from
-    {{ source('smartcollect', 'call_campaign_members') }}
+    {{ source(var('source_db'), 'call_campaign_members') }}

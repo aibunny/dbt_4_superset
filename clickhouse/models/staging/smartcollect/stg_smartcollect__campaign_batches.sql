@@ -14,4 +14,4 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
 from
-    {{ source('smartcollect', 'campaign_batches')}}
+    {{ source(var('source_db'), 'campaign_batches')}}

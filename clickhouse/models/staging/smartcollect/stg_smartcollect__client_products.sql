@@ -6,6 +6,6 @@ select
 
 
 from 
-    {{source('smartcollect','client_products')}}
+    {{source(var('source_db'),'client_products')}}
 where
     deleted_at is null

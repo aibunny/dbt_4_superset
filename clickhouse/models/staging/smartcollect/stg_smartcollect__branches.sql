@@ -12,7 +12,7 @@ with branches as(
         {{ coalesce_to_timestamp('updated_at')}}
     
     from
-        {{source('smartcollect', 'branches')}}
+        {{source(var('source_db'), 'branches')}}
     where
     deleted_at is null and active = {{ get_active_value(target.type) }}
 )

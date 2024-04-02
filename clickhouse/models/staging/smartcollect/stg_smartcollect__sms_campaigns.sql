@@ -12,7 +12,7 @@ with sms_campaigns as (
         {{ coalesce_to_timestamp('updated_at')}}
     
     from 
-        {{source('smartcollect','sms_campaigns')}}
+        {{source(var('source_db'),'sms_campaigns')}}
     where
         deleted_at is null and active= {{ get_active_value(target.type)}}
 )

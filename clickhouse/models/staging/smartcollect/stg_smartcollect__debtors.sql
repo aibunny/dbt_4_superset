@@ -14,7 +14,7 @@ with debtors as (
         {{ coalesce_to_timestamp('updated_at')}},
         COALESCE(score, 0)  AS score
     from
-        {{source('smartcollect', 'debtors')}}
+        {{source(var('source_db'), 'debtors')}}
     where
         deleted_at is null
 )

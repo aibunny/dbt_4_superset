@@ -8,6 +8,6 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
 from
-    {{ source('smartcollect', 'permissions') }}
+    {{ source(var('source_db'), 'permissions') }}
 where
     deleted_at is null

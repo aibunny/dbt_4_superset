@@ -14,6 +14,6 @@ select
 
     
 from
-    {{ source('smartcollect', 'mail_templates') }}
+    {{ source(var('source_db'), 'mail_templates') }}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}

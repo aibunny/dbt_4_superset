@@ -10,7 +10,7 @@ with products as (
         created_at,
         {{ coalesce_to_timestamp('updated_at')}}
     from
-    {{ source('smartcollect', 'products')}}
+    {{ source(var('source_db'), 'products')}}
 )
 
 select * from products

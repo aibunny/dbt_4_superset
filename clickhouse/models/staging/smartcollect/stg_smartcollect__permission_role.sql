@@ -1,4 +1,4 @@
 select
     permission_id,
     role_id
-from {{source('smartcollect','permission_role')}}
+from {{source(var('source_db'),'permission_role')}}

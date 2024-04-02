@@ -1,0 +1,24 @@
+smartcollect_ch:
+  target: dev
+  outputs:
+    dev:
+      type: clickhouse
+      schema: analytics
+      host: clickhouse
+      port: 8123
+      user: clickhouse
+      password: clickhouse
+      secure: False
+
+smartcollect_pg:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      dbname: smartcollect
+      schema: analytics
+      host: localhost
+      port: 5432
+      user: postgres
+      pass: postgres
+      threads: 1

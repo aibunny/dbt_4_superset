@@ -17,7 +17,7 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
     
-from {{ source('smartcollect', 'bpmn_workflow_processes')}}
+from {{ source(var('source_db'), 'bpmn_workflow_processes')}}
 
 where
     deleted_at is null 

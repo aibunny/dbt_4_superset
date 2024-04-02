@@ -10,7 +10,7 @@ with delinquency_reasons as (
         {{ coalesce_to_timestamp('updated_at')}}
 
     from
-        {{source('smartcollect', 'delinquency_reasons')}}
+        {{source(var('source_db'), 'delinquency_reasons')}}
     where
 		deleted_at is null and active = {{ get_active_value(target.type) }}
 )

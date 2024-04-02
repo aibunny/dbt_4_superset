@@ -8,6 +8,6 @@ select
 
     updated_by as updated_by
 from
-    {{ source('smartcollect', 'organization_types') }}
+    {{ source(var('source_db'), 'organization_types') }}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}

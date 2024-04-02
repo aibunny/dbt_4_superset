@@ -10,7 +10,7 @@ with sub_products as (
         {{ coalesce_to_timestamp('updated_at')}}
 
     from 
-        {{source('smartcollect','sub_products')}}
+        {{source(var('source_db'),'sub_products')}}
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

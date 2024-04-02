@@ -1,5 +1,5 @@
 models:
-  - name: Sget_source_schemaget_source_schemaget_source_schemams
+  - name: Sms
     description: "This dataset contains information about sent out SMS messages, including details about the SMS campaign, delivery status, and costs."
     columns:
       - name: sms_id

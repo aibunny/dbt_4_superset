@@ -16,7 +16,7 @@ with contact_statuses as (
 
 
     from
-        {{source('smartcollect', 'contact_statuses')}}
+        {{source(var('source_db'), 'contact_statuses')}}
     
     where 
         deleted_at is null and active = {{ get_active_value(target.type) }}   

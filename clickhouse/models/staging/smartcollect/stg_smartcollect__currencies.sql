@@ -8,7 +8,7 @@ with currencies as (
         updated_by,
         {{ coalesce_to_timestamp('updated_at')}}
     from 
-        {{source('smartcollect','currencies')}}
+        {{source(var('source_db'),'currencies')}}
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

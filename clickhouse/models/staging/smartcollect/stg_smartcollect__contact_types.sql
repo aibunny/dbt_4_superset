@@ -12,7 +12,7 @@ with contact_types as (
         {{ coalesce_to_timestamp('updated_at')}}
 
     from
-        {{source('smartcollect', 'contact_types')}}
+        {{source(var('source_db'), 'contact_types')}}
     where
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

@@ -9,6 +9,6 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
 from 
-    {{source('smartcollect','collection_strategies')}}
+    {{source(var('source_db'),'collection_strategies')}}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}

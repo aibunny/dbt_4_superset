@@ -12,6 +12,6 @@ select
     {{ coalesce_to_timestamp('updated_at')}}
 
 from 
-    {{source('smartcollect','collaterals')}}
+    {{source(var('source_db'),'collaterals')}}
 where
     deleted_at is null
