@@ -1,4 +1,3 @@
-
 # **Setup**
 
 1. When setting up the project create a virtulenv by running on terminal
@@ -21,10 +20,8 @@ Install the project requirements
 pip install -r requirements.txt
 ```
 
-
-
 2. Create a `profiles.yml` file in your current dir then paste one of the profiles in [sample.profiles.yml](./sample.profiles.yml) , edit the details as required the `smartcollect_pg` is for psql and `smartcollect_ch` is for clickhouse
-3. Edit [dbt_project.yml](./dbt.project.yml) and change the `profile` to match your intended target database as defined above in `profiles.yaml`
+3. Edit [dbt_project.yml](./dbt_project.yml) and change the `profile` to match your intended target database as defined above in `profiles.yaml`
    NB: The default profile is for postgres only edit if using clickhouse or if you changed the profile names in step 2
 
 # Running
@@ -42,7 +39,6 @@ else when the source db is clickhouse use:
 ```bash
 dbt run --vars "{'source_db':'smartcollect_ch'}" --profile-dir .
 ```
-
 
 ### Resources:
 
