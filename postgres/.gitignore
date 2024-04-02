@@ -1,8 +1,0 @@
-
-target/
-dbt_packages/
-logs/
-seeds
-.env
-sample.sql1
-sample.sql

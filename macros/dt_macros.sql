@@ -63,7 +63,7 @@
   {% if target_type == 'clickhouse' %}
     1
   {% else %}
-    True
+--profile-dir .    True
   {% endif %}
 {% endmacro %}
 
