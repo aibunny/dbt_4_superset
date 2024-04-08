@@ -1,4 +1,5 @@
-select
+with actions_taken as (
+    select
     id as action_id,
     title as action_title,
     slug as action_slug,
@@ -15,3 +16,6 @@ from
     {{ source(var('source_db'), 'actions_taken')}}
 where
     deleted_at is null and active = {{ get_active_value(target.type) }}
+)
+
+select * from actions_taken

@@ -104,7 +104,7 @@ sources:
 
   #clickhouse source
   - name: smartcollect_ch
-    schema: smartcollect
+    schema: smartcollect_psql
     tables:
       - name: actions_taken
       - name: addresses
