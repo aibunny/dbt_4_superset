@@ -18,4 +18,7 @@ with ptp_mart as (
         {{ref('int_new_ptps')}}
 )
 
-select * from ptp_mart
+select 
+    distinct
+    *
+from ptp_mart

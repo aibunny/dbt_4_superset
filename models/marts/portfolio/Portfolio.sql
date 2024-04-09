@@ -17,4 +17,7 @@ with portfolio_mart  as (
 )
 
 
-select * from portfolio_mart
+select 
+    distinct
+    *
+from portfolio_mart

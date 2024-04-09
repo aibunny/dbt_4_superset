@@ -18,4 +18,7 @@ with organization_mart as (
         {{ref('int_new_organization')}}
 )
 
-select * from organization_mart
+select 
+    distinct
+    *
+from organization_mart

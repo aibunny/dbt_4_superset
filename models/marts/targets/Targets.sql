@@ -12,4 +12,7 @@ with targets_mart as (
         {{ ref('int_new_targets')}}
 )
 
-select * from targets_mart
+select 
+    distinct
+    *
+from targets_mart

@@ -19,4 +19,7 @@ with calls_mart as (
         {{ref('int_new_calls')}}
 )
 
-select * from calls_mart
+select 
+    distinct
+    *
+from calls_mart

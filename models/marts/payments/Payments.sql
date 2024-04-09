@@ -17,4 +17,7 @@ with payment_mart as (
         {{ ref('int_new_payments')}}
 )
 
-select * from payment_mart
+select 
+    distinct
+    *
+from payment_mart

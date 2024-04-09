@@ -18,4 +18,7 @@ with activity_mart as (
         {{ref('int_new_notes')}}
 )
 
-select * from activity_mart
+select 
+    distinct
+    *
+from activity_mart

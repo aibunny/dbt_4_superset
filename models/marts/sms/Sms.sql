@@ -18,4 +18,7 @@ with sms_mart as (
         {{ref('int_new_sms')}}
 )
 
-select * from sms_mart
+select 
+    distinct
+    *
+from sms_mart

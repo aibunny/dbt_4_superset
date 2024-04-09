@@ -18,4 +18,7 @@ with mails_mart as (
         {{ref('int_new_mails')}}
 )
 
-select * from mails_mart
+select 
+    distinct
+    *
+from mails_mart
