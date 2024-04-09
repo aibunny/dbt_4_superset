@@ -31,8 +31,6 @@ with mail_campaigns as(
         on m.mail_campaign_id = mc.mail_campaign_id
     
     left join         
-        case when mail_scheduled_at is not null
-        then 'Scheduled' else 'Not Scheduled'end as mail_status,
         {{ref('ref_organization')}} o
         on m.organization_id = o.organization_id
     left join 

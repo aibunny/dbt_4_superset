@@ -1,3 +1,5 @@
+
+
 with organization as (
     select 
         o.organization_id as organization_id,

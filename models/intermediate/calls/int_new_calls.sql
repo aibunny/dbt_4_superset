@@ -1,5 +1,8 @@
--- This are calls in call campaigns and their ratings
-
+{{
+    config(
+        materialized = 'view'
+    )
+}}
 with calls_in_campaigns as(
     select
         c.call_id as call_id,

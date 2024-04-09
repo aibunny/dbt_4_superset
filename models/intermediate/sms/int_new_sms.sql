@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized = 'view'
+    )
+}}
+
 with sms_in_campaigns as (
     select
         s.sms_id as sms_id,
