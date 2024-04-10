@@ -155,4 +155,7 @@ with refined_case_files as(
         c.workflow_task_id = wt.workflow_task_id
 )
 
-select * from refined_case_files
+select 
+    distinct
+    * 
+from refined_case_files

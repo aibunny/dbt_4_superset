@@ -49,4 +49,7 @@ with refined_targets as (
 
 )
 
-select * from refined_targets
+select 
+    distinct
+    * 
+from refined_targets

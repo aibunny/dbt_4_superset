@@ -37,4 +37,7 @@ with refined_notes as (
         n.created_at >= {{runtime(run_started_at,target.type)}}
 )
 
-select * from refined_notes
+select 
+    distinct
+    * 
+from refined_notes

@@ -51,4 +51,6 @@ with refined_ptps as (
         
 )
 
-select * from refined_ptps
+select 
+    * 
+from refined_ptps

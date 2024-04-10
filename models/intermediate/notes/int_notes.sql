@@ -28,4 +28,7 @@ with refined_notes as (
         on n.case_file_id = p.case_file_id
 )
 
-select * from refined_notes
+select 
+    distinct
+    * 
+from refined_notes

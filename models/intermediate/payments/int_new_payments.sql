@@ -62,4 +62,7 @@ with refined_payments as (
     
 )
 
-select * from refined_payments
+select 
+    distinct
+    * 
+from refined_payments

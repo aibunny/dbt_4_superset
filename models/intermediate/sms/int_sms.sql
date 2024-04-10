@@ -39,4 +39,6 @@ with sms as (
 
 )
 
-select * from sms
+select 
+    * 
+from sms

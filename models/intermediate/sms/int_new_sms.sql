@@ -47,4 +47,7 @@ with sms_in_campaigns as (
         s.created_at >= {{runtime(run_started_at,target.type)}}
 )
 
-select * from sms_in_campaigns
+
+select 
+    * 
+from sms_in_campaigns

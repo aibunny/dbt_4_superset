@@ -35,4 +35,7 @@ with refined_organization as (
     
 )
 
-select * from refined_organization
+select 
+    distinct
+    * 
+from refined_organization

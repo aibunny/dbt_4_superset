@@ -44,4 +44,7 @@ with refined_organization as (
         and o.updated_at is null) or o.created_at >= {{runtime(run_started_at, target.type)}}
 )
 
-select * from refined_organization
+select 
+    distinct
+    * 
+from refined_organization

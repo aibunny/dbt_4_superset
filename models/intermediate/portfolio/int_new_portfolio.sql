@@ -167,5 +167,8 @@ with refined_case_files as(
         or c.created_at >= {{ runtime(run_started_at, target.type) }}
 )
 
-select * from refined_case_files
+select 
+    distinct
+    * 
+from refined_case_files
 

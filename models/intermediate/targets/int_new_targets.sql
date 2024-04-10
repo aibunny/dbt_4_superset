@@ -60,5 +60,7 @@ with refined_targets as (
         )  or t.created_at >= {{ runtime(run_started_at, target.type) }}
 )
 
-
-select * from refined_targets
+select 
+    distinct
+    * 
+from refined_targets
