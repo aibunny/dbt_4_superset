@@ -38,6 +38,5 @@ with refined_organization as (
 )
 
 select 
-    distinct
     * 
 from refined_organization

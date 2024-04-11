@@ -3,7 +3,7 @@
 with organization as (
     select 
         o.organization_id as organization_id,
-        o.organization_is_primary as organization_is_primary, 
+        o.organization_is_primary::text as organization_is_primary, 
         o.organization_type_id as organization_type_id,
         o.country_id as country_id,
         c.country_name as country_name,

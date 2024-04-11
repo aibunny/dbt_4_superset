@@ -29,7 +29,7 @@ with refined_organization as (
         t.team_leader as team_leader,  
         o.created_at as created_at,
         o.updated_at as updated_at
-
+        
     from 
         {{ref("ref_organization")}} o
     left join 
@@ -49,6 +49,5 @@ with refined_organization as (
 )
 
 select 
-    distinct
     * 
 from refined_organization
