@@ -67,10 +67,10 @@ with refined_case_files as(
         o.country_name as country,
         u.user_name as user,
         u.user_type as user_type,
-        u.branch_name as branch,
-        u.team_name as team,
+        br.branch_name as branch,
+        t.team_name as team,
         p.product_name as product,
-        p.sub_product_name as sub_product,
+        sp.sub_product_name as sub_product,
         b.bucket_name as bucket,
         b.upper_limit as bucket_upper_limit,
         b.lower_limit as bucket_lower_limit,
@@ -111,12 +111,22 @@ with refined_case_files as(
         {{ ref('ref_organization') }} o on 
         c.organization_id = o.organization_id 
     left join
-        {{ ref('int_users') }} u on
+        {{ ref('stg_smartcollect__users') }} u on
         c.user_id = u.user_id
     left join
-        {{ ref('int_products') }} p on 
-        c.sub_product_id = p.sub_product_id
-        or c.product_id = p.product_id
+        {{ ref('stg_smartcollect__branches') }} br on
+        c.branch_id = br.branch_id
+    left join
+        {{ ref('stg_smartcollect__teams') }} t on
+        c.team_id = t.team_id
+    
+    left join
+        {{ ref('stg_smartcollect__products') }} p on 
+        c.product_id = p.product_id
+    left join
+        {{ ref('stg_smartcollect__sub_products') }} sp on 
+        c.sub_product_id = sp.sub_product_id
+        
     -- left join
     --     {{ref('int_clients') }} cl on
     --     c.client_id = cl.client_id
@@ -156,6 +166,5 @@ with refined_case_files as(
 )
 
 select 
-    distinct
     * 
 from refined_case_files
