@@ -27,5 +27,7 @@ with portfolio_mart  as (
 
 select 
     *
-from portfolio_mart
-where rn = 1
+from 
+    portfolio_mart
+where 
+    rn = 1

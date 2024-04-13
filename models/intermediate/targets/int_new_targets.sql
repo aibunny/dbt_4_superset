@@ -6,9 +6,9 @@
 
 with refined_targets as (
     select
-        t.target_id,
-        t.product_id,
-        t.sub_product_id,
+        t.target_id as target_id,
+        t.product_id as product_id,
+        t.sub_product_id as sub_product_id,
         u.user_id as user_id,
         tm.team_id as team_id,
         b.branch_id as branch_id,
@@ -23,7 +23,6 @@ with refined_targets as (
         tm.team_name as team,
         b.branch_name as branch,
         o.organization_name as organization,
-
         t.created_at as created_at
     
     from 

@@ -5,6 +5,7 @@
 }}
 
 with activity_mart as (
+    
     select 
         *
     from
@@ -16,6 +17,7 @@ with activity_mart as (
         *
     from
         {{ref('int_new_notes')}}
+    
 )
 
 select 
