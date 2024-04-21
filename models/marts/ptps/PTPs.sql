@@ -31,3 +31,5 @@ select
     distinct
     *
 from ptp_mart
+
+where rn = 1

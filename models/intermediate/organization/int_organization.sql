@@ -35,6 +35,8 @@ with refined_organization as (
     left join 
         {{ref('stg_smartcollect__users')}} u
         on o.organization_id = u.organization_id
+    where 
+        o.organization_id != '{{ var("missing_uuid") }}' 
 )
 
 select 

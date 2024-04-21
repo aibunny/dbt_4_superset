@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized = 'view' 
+    )
+}}
+
 with refined_whatsapp as (
     select 
         w.whatsapp_message_id as whatsapp_message_id,
@@ -23,7 +29,7 @@ with refined_whatsapp as (
         on w.whatsapp_campaign_id = whatsapp_campaign_id
 
     where
-        w.created_at >= '{{ref(run_started_at)}}'
+        w.created_at >= '{{run_started_at}}'
 )
 
 select * from refined_whatsapp

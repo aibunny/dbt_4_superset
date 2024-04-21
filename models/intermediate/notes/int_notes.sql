@@ -7,6 +7,7 @@ with refined_notes as (
         n.update_type as activity,
         ct.call_type as call_type,
         cs.contact_status_name as contact_status,
+        cs.contact_type_name as contact_type,
         p.organization as organization,
         p.branch as branch,
         p.team as team,
@@ -20,7 +21,7 @@ with refined_notes as (
         on n.call_type_id = ct.call_type_id
     
     left join
-        {{ref('stg_smartcollect__contact_statuses')}} cs
+        {{ref('ref_contact_status')}} cs
         on n.contact_status_id = cs.contact_status_id
     
     left join

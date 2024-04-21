@@ -64,7 +64,7 @@ models:
           data_type: "UUID"
           constraints: ["FOREIGN KEY"]
       - name: sms_sent
-        description: "Indicates whether the SMS message is sent."
+        description: "Indicates whether the SMS message is sent(1),unsent(2),scheduled(3),moderation(4)."
         meta:
           label: "SMS Sent"
           data_type: "BOOLEAN"

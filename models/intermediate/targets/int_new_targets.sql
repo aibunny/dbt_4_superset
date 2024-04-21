@@ -23,7 +23,8 @@ with refined_targets as (
         tm.team_name as team,
         b.branch_name as branch,
         o.organization_name as organization,
-        t.created_at as created_at
+        t.created_at as created_at,
+        t.updated_at as updated_at
     
     from 
         {{ ref('stg_smartcollect__targets')}} t

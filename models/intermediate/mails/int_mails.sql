@@ -13,7 +13,7 @@ with mail_campaigns as(
         o.organization_name as organization,
         o.country_name as country,
         o.organization_is_primary as organization_is_primary,
-    --    m.target as mail_target,
+        m.target as mail_target,
         m.scheduled_at as mail_scheduled_at,
         m.sent as mail_sent,
         m.send_failure_reason as mail_Send_failure_reason,
@@ -35,7 +35,7 @@ with mail_campaigns as(
         on m.organization_id = o.organization_id
     left join 
         {{ref('stg_smartcollect__users')}} u
-        on u.user_id = u.user_id
+        on m.user_id = u.user_id
 
 )
 

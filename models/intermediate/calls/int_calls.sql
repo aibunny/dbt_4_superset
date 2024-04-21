@@ -32,7 +32,8 @@ with calls_in_campaigns as(
     left join 
         {{ref('stg_smartcollect__call_campaigns')}} cc on c.call_campaign_id = cc.call_campaign_id
     left join 
-        {{ref('stg_smartcollect__call_callibrations')}} cr on c.call_id = cr.call_id
+        {{ref('stg_smartcollect__call_callibrations')}} 
+        cr on c.call_id = cr.call_id
     left join
         {{ref('ref_organization')}} o 
         on c.organization_id = o.organization_id
