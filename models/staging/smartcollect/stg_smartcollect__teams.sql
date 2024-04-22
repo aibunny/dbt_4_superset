@@ -7,7 +7,7 @@ with teams as (
         {{ coalesce_to_uuid('organization_id') }},
         {{ coalesce_to_uuid('branch_id') }},
         team_type as team_type,
-        team_leader as team_leader,
+        u.user_name as team_leader,
         created_by,
         updated_by,
         created_at,
@@ -15,6 +15,11 @@ with teams as (
 
     from
         {{source(var('source_db'), 'teams')}}
+
+    left join 
+        {{  ref('stg_smartcollect__users')}} u
+        on team_leader = u.user_id
+
     where 
         deleted_at is null and active = {{ get_active_value(target.type) }}
 )

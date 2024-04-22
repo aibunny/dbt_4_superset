@@ -1,8 +1,8 @@
 select
     id as ptp_id,
-    amount as ptp_amount,
+    coalesce(amount,0) as ptp_amount,
     ptp_date,
-    amount_paid,
+    coalesce(amount_paid,0) as amount_paid,
     date_paid,
     type as ptp_type,
     state as ptp_state,
