@@ -1,0 +1,34 @@
+FROM python:3.11
+
+# Install cron and update package index
+RUN apt-get update && apt-get -y install cron python3-virtualenv
+
+# Set working directory
+WORKDIR /dbt_project
+
+# Copy requirements.txt and install dependencies
+COPY requirements.txt .
+RUN virtualenv venv
+# Activate virtual environment and install dependencies
+RUN . venv/bin/activate && pip install -r requirements.txt
+
+# Copy your dbt project into the container
+COPY . .
+
+RUN dbt run --vars "{'source_db':'smartcollect_pg'}" --profiles-dir . \
+    && dbt compile --profiles-dir . \
+    && dbt docs generate --profiles-dir . \
+    && dbt docs serve
+
+EXPOSE 3000
+
+# Set up cron job to run dbt every minute in the working directory
+RUN echo "0 * * * * root cd /dbt_project && . venv/bin/activate  && dbt run --vars "{'source_db':'smartcollect_pg'}" --models intermediate mart --profiles-dir . >> /var/log/cron.log 2>&1" > /etc/cron.d/dbt-cron
+RUN chmod 0644 /etc/cron.d/dbt-cron
+
+# Start cron in the foreground, redirecting output to stdout/stderr
+CMD cron && tail -f /var/log/cron.log
+
+
+
+

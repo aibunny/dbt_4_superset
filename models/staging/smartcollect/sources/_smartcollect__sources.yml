@@ -6,8 +6,6 @@ sources:
     tables:
       - name: actions_taken
       - name: addresses
-      - name: approval_levels
-      - name: approvals
       - name: bpmn_workflow_processes
       - name: branches
       - name: buckets
@@ -23,6 +21,7 @@ sources:
       - name: campaign_batches
       - name: case_file_movements
       - name: case_files
+      - name: centres
       - name: charges
       - name: client_contacts
       - name: client_products
@@ -108,8 +107,6 @@ sources:
     tables:
       - name: actions_taken
       - name: addresses
-      - name: approval_levels
-      - name: approvals
       - name: bpmn_workflow_processes
       - name: branches
       - name: buckets
@@ -125,6 +122,7 @@ sources:
       - name: campaign_batches
       - name: case_file_movements
       - name: case_files
+      - name: centres
       - name: charges
       - name: client_contacts
       - name: client_products

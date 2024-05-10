@@ -11,9 +11,7 @@ with users as (
         u.user_name as user_name,
         u.user_type as user_type,
         t.team_name as team_name,
-        t.team_type as team_type,
-        
-
+        t.team_type as team_type,     
         u.created_at as created_at,
         u.updated_at ad updated_at
 

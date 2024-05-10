@@ -8,7 +8,6 @@ with actions_taken as (
     tag as action_tag,
     created_by,
     updated_by,
-    deleted_by,
     created_at,
     deleted_at::timestamp as deleted_at
     

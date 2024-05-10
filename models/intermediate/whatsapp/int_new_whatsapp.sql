@@ -7,7 +7,7 @@
 with refined_whatsapp as (
     select 
         w.whatsapp_message_id as whatsapp_message_id,
-        wc.whatsapp_campaign_id as whatsapp_campaign_id, #TODO:
+        wc.whatsapp_campaign_id as whatsapp_campaign_id, --TODO:
         w.case_file_id as case_file_id,
         w.organization_id as organization_id,
         w.business_account_id as business_account_id,
@@ -19,7 +19,7 @@ with refined_whatsapp as (
         wc.whatsapp_campaign_name as whatsapp_campaign_name,
         wc.whatsapp_campaign_target as whatsapp_campaign_target,
         wc.runs_from as whatsapp_campaign_runs_from,
-        wc.runs_to as whatsapp_campaign_runs_to
+        wc.runs_to as whatsapp_campaign_runs_to,
         w.created_at as whatsapp_message_created_at,
         wc.whatsapp_campaign_created_at as whatsapp_campaign_created_at
     from
