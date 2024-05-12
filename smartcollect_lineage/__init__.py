@@ -4,7 +4,7 @@ from .push_descriptions import main as push_descriptions_main
 from .push_metrics import main as push_metrics_main
 from .create_db import main as create_db_main
 from .create_dashboards import main as create_dashboard_main
-from .initiate import initiate
+from .initiate import initiate as initiate_lineage
 app = typer.Typer()
 
 
@@ -168,7 +168,7 @@ def initiate(
         help=" path to env file."
     )
 ):
-    initiate(env_file_path=env_file_path)
+    initiate_lineage(env_file_path=env_file_path)
 
 
 if __name__ == '__main__':

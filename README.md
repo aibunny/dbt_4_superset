@@ -3,6 +3,7 @@
 Installation
 
 * The GITHUB_USER and GITHUB_TOKEN should be provided as environment variables
+* The token is
 
 ```bash
 pip install git+https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/crafted-systems/smartcollect-lineage.git
