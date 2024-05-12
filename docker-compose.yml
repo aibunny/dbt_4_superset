@@ -1,0 +1,21 @@
+services:
+  dbt_smartcollect:
+    build:
+      context: .
+    container_name: dbt_smartcollect
+    env_file:
+      - .env
+    environment:
+      DB_DRIVER: ${DB_DRIVER}
+      DB_ENGINE: ${DB_ENGINE}
+      TABLES: ${TABLES}
+      DB_SCHEMA: 'analytics'
+      SUPERSET_USERNAME: ${SUPERSET_USERNAME}
+      SUPERSET_PASSWORD: ${SUPERSET_PASSWORD}
+      SUPERSET_URL: ${SUPERSET_URL}
+      OVERWRITE: true
+      DB_NAME: smartcollect
+    ports:
+      - 3000:3000
+    volumes:
+      - ./init/:./init:/docker-entrypoint-initdb.d

@@ -20,6 +20,9 @@ RUN dbt run --vars "{'source_db':'smartcollect_pg'}" --profiles-dir . \
     && dbt docs generate --profiles-dir . \
     && dbt docs serve
 
+
+
+
 EXPOSE 3000
 
 # Set up cron job to run dbt every minute in the working directory
