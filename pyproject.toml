@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "smartcollect-lineage"
-version = "0.3.4"
+version = "0.3.5"
 description = "Make dbt docs and Apache Superset talk to one another"
 authors = [ "AIBUNNY <bunny@theaibunny.com>"]
 readme = "README.md"
