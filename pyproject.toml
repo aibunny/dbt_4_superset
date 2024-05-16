@@ -4,7 +4,7 @@ version = "0.3.5"
 description = "Make dbt docs and Apache Superset talk to one another"
 authors = [ "AIBUNNY <bunny@theaibunny.com>"]
 readme = "README.md"
-repository = "https://github.com/aibunny/dbt-4-superset"
+repository = "https://github.com/crafted/smartcollect-lineage"
 
 [tool.poetry.scripts]
 smartcollect-lineage = "smartcollect_lineage.__init__:app"

@@ -7,7 +7,7 @@ chardet==5.2.0
 charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
-dbt-4-superset @ git+https://github.com/aibunny/dbt-4-superset.git@d341e93683c308d4ee9d55c898fac354d6872ff2
+dbt-4-superset @ git+https://github.com/crafted/smartcollect-lineage
 diff_cover==8.0.3
 idna==3.6
 iniconfig==2.0.0

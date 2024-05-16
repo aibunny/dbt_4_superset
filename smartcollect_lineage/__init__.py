@@ -37,7 +37,8 @@ def pull_dashboards(
             help="Access token to Superset API. "
             "Can be automatically generated if "
             "SUPERSET_REFRESH_TOKEN is provided."),
-        superset_refresh_token: str = typer.Option(None, envvar="SUPERSET_REFRESH_TOKEN",                                                           help="Refresh token to Superset API.")):
+        superset_refresh_token: str = typer.Option(None, envvar="SUPERSET_REFRESH_TOKEN",
+                                                   help="Refresh token to Superset API.")):
 
     pull_dashboards_main(
         dbt_project_dir, exposures_path, dbt_db_name,
