@@ -1,6 +1,7 @@
 import requests
 import os
 import logging
+import time
 from dotenv import load_dotenv
 from .create_db import main as create_db_main
 from .create_dashboards import main as create_dashboards_main
@@ -155,6 +156,10 @@ def initiate(env_file_path=None):
             superset_access_token=init_superset_access_token,
             env_file_path=init_env_file_path
         )
+        # sleep for 20 seconds allow time for all datasets to be created
+        logging.info("Going to sleep allowing datasets to be created")
+
+        time.sleep(20)
 
         initiate_push_metrics(
             superset_access_token=init_superset_access_token,
