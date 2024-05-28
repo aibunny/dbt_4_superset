@@ -4,7 +4,9 @@ from .push_descriptions import main as push_descriptions_main
 from .push_metrics import main as push_metrics_main
 from .create_db import main as create_db_main
 from .create_dashboards import main as create_dashboard_main
+from .embed_dashboard import  main as embed_dashboard_main
 from .initiate import initiate as initiate_lineage
+
 app = typer.Typer()
 
 
@@ -160,6 +162,37 @@ def create_dashboard(
     create_dashboard_main(
         env_file_path, dashboards_file_path, superset_url,
         superset_access_token, superset_refresh_token)
+
+
+@app.command()
+def embed_dashboard(
+        superset_url: str = typer.Argument(
+            ...,
+            help="URL of your Superset, e.g. https://mysuperset.mycompany.com"
+        ),
+
+        env_file_path: str = typer.Argument(
+            '.',
+            help=" path to env file."
+        ),
+
+        superset_access_token: str = typer.Option(
+            None, envvar="SUPERSET_ACCESS_TOKEN",
+            help="Access token to Superset API."
+                 "Can be automatically generated if "
+                 "SUPERSET_REFRESH_TOKEN is provided."
+        ),
+        superset_refresh_token: str = typer.Option(
+            None, envvar="SUPERSET_REFRESH_TOKEN",
+            help="Refresh token to Superset API."
+        )
+):
+
+    embed_dashboard_main(
+        superset_url,
+        env_file_path,
+        superset_access_token,
+        superset_refresh_token)
 
 
 @app.command()

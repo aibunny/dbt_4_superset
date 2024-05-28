@@ -8,7 +8,7 @@ from .create_dashboards import main as create_dashboards_main
 from .push_descriptions import main as push_descriptions_main
 from .push_metrics import main as push_metrics_main
 from .create_public_role_permissions import main as create_public_role_permissions_main
-
+from .embed_dashboard import main as embed_dashboard_main
 load_dotenv()
 
 logging.basicConfig(
@@ -124,13 +124,29 @@ def initiate_create_public_role_permissions(
     superset_refresh_token=None
 ):
 
-    logging.info("Intitiating Create Public roles permissions")
+    logging.info("Initiating Create Public roles permissions")
 
     create_public_role_permissions_main(
         superset_url,
         superset_access_token,
         superset_refresh_token
     )
+
+
+def initiate_embed_dashboards(
+        env_file_path=None,
+        superset_url=None,
+        superset_access_token=None,
+        superset_refresh_token=None
+):
+
+    logging.info("Initiating Embedding Dashboards")
+
+    embed_dashboard_main(
+        superset_url,
+        env_file_path,
+        superset_access_token,
+        superset_refresh_token)
 
 
 def initiate(env_file_path=None):
@@ -186,7 +202,13 @@ def initiate(env_file_path=None):
                 superset_url=init_superset_url,
                 superset_access_token=init_superset_access_token
             )
+
+            initiate_embed_dashboards(
+                env_file_path=init_env_file_path,
+                superset_url=init_superset_url,
+                superset_access_token=init_superset_access_token
+            )
         else:
-            logging.info("SKIPPED CREATE DASHBOARDS")
+            logging.info("SKIPPED CREATE & EMBED DASHBOARDS")
     except Exception as e:
         logging.error("Initializing scripts failed after encountering: %s", e)

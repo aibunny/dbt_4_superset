@@ -53,8 +53,6 @@ def get_db_configs(env_file_path: str) -> dict:
         "sqlalchemy_uri": sql_uri
     }
 
-    dict(db_configs)
-
     return db_configs
 
 
