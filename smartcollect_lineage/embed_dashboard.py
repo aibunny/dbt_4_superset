@@ -105,7 +105,7 @@ def get_dash_embedding_configuration(
                 f"/dashboard/{dash_id}/embedded",
                 json={
                     "allowed_domains": [
-                        smartcollect_url,
+                        smartcollect_url
                     ]
                 }
             )
