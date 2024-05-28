@@ -45,7 +45,7 @@ def get_dashboards(superset: Superset) -> list:
 
     res = superset.request(
         'GET',
-        '/dashboards',
+        '/dashboard/',
     )
     dashboards = res['result']
 
@@ -102,7 +102,7 @@ def get_dash_embedding_configuration(
         try:
             res = superset.request(
                 'POST',
-                f"/dashboards/{dash_id}/embedded",
+                f"/dashboard/{dash_id}/embedded",
                 json={
                     "allowed_domains": [
                         smartcollect_url,

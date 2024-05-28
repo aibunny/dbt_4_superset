@@ -36,7 +36,7 @@ def create_db(superset: Superset, db_configs: dict):
 def get_db_configs(env_file_path: str) -> dict:
     logging.info("Getting database config from .env")
 
-    load_env_variables(env_file_path)
+    load_dotenv(dotenv_path=env_file_path)
 
     if os.getenv("SQLALCHEMY_URI"):
         sql_uri = os.getenv("SQLALCHEMY_URI")
@@ -44,7 +44,8 @@ def get_db_configs(env_file_path: str) -> dict:
         sql_uri = (
             f"{os.getenv('DB_ENGINE')}+{os.getenv('DB_DRIVER')}://"
             f"{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@"
-            f"{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+            f"{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/"
+            f"{os.getenv('DB_NAME')}"
         )
 
     db_configs = {
@@ -52,6 +53,7 @@ def get_db_configs(env_file_path: str) -> dict:
         "engine": os.getenv("DB_ENGINE", "postgres"),
         "sqlalchemy_uri": sql_uri
     }
+    print(db_configs)
 
     return db_configs
 
