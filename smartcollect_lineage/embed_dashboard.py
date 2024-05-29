@@ -138,7 +138,7 @@ def main(superset_url: str,
                         access_token=superset_access_token,
                         refresh_token=superset_refresh_token)
 
-    smartcollect_url = os.getenv('SMARTCOLLECT_URL')
+    smartcollect_url = os.getenv('SMARTCOLLECT_API_URL')
     api_key = os.getenv('SMARTCOLLECT_API_KEY')
     get_dash_embedding_configuration(
         superset,
